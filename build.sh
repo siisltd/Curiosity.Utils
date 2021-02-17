@@ -11,7 +11,7 @@ export BUILD_DATE=$build_date
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 TOOLS_DIR=$SCRIPT_DIR/tools
 TOOLS_PROJ=$TOOLS_DIR/tools.csproj
-DEFAULT_CAKE_VERSION=0.38.5
+DEFAULT_CAKE_VERSION=1.0.0
 NETCOREFRAMEWORKSDK3=netcoreapp3.1
 
 if [[ "$CAKE_VERSION" = "" ]]; then

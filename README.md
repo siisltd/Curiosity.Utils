@@ -1,3 +1,5 @@
-# Marvin.NET
+# Curiosity.Utils
 
-Marvin team .NET projects
+Utilities for Curiosity projects.
+
+> ReadMe is under construction.
