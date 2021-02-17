@@ -1,0 +1,6 @@
+Urls: http://127.0.0.1:39122
+
+Log:
+  LogConfigurationPath: ./NLog.config
+  LogOutputDirectory: ./log
+

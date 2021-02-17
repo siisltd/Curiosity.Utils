@@ -1,0 +1,44 @@
+stages:
+  - build
+  - publish
+
+build auto:
+  stage: build
+  tags:
+    - netcore
+    - linux
+    - ci
+  script:
+    - ./build.sh -t Build
+  when: always
+  only:
+    - master
+    - dev
+    - /^release.*$/
+    - /^hotfix.*$/
+    - merge_requests
+      
+publish manual:
+  stage: publish
+  tags:
+    - netcore
+    - linux
+    - ci
+  script:
+    - ./build.sh -t Publish --nugetApiKey=$Nuget_Api_Key
+  when: manual
+  
+publish forced:
+  stage: publish
+  tags:
+    - netcore
+    - linux
+    - ci
+  script:
+    - ./build.sh -t Publish --nugetApiKey=$Nuget_Api_Key
+  when: on_success
+  only:
+    refs:
+      - master
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /\[PUBLISH\]/

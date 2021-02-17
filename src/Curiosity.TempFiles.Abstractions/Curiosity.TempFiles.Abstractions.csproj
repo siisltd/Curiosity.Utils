@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <RootNamespace>Curiosity.TempFiles</RootNamespace>
+        <LangVersion>8</LangVersion>
+        <Nullable>enable</Nullable>
+        <Title>Marvin.TempFiles.Abstractions</Title>
+        <Authors>Max Markelow (@markeli)</Authors>
+        <Description>Abstractions for working with temp files</Description>
+        <Copyright>Marvin, 2020</Copyright>
+        <PackageTags>marvin; temp files; temp</PackageTags>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <FileVersion>1.0.0</FileVersion>
+        <PackageVersion>1.0.1</PackageVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\Marvin.TempFiles.Abstractions.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Curiosity.Configuration\Curiosity.Configuration.csproj" />
+    </ItemGroup>
+
+</Project>

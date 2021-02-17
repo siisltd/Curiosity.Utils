@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <RootNamespace>Curiosity.Configurations</RootNamespace>
+        <LangVersion>8</LangVersion>
+        <Nullable>enable</Nullable>
+        <Title>Marvin.Configuration.YAML</Title>
+        <Authors>Max Markelow (@markeli)</Authors>
+        <Description>YAML configuration provider</Description>
+        <Copyright>Marvin, 2020</Copyright>
+        <PackageTags>marvin; configuration; yaml; yml</PackageTags>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <FileVersion>1.0.0</FileVersion>
+        <PackageVersion>1.0.2</PackageVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\Marvin.Configuration.YAML.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.10" />
+      <PackageReference Include="NetEscapades.Configuration.Yaml" Version="2.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Curiosity.Configuration\Curiosity.Configuration.csproj" />
+    </ItemGroup>
+
+</Project>
