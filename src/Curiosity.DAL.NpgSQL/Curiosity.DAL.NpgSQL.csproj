@@ -4,11 +4,11 @@
         <TargetFramework>netstandard2.1</TargetFramework>
         <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
-        <Title>Marvin.DAL.NpgSQL</Title>
+        <Title>Curiosity.DAL.NpgSQL</Title>
         <Authors>Max Markelow (@markeli)</Authors>
         <Description>Classes for NpgSQL driver</Description>
-        <Copyright>Marvin, 2020</Copyright>
-        <PackageTags>marvin; dal; NpgSQL; Postgres</PackageTags>
+        <Copyright>SIIS Ltd, 2021</Copyright>
+        <PackageTags>Curiosity; dal; NpgSQL; Postgres; siisltd</PackageTags>
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
         <PackageVersion>1.0.0</PackageVersion>

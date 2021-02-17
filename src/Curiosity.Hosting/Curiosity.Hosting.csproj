@@ -2,15 +2,14 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <UserSecretsId>dotnet-Marvin.Hosting-04FDEB36-CFEE-4FBB-9E9F-78E81DA3A1DB</UserSecretsId>
         <OutputType>Library</OutputType>
         <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
-        <Title>Marvin.Hosting</Title>
+        <Title>Curiosity.Hosting</Title>
         <Authors>Max Markelow (@markeli)</Authors>
         <Description>Hosting tools</Description>
-        <Copyright>Marvin, 2020</Copyright>
-        <PackageTags>marvin; Hosting; Boostrapping</PackageTags>
+        <Copyright>SIIS Ltd, 2021</Copyright>
+        <PackageTags>Curiosity; Hosting; Boostrapping; siisltd</PackageTags>
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
         <PackageVersion>1.1.2</PackageVersion>
@@ -18,7 +17,7 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\Marvin.Hosting.xml</DocumentationFile>
+      <DocumentationFile>bin\Release\Curiosity.Hosting.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -32,10 +31,6 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.10" />
         <PackageReference Include="NLog.Extensions.Logging" Version="1.6.5" />
         <PackageReference Include="NLog.MailKit" Version="3.3.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="Properties\launchSettings.json" />
     </ItemGroup>
 
     <ItemGroup>

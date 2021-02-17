@@ -5,11 +5,11 @@
         <OutputType>Library</OutputType>
         <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
-        <Title>Marvin.Tools.Web</Title>
+        <Title>Curiosity.Tools.Web</Title>
         <Authors>Max Markelow (@markeli)</Authors>
-        <Description>Marvin's web tools</Description>
-        <Copyright>Marvin, 2020</Copyright>
-        <PackageTags>marvin; tools; web</PackageTags>
+        <Description>Curiosity web tools</Description>
+        <Copyright>SIIS Ltd, 2021</Copyright>
+        <PackageTags>Curiosity; tools; web; siisltd</PackageTags>
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
         <PackageVersion>1.0.3</PackageVersion>
@@ -17,7 +17,7 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\Marvin.Tools.Web.xml</DocumentationFile>
+      <DocumentationFile>bin\Release\Curiosity.Tools.Web.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -30,9 +30,4 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.10" />
       <PackageReference Include="Microsoft.Net.Http.Headers" Version="2.2.8" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Middleware\PreviewDetector" />
-    </ItemGroup>
-
 </Project>

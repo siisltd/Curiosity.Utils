@@ -5,18 +5,18 @@
         <RootNamespace>Curiosity.Configurations</RootNamespace>
         <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
-        <Title>Marvin.Configuration.YAML</Title>
+        <Title>Curiosity.Configuration.YAML</Title>
         <Authors>Max Markelow (@markeli)</Authors>
         <Description>YAML configuration provider</Description>
-        <Copyright>Marvin, 2020</Copyright>
-        <PackageTags>marvin; configuration; yaml; yml</PackageTags>
+        <Copyright>SIIS Ltd, 2021</Copyright>
+        <PackageTags>Curiosity; configuration; yaml; yml; siisltd</PackageTags>
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
         <PackageVersion>1.0.2</PackageVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\Marvin.Configuration.YAML.xml</DocumentationFile>
+      <DocumentationFile>bin\Release\Curiosity.Configuration.YAML.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>

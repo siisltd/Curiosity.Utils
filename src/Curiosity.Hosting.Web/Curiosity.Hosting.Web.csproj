@@ -5,11 +5,11 @@
         <OutputType>Library</OutputType>
         <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
-        <Title>Marvin.Hosting.Web</Title>
+        <Title>Curiosity.Hosting.Web</Title>
         <Authors>Max Markelow (@markeli)</Authors>
         <Description>Hosting tools for Web applications</Description>
-        <Copyright>Marvin, 2020</Copyright>
-        <PackageTags>marvin; Hosting; Boostrapping; Web; WebAPI</PackageTags>
+        <Copyright>SIIS Ltd, 2021</Copyright>
+        <PackageTags>Curiosity; Hosting; Boostrapping; Web; WebAPI; siisltd</PackageTags>
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
         <PackageVersion>1.1.2</PackageVersion>
@@ -17,7 +17,7 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\Marvin.Hosting.Web.xml</DocumentationFile>
+      <DocumentationFile>bin\Release\Curiosity.Hosting.Web.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>

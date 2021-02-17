@@ -4,18 +4,18 @@
         <TargetFramework>netstandard2.1</TargetFramework>
         <Nullable>enable</Nullable>
         <LangVersion>8</LangVersion>
-        <Title>Marvin.Archiver.SharpZip</Title>
+        <Title>Curiosity.Archiver.SharpZip</Title>
         <Authors>Max Markelow (@markeli)</Authors>
         <Description>Archiver implemetion based on SharpZip</Description>
-        <Copyright>Marvin, 2020</Copyright>
-        <PackageTags>marvin; zip; archiver</PackageTags>
+        <Copyright>SIIS Ltd, 2021</Copyright>
+        <PackageTags>Curiosity; zip; archiver; siisltd; sharpzib</PackageTags>
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
         <PackageVersion>1.0.1</PackageVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\Marvin.Archiver.SharpZip.xml</DocumentationFile>
+      <DocumentationFile>bin\Release\Curiosity.Archiver.SharpZip.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>

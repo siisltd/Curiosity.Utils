@@ -4,14 +4,18 @@
         <TargetFramework>netstandard2.1</TargetFramework>
         <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
-        <Title>Marvin.AppInitializer</Title>
+        <Title>Curiosity.AppInitializer</Title>
         <Authors>Max Markelow (@markeli)</Authors>
         <Description>Performs async app initialization on start.</Description>
-        <Copyright>Marvin, 2020</Copyright>
-        <PackageTags>marvin; host; initialization</PackageTags>
+        <Copyright>SIIS Ltd, 2021</Copyright>
+        <PackageTags>Curiosity; host; initialization; siisltd</PackageTags>
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
         <PackageVersion>1.0.1</PackageVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\Curiosity.AppInitializer.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
