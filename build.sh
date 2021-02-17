@@ -93,5 +93,5 @@ else
     echo "Target: $TARGET"  
     echo "EXCLUSIVE: ${EXCLUSIVE}"  
 #    echo "Args: ${SCRIPT_ARGUMENTS[@]}"  
-    dotnet "$CAKE_DLL" $SCRIPT -verbosity=$VERBOSITY -configuration=$CONFIGURATION -target=$TARGET ${EXCLUSIVE} $DRYRUN ${SCRIPT_ARGUMENTS[@]}
+    dotnet "$CAKE_DLL" $SCRIPT --verbosity=$VERBOSITY --configuration=$CONFIGURATION --target=$TARGET ${EXCLUSIVE} $DRYRUN ${SCRIPT_ARGUMENTS[@]}
 fi

@@ -16,7 +16,7 @@ var binsDir = artifactsDir + Directory("./bins");
 var packages = artifactsDir + Directory("./packages");
 var testResultsDir = artifactsDir + Directory("test-results");
 var publishDir = artifactsDir + Directory("publish");
-var solutionPath = "./Curiosity.NET.sln";
+var solutionPath = "./Curiosity.Utils.sln";
 var framework = "netcoreapp3.1";
 var tempDir = "./temp";
 
