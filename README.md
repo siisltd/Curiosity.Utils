@@ -1,5 +1,5 @@
 # Curiosity.Utils
 
-Utilities for Curiosity projects.
+Utils for .NET Core / .NET Standard projects
 
 > ReadMe is under construction.
