@@ -1,6 +1,8 @@
 using System.Threading.Tasks;
+using Curiosity.Hosting;
+using Curiosity.Hosting.Web;
 
-namespace Curiosity.Hosting.Web.TestApp
+namespace Curiosity.SampleWebApp
 {
     public class Configuration : CuriosityWebAppConfiguration
     {

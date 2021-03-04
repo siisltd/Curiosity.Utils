@@ -1,10 +1,11 @@
+using Curiosity.Hosting.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Curiosity.Hosting.Web.TestApp
+namespace Curiosity.SampleWebApp
 {
     public class Startup
     {

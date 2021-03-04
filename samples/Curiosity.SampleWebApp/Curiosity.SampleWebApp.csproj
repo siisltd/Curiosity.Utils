@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\src\Curiosity.Hosting.Web\Curiosity.Hosting.Web.csproj" />
+      <ProjectReference Include="..\..\src\Curiosity.Hosting.Web\Curiosity.Hosting.Web.csproj" />
     </ItemGroup>
 
 </Project>
