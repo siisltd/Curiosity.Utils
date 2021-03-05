@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using EntryPoint;
@@ -74,6 +75,25 @@ namespace Curiosity.Hosting
             var configLog = configPrinter.GetLog(configuration);
             logger.Info($"Starting app with configuration: \n{configLog ?? "<no config>"}");
             
+            // validate configuration
+            var errors = configuration.Validate();
+            if (errors.Count == 0)
+            {
+                logger.Info("Configuration is valid.");
+            }
+            else
+            {
+                var errorsBuilder = new StringBuilder();
+                foreach (var validationError in errors)
+                {
+                    errorsBuilder.AppendLine($"- {validationError.FieldName}: {validationError.Error}");
+                }
+
+                logger.Error($"Configuration is invalid. Errors: {Environment.NewLine}{errorsBuilder}");
+
+                return CuriosityExitCodes.IncorrectConfiguration;
+            }
+
             try
             {
                 var startEmailLogger = LogManager.GetLogger("appStartEmailLog");

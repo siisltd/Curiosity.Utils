@@ -43,7 +43,7 @@ namespace Curiosity.Hosting.Web
             await host.InitAsync(cancellationToken);
             await host.RunAsync(cancellationToken);
 
-            return 0;
+            return CuriosityExitCodes.Success;
         }
 
         private static IHost CreateWebHost(
