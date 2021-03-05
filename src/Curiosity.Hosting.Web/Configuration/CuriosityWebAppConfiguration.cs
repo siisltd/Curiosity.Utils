@@ -18,7 +18,7 @@ namespace Curiosity.Hosting.Web
         /// <inheritdoc />
         public override IReadOnlyCollection<ConfigurationValidationError> Validate(string? prefix = null)
         {
-            return ((ICuriosityWebAppConfiguration) this).Validate(prefix);
+            return CuriosityWebAppConfigurationValidator.Validate(this, prefix);
         }
     }
 }
