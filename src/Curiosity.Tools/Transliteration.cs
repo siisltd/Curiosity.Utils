@@ -25,7 +25,10 @@ namespace Curiosity.Tools
 
             foreach (var x in tdict)
             {
-                output = output.Replace(x.Key, x.Value);
+                if (x.Key.Length > 0)
+                {
+                    output = output.Replace(x.Key, x.Value);
+                }
             }
             return output;
         }
@@ -42,7 +45,10 @@ namespace Curiosity.Tools
 
             foreach (var x in tdict)
             {
-                output = output.Replace(x.Value, x.Key);
+                if (x.Value.Length > 0)
+                {
+                    output = output.Replace(x.Value, x.Key);
+                }
             }
             return output;
         }
