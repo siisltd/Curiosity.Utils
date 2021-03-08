@@ -66,7 +66,7 @@ Task("IntegrationTests")
         Information("IntegrationTests task...");
 		
         Information("Running docker...");
-        StartProcess("docker-compose", "-f ./tests/IntegrationTests/env-compose.yml up -d");
+//         StartProcess("docker-compose", "-f ./tests/IntegrationTests/env-compose.yml up -d");
 		Information("Running docker completed");
 		
         var projects = GetFiles("./tests/IntegrationTests/**/*csproj");
@@ -86,7 +86,7 @@ Task("IntegrationTests")
     .Finally(() =>
     {  
         Information("Stopping docker...");
-        StartProcess("docker-compose", "-f ./tests/IntegrationTests/env-compose.yml down");
+//         StartProcess("docker-compose", "-f ./tests/IntegrationTests/env-compose.yml down");
         Information("Stopping docker completed");
     });  
     
