@@ -4,7 +4,7 @@
 
 ### Changed
 
-- Upgraded `"System.ComponentModel.Annotations` to `v5.0.0`.
+- Upgraded `System.ComponentModel.Annotations` to `v5.0.0`.
 
 ## [1.0.4] - 2021-03-08
 
