@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.6] - 2021-03-08
+
+### Fixed
+
+- Fixed localization.
+
 ## [1.0.5] - 2021-03-08
 
 ### Changed

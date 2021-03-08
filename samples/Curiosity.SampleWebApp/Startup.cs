@@ -1,4 +1,6 @@
+using System;
 using Curiosity.Hosting.Web;
+using Curiosity.Tools.Web.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -15,6 +17,8 @@ namespace Curiosity.SampleWebApp
         {
             var configuration = services.BuildServiceProvider().GetRequiredService<Configuration>();
             services.ConfigureCuriosityMvc(configuration);
+            
+            Console.WriteLine(SiteError.Unauthorized.ToLocalizedString());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

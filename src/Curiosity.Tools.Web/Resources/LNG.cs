@@ -6,7 +6,7 @@ namespace Curiosity.Tools.Web.Resources
     internal static class LNG
     {
         private static readonly ResourceManager _resourceManager
-            = new ResourceManager(Assembly.GetExecutingAssembly().FullName, typeof(LNG).GetTypeInfo().Assembly);
+            = new ResourceManager("Curiosity.Tools.Web.Resources.LNG", typeof(LNG).GetTypeInfo().Assembly);
 
         public static string SiteError_ParameterMissing => GetString("SiteError_ParameterMissing");
         public static string SiteError_InvalidParameter => GetString( "SiteError_InvalidParameter");
