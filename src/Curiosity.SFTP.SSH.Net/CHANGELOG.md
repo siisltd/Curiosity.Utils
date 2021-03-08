@@ -1,7 +1,7 @@
 # Changelog
 
-## [1.0.2] - 2021-03-08
+## [1.0.3] - 2021-03-08
 
-### Fixed
+### Added
 
-- Made arguments check more correct.
+- Added changelog file.
