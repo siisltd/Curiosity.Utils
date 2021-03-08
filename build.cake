@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
 ///////////////////////////////////////////////////////////////////////////////
@@ -7,18 +5,10 @@ using System.Collections.Generic;
 var target = Argument<string>("target", "Default");
 var configuration = Argument<string>("configuration", "Release");
 
-//////////////////////////////////////////////////////////////////////
-// EXTERNAL NUGET TOOLS
-//////////////////////////////////////////////////////////////////////
-
 var artifactsDir = Directory("./artifacts");
-var binsDir = artifactsDir + Directory("./bins");
-var packages = artifactsDir + Directory("./packages");
-var testResultsDir = artifactsDir + Directory("test-results");
-var publishDir = artifactsDir + Directory("publish");
+var packages = "./artifacts/packages";
 var solutionPath = "./Curiosity.Utils.sln";
-var framework = "netcoreapp3.1";
-var tempDir = "./temp";
+var framework = "netstandard2.0";
 
 var nugetSource = "https://api.nuget.org/v3/index.json";
 var nugetApiKey = Argument<string>("nugetApiKey", null);
@@ -28,32 +18,22 @@ Task("Clean")
     {            
         DotNetCoreClean(solutionPath);        
         DirectoryPath[] cleanDirectories = new DirectoryPath[] {
-            binsDir,
-            testResultsDir,
-            artifactsDir,
-            tempDir
+            artifactsDir
         };
     
         CleanDirectories(cleanDirectories);
     
-        foreach(var path in cleanDirectories)
-        {
-            EnsureDirectoryExists(path);
-        }
+        foreach(var path in cleanDirectories) { EnsureDirectoryExists(path); }
+    
     });
- 
+
 Task("Build")
     .IsDependentOn("Clean")
     .Does(() => 
     {
         var settings = new DotNetCoreBuildSettings
           {
-              Configuration = configuration,
-              OutputDirectory = binsDir,
-              MSBuildSettings = new DotNetCoreMSBuildSettings
-              {
-                 MaxCpuCount = 4               
-              }
+              Configuration = configuration
           };
           
         DotNetCoreBuild(
@@ -79,15 +59,16 @@ Task("UnitTests")
                 });
         }
     });
- 
+     
 Task("IntegrationTests")
     .Does(() =>
     {        
-        Information("Core integration tests task...");
-        
-//         Information("Running docker task...");
-//         StartProcess("docker-compose", "-f ./tests/IntegrationTests/env-compose.yml up -d");
-        
+        Information("IntegrationTests task...");
+		
+        Information("Running docker...");
+        StartProcess("docker-compose", "-f ./tests/IntegrationTests/env-compose.yml up -d");
+		Information("Running docker completed");
+		
         var projects = GetFiles("./tests/IntegrationTests/**/*csproj");
         foreach(var project in projects)
         {
@@ -104,9 +85,10 @@ Task("IntegrationTests")
     })
     .Finally(() =>
     {  
-//         Information("Stopping docker task...");
-//         StartProcess("docker-compose", "-f ./tests/IntegrationTests/Core/env-compose.yml down");
-    }); 
+        Information("Stopping docker...");
+        StartProcess("docker-compose", "-f ./tests/IntegrationTests/env-compose.yml down");
+        Information("Stopping docker completed");
+    });  
     
 Task("Pack")
     .Does(() =>
@@ -120,26 +102,37 @@ Task("Pack")
          
           DotNetCorePack(solutionPath, settings);
     });
-    
+ 
 Task("Publish")
-.IsDependentOn("Pack")
-.Does(() => {
-     var pushSettings = new DotNetCoreNuGetPushSettings 
-     {
-         Source = nugetSource,
-         ApiKey = nugetApiKey,
-         SkipDuplicate = true
-     };
-     
-     var pkgs = GetFiles($"{packages}/*.nupkg");
-     foreach(var pkg in pkgs) 
-     {     
-         Information($"Publishing \"{pkg}\".");
-         DotNetCoreNuGetPush(pkg.FullPath, pushSettings);
-     }
+    .IsDependentOn("Pack")
+    .Does(() =>
+    {
+         var pushSettings = new DotNetCoreNuGetPushSettings 
+         {
+             Source = nugetSource,
+             ApiKey = nugetApiKey,
+             SkipDuplicate = true
+         };
+         
+         var pkgs = GetFiles($"{packages}/*.nupkg");
+         foreach(var pkg in pkgs) 
+         {     
+             Information($"Publishing \"{pkg}\".");
+             DotNetCoreNuGetPush(pkg.FullPath, pushSettings);
+         }
  });
-
-Task("Default")
-    .IsDependentOn("Build");
+ 
     
+Task("Default")
+    .IsDependentOn("Build")
+    .IsDependentOn("UnitTests")
+    .IsDependentOn("IntegrationTests");
+    
+Task("TravisCI")
+    .IsDependentOn("Build")
+    .IsDependentOn("UnitTests")
+    .IsDependentOn("IntegrationTests")
+    .IsDependentOn("Pack")
+    .IsDependentOn("Publish");
+  
 RunTarget(target);

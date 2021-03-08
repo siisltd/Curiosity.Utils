@@ -86,7 +86,7 @@ fi
 
 # Start Cake
 if ${SHOW_VERSION}; then
-    exec dotnet "$CAKE_DLL" -version
+    exec dotnet "$CAKE_DLL" --version
 else
     echo "Running:" 
     echo "Configuration: $CONFIGURATION"  
