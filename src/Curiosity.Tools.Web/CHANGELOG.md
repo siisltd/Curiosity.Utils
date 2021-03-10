@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.7] - 2021-03-10
+
+### Added
+
+- Added json converter for trimming strings.
+
 ## [1.0.6] - 2021-03-08
 
 ### Fixed
