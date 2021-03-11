@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using System.Net.Mail;
+using MimeKit;
 
 namespace Curiosity.EMail
 {
@@ -27,13 +27,7 @@ namespace Curiosity.EMail
             for (var i = 0; i < splittedEmails.Length; i++)
             {
                 var email = splittedEmails[i].Trim();
-                try
-                {
-                    // Sometimes usual mail address can't handle all cases, need extra validation
-                    new MailAddress(email);
-                    // new MailboxAddress(email);
-                }
-                catch
+                if (!IsEmailValid(email))
                 {
                     return false;
                 }
@@ -61,6 +55,14 @@ namespace Curiosity.EMail
                 .ToArray();
 
             return String.Join(", ", emailsList);
+        }
+
+        /// <summary>
+        /// Checks that email address is valid 
+        /// </summary>
+        public static bool IsEmailValid(string? email)
+        {
+            return MailboxAddress.TryParse(ParserOptions.Default, email ?? "", out _);
         }
     }
 }
