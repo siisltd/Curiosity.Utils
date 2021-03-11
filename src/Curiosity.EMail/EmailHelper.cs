@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using MimeKit;
 
@@ -36,13 +37,13 @@ namespace Curiosity.EMail
             return true;
         }
 
-        // public static IReadOnlyCollection<MailboxAddress> ToEmailsList(this string emails)
-        // {
-        //     return emails
-        //         .Split(Separators, StringSplitOptions.RemoveEmptyEntries)
-        //         .Select(x => new MailboxAddress(x.Trim()))
-        //         .ToArray();
-        // }
+        public static IReadOnlyList<MailboxAddress> ToEmailsList(this string emails)
+        {
+            return emails
+                .Split(Separators, StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => MailboxAddress.Parse(x.Trim()))
+                .ToArray();
+        }
 
         public static string? ToNormalizedEmailsListString(this string? emails)
         {
@@ -58,7 +59,7 @@ namespace Curiosity.EMail
         }
 
         /// <summary>
-        /// Checks that email address is valid 
+        /// Checks that email address is valid.
         /// </summary>
         public static bool IsEmailValid(string? email)
         {
