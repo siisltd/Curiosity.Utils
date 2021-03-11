@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.6] - 2021-03-05
+
+### Changed 
+
+- Updated dependencies.
+
 ## [1.1.4] - 2021-03-05
 
 ### Fixed 
