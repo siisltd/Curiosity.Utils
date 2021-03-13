@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.7] - 2021-03-13
+
+### Added 
+
+- Added Sensitive data protector to configuration
+
 ## [1.1.6] - 2021-03-05
 
 ### Changed 

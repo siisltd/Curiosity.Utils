@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.8] - 2021-03-13
+
+### Added
+
+- Added Sensitive data protector to request logging middleware
+
 ## [1.0.7] - 2021-03-10
 
 ### Added
