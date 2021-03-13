@@ -13,7 +13,11 @@ namespace Curiosity.Hosting.Web
         /// <inheritdoc />
         public KestrelOptions? Kestrel { get; set; }
 
+        /// <inheritdoc />
         public ThreadPoolOptions ThreadPool { get; set; } = new ThreadPoolOptions();
+        
+        /// <inheritdoc />
+        public string[]? SensitiveDataFieldNames { get; set; }
 
         /// <inheritdoc />
         public override IReadOnlyCollection<ConfigurationValidationError> Validate(string? prefix = null)

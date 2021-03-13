@@ -4,3 +4,7 @@ Log:
   LogConfigurationPath: ./NLog.config
   LogOutputDirectory: ./log
 
+# Name collection of the fields the data in which we want to hide
+SensitiveDataFieldNames:
+  - password
+  - passwordConfirmation

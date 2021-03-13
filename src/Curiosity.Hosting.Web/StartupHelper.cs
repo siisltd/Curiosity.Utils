@@ -1,6 +1,7 @@
 using System.Reflection;
 using Curiosity.AppInitializer;
 using Curiosity.Hosting.Web.Resources;
+using Curiosity.Tools.IoC;
 using Curiosity.Tools.Web.ModelBinders;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
@@ -64,6 +65,7 @@ namespace Curiosity.Hosting.Web
 
             services.AddMemoryCache();
             services.AddAppInitialization();
+            services.AddSensitiveDataProtector(configuration.SensitiveDataFieldNames);
             
             return mvcBuilder;
         }
