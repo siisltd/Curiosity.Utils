@@ -1,0 +1,14 @@
+
+<h4 style="color: Red;">
+    При обработке запроса произошла ошибка
+</h4>
+
+@if (ViewBag.ErrorText != null)
+{
+    <div class="alert alert-danger">@ViewBag.ErrorText</div>
+}
+
+@if (Model != null && Model.Exception != null)
+{
+    <div class="alert alert-danger">@Model.Exception.Message</div>
+}

@@ -1,7 +1,10 @@
 using System;
+using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
@@ -18,79 +21,141 @@ namespace Curiosity.Tools.Web.Middleware
         private readonly ILogger _logger;
         private readonly Func<object, Task> _clearCacheHeadersDelegate;
 
+        private readonly RequestDelegate _exceptionHandler;
+        
         public CuriosityExceptionHandleMiddleware(
             RequestDelegate next,
             ILogger<CuriosityExceptionHandleMiddleware> logger,
             IOptions<CuriosityExceptionHandlerOptions> options)
         {
-            _next = next;
-            _options = options.Value;
-            _logger = logger;
+            _next = next ?? throw new ArgumentNullException(nameof(next));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _options = options?.Value ?? throw new ArgumentNullException(nameof(options));
+            
             _clearCacheHeadersDelegate = ClearCacheHeaders;
             
             if (_options.ExceptionHandlingPath == null)
-            {
                 throw new InvalidOperationException($"{nameof(_options.ExceptionHandlingPath)} can't be empty.");
-            }
+
+            _exceptionHandler = _next;
         }
 
-        public async Task Invoke(HttpContext context)
+        public Task Invoke(HttpContext context)
         {
+            ExceptionDispatchInfo edi;
             try
             {
-                await _next(context);
-            }
-            catch (Exception ex)
-            {
-                // We can't do anything if the response has already started, just abort.
-                if (context.Response.HasStarted)
+                var task = _next(context);
+                if (!task.IsCompletedSuccessfully)
                 {
-                    _logger.LogError(ex, $"Can't handle error for request {context.Request.Path} because request has been already started.");
-                    throw;
+                    return Awaited(this, context, task);
                 }
 
-                PathString originalPath = context.Request.Path;
-                if (_options.ExceptionHandlingPath.HasValue)
-                {
-                    context.Request.Path = _options.ExceptionHandlingPath;
-                }
+                return Task.CompletedTask;
+            }
+            catch (Exception exception)
+            {
+                // Get the Exception, but don't continue processing in the catch block as its bad for stack usage.
+                edi = ExceptionDispatchInfo.Capture(exception);
+            }
+
+            return HandleException(context, edi);
+
+            static async Task Awaited(CuriosityExceptionHandleMiddleware middleware, HttpContext context, Task task)
+            {
+                ExceptionDispatchInfo edi = null;
                 try
                 {
-                    context.Response.Clear();
-                    var exceptionHandlerFeature = new ExceptionHandlerFeature()
-                    {
-                        Error = ex,
-                        Path = originalPath.Value,
-                    };
-                    context.Features.Set<IExceptionHandlerFeature>(exceptionHandlerFeature);
-                    context.Features.Set<IExceptionHandlerPathFeature>(exceptionHandlerFeature);
-                    context.Response.StatusCode = 500;
-                    context.Response.OnStarting(_clearCacheHeadersDelegate, context.Response);
-
-                    await _next(context);
-
-                    return;
+                    await task;
                 }
-                catch (Exception ex2)
+                catch (Exception exception)
                 {
-                    // Suppress secondary exceptions, re-throw the original.
-                    _logger.LogError(ex2, $"Error occured while handling error for request \"{context.Request.Path}\".");
+                    // Get the Exception, but don't continue processing in the catch block as its bad for stack usage.
+                    edi = ExceptionDispatchInfo.Capture(exception);
                 }
-                finally
+
+                if (edi != null)
                 {
-                    context.Request.Path = originalPath;
+                    await middleware.HandleException(context, edi);
                 }
-                throw; // Re-throw the original if we couldn't handle it
             }
         }
 
-        private Task ClearCacheHeaders(object state)
+        private async Task HandleException(HttpContext context, ExceptionDispatchInfo edi)
         {
-            var response = (HttpResponse)state;
-            response.Headers[HeaderNames.CacheControl] = "no-cache";
-            response.Headers[HeaderNames.Pragma] = "no-cache";
-            response.Headers[HeaderNames.Expires] = "-1";
-            response.Headers.Remove(HeaderNames.ETag);
+            // пишем в warning, потому что у нас в проектах в другом месте месте определяется, что идет в error, а что в info
+            _logger.LogWarning(edi.SourceException, $"An unhandled exception has occurred while executing the request (Path: \"{context.Request.Path}\"; Query: \"{context.Request.QueryString}\").");
+            
+            // We can't do anything if the response has already started, just abort.
+            if (context.Response.HasStarted)
+            {
+                _logger.LogWarning($"Can't handle error for request {context.Request.Path} because, The response has already started, the error handler will not be executed.");
+                edi.Throw();
+            }
+
+            var originalPath = context.Request.Path;
+            if (_options.ExceptionHandlingPath.HasValue)
+            {
+                context.Request.Path = _options.ExceptionHandlingPath;
+            }
+            try
+            {
+                ClearHttpContext(context);
+
+                var exceptionHandlerFeature = new ExceptionHandlerFeature()
+                {
+                    Error = edi.SourceException,
+                    Path = originalPath.Value,
+                };
+                context.Features.Set<IExceptionHandlerFeature>(exceptionHandlerFeature);
+                context.Features.Set<IExceptionHandlerPathFeature>(exceptionHandlerFeature);
+                context.Response.StatusCode = 500;
+                context.Response.OnStarting(_clearCacheHeadersDelegate, context.Response);
+
+                await _exceptionHandler(context);
+
+                // TODO: Optional re-throw? We'll re-throw the original exception by default if the error handler throws.
+                return;
+            }
+            catch (BadHttpRequestException ex2)
+            {
+                // https://github.com/dotnet/aspnetcore/issues/23949 ошибка возникает, когда пользователя отменяет запрос.
+                // Тогда в своей обработки мы не можем обновить response. MS тупо советуют не реагировать на ошибку.
+                _logger.LogWarning(ex2, $"Request was cancelled by user. So we can't update the response. \"{context.Request.Path}\".");
+
+                return;
+            }
+            catch (Exception ex2)
+            {
+                // Suppress secondary exceptions, re-throw the original.
+                _logger.LogError(ex2, "An exception was thrown attempting to execute the error handler.");
+            }
+            finally
+            {
+                context.Request.Path = originalPath;
+            }
+
+            edi.Throw(); // Re-throw the original if we couldn't handle it
+        }
+
+        private static void ClearHttpContext(HttpContext context)
+        {
+            context.Response.Clear();
+
+            // An endpoint may have already been set. Since we're going to re-invoke the middleware pipeline we need to reset
+            // the endpoint and route values to ensure things are re-calculated.
+            context.SetEndpoint(endpoint: null);
+            var routeValuesFeature = context.Features.Get<IRouteValuesFeature>();
+            routeValuesFeature?.RouteValues?.Clear();
+        }
+
+        private static Task ClearCacheHeaders(object state)
+        {
+            var headers = ((HttpResponse)state).Headers;
+            headers[HeaderNames.CacheControl] = "no-cache";
+            headers[HeaderNames.Pragma] = "no-cache";
+            headers[HeaderNames.Expires] = "-1";
+            headers.Remove(HeaderNames.ETag);
             return Task.CompletedTask;
         }
     }

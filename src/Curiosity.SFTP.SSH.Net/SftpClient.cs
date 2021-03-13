@@ -88,8 +88,8 @@ namespace Curiosity.SFTP.SSH.Net
         /// <inheritdoc />
         public byte[]? DownloadFileFromServer(string basePath, string fileName)
         {
-            if (String.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(fileName);
-            if (String.IsNullOrWhiteSpace(basePath)) throw new ArgumentNullException(basePath);
+            if (String.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(nameof(fileName));
+            if (String.IsNullOrWhiteSpace(basePath)) throw new ArgumentNullException(nameof(basePath));
 
             return _retryPolicy.Execute(() =>
             {
@@ -125,8 +125,8 @@ namespace Curiosity.SFTP.SSH.Net
         /// <inheritdoc />
         public Task<TempFileStream?> DownloadFileFromServerAsync(string basePath, string fileName)
         {
-            if (String.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(fileName);
-            if (String.IsNullOrWhiteSpace(basePath)) throw new ArgumentNullException(basePath);
+            if (String.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(nameof(fileName));
+            if (String.IsNullOrWhiteSpace(basePath)) throw new ArgumentNullException(nameof(basePath));
 
             return _retryAsyncPolicy.ExecuteAsync(async () =>
             {
@@ -156,8 +156,8 @@ namespace Curiosity.SFTP.SSH.Net
         /// <inheritdoc />
         public Task UploadFileToServerAsync(byte[] data, string basePath, string fileName, bool overwrite = false)
         {
-            if (String.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(fileName);
-            if (String.IsNullOrWhiteSpace(basePath)) throw new ArgumentNullException(basePath);
+            if (String.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(nameof(fileName));
+            if (String.IsNullOrWhiteSpace(basePath)) throw new ArgumentNullException(nameof(basePath));
             if (data.Length == 0) throw new ArgumentException(LNG.SftpClient_CanNotBeEmpty, nameof(data));
             
             return UploadFileToServerAsync(new MemoryStream(data), basePath, fileName, overwrite);
@@ -166,8 +166,8 @@ namespace Curiosity.SFTP.SSH.Net
         /// <inheritdoc />
         public Task UploadFileToServerAsync(Stream stream, string basePath, string fileName, bool overwrite = false)
         {
-            if (String.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(fileName);
-            if (String.IsNullOrWhiteSpace(basePath)) throw new ArgumentNullException(basePath);
+            if (String.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(nameof(fileName));
+            if (String.IsNullOrWhiteSpace(basePath)) throw new ArgumentNullException(nameof(basePath));
 
             if (stream == null)
                 throw new ArgumentNullException(fileName);
@@ -288,8 +288,8 @@ namespace Curiosity.SFTP.SSH.Net
         /// <inheritdoc />
         public void DeleteFileFromServer(string basePath, string fileName)
         {
-            if (String.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(fileName);
-            if (String.IsNullOrWhiteSpace(basePath)) throw new ArgumentNullException(basePath);
+            if (String.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(nameof(fileName));
+            if (String.IsNullOrWhiteSpace(basePath)) throw new ArgumentNullException(nameof(basePath));
 
             _retryPolicy.Execute(() =>
             {
@@ -311,8 +311,8 @@ namespace Curiosity.SFTP.SSH.Net
         /// <inheritdoc />
         public bool IsExist(string basePath, string fileName)
         {
-            if (String.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(fileName);
-            if (String.IsNullOrWhiteSpace(basePath)) throw new ArgumentNullException(basePath);
+            if (String.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(nameof(fileName));
+            if (String.IsNullOrWhiteSpace(basePath)) throw new ArgumentNullException(nameof(basePath));
 
             return _retryPolicy.Execute(() =>
             {

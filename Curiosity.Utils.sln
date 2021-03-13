@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7C485CBA-A08F-4A0E-835A-4505CBBB7EA8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{E29E891F-BBEE-40EC-8B06-2CE3A811C657}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E29E891F-BBEE-40EC-8B06-2CE3A811C657}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.Tools", "src\Curiosity.Tools\Curiosity.Tools.csproj", "{DB8D86C6-4FA0-48BA-AFA6-7403D7762FD9}"
 EndProject

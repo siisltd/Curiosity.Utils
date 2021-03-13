@@ -2,20 +2,45 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        
+        <PackageId>Curiosity.Tools.Web</PackageId>
+        <Title>Curiosity.Tools.Web</Title>
+        <Description>Curiosity web tools</Description>
+        <Summary>Curiosity web tools. Usefull stuff for ASP.NET Core apps.</Summary>
+        <PackageTags>Curiosity; tools; web; siisltd</PackageTags>
+        <Language>English</Language>
+
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <FileVersion>1.0.0</FileVersion>
+        <PackageVersion>1.0.7</PackageVersion>
+
+        <Authors>Max Markelow (@markeli), Andrei Vinogradov (@anri-vin), Andrey Ioch (@DevCorvette)</Authors>
+        <Company>SIIS Ltd</Company>
+        <Copyright>SIIS Ltd, 2021</Copyright>
+
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+        <PackageProjectUrl>https://github.com/siisltd/Curiosity.Utils</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
+        <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Curiosity.Curiosity.Tools.Web/CHANGELOG.md</PackageReleaseNotes>
+
         <OutputType>Library</OutputType>
         <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
-        <Title>Curiosity.Tools.Web</Title>
-        <Authors>Max Markelow (@markeli)</Authors>
-        <Description>Curiosity web tools</Description>
-        <Copyright>SIIS Ltd, 2021</Copyright>
-        <PackageTags>Curiosity; tools; web; siisltd</PackageTags>
-        <AssemblyVersion>1.0.0</AssemblyVersion>
-        <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.0.3</PackageVersion>
         <IsPackable>true</IsPackable>
+        
+    </PropertyGroup>
+    
+    <PropertyGroup>
+        <PackageIcon>siisltd.png</PackageIcon>
     </PropertyGroup>
 
+    <ItemGroup>
+        <None Include="..\..\siisltd.png" Pack="true" PackagePath="\" />
+    </ItemGroup>
+    
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <DocumentationFile>bin\Release\Curiosity.Tools.Web.xml</DocumentationFile>
     </PropertyGroup>
@@ -29,5 +54,6 @@
       <PackageReference Include="Flurl.Http" Version="3.0.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.10" />
       <PackageReference Include="Microsoft.Net.Http.Headers" Version="2.2.8" />
+      <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     </ItemGroup>
 </Project>
