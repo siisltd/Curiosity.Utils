@@ -14,13 +14,17 @@ namespace Curiosity.Tools.Web.Middleware
     {
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
+        private readonly SensitiveDataProtector _dataProtector;
 
         public RequestLoggingMiddleware(
-            RequestDelegate next,
-            ILogger<RequestLoggingMiddleware> logger)
+            RequestDelegate next, 
+            ILogger logger, 
+            IServiceProvider serviceProvider)
         {
-            _logger = logger;
-            _next = next;
+            _next = next ?? throw new ArgumentNullException(nameof(next));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            
+            _dataProtector = serviceProvider.GetService(typeof(SensitiveDataProtector)) as SensitiveDataProtector ?? new SensitiveDataProtector();
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -52,7 +56,7 @@ namespace Curiosity.Tools.Web.Middleware
                     else
                     {
                         _logger.LogDebug($"[REQUEST CONTENT FROM {ip}] {request.Path}");
-                        _logger.LogDebug(requestBody);
+                        _logger.LogDebug(_dataProtector.HideInJson(requestBody));
                         _logger.LogDebug($"[END] {request.Path}");
                     }
                 }
