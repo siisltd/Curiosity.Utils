@@ -5,6 +5,7 @@
         <OutputType>Exe</OutputType>
         <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
