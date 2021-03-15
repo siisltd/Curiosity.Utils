@@ -139,7 +139,7 @@ Task("Publish")
         }
         else
         {
-            Error("Can't publish because publishing configured only for TravisCI and for master branch");
+            Error("Can't publish because publishing configured only for TravisCI and for master branch and not pull requests.");
         }
  }); 
  
