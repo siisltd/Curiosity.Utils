@@ -2,26 +2,33 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
-        <OutputType>Library</OutputType>
-        <LangVersion>8</LangVersion>
-        <Nullable>enable</Nullable>
         
+        <PackageId>Curiosity.Hosting</PackageId>
         <Title>Curiosity.Hosting</Title>
-        <Authors>Max Markelow (@markeli)</Authors>
-        
         <Description>Hosting tools</Description>
-        <Copyright>SIIS Ltd, 2021</Copyright>
+        <Summary>Hosting tools</Summary>
         <PackageTags>Curiosity; Hosting; Boostrapping; siisltd</PackageTags>
+        <Language>English</Language>
         
-        <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Curiosity.Curiosity.Hosting/CHANGELOG.md</PackageReleaseNotes>
-        <PackageProjectUrl>https://github.com/siisltd/Curiosity.Utils</PackageProjectUrl>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <FileVersion>1.0.0</FileVersion>
+        <PackageVersion>1.1.5</PackageVersion>
+
+        <Authors>Max Markelow (@markeli)</Authors>
+        <Company>SIIS Ltd</Company>
+        <Copyright>SIIS Ltd, 2021</Copyright>
 
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        
+        <PackageProjectUrl>https://github.com/siisltd/Curiosity.Utils</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
+        <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Curiosity.Curiosity.Hosting/CHANGELOG.md</PackageReleaseNotes>
 
-        <AssemblyVersion>1.0.0</AssemblyVersion>
-        <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.1.4</PackageVersion>
+        <OutputType>Library</OutputType>
+        <LangVersion>8</LangVersion>
+        <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
     </PropertyGroup>
 
@@ -48,6 +55,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.10" />
         <PackageReference Include="NLog.Extensions.Logging" Version="1.6.5" />
         <PackageReference Include="NLog.MailKit" Version="3.3.0" />
+        <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     </ItemGroup>
 
     <ItemGroup>

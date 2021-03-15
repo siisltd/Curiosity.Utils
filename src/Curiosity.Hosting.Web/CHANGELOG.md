@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.9] - 2021-03-15
+
+### Added
+
+- Explicitly installed `Annotaitons` package.
+
 ## [1.1.8] - 2021-03-15
 
 ### Added
