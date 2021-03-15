@@ -13,12 +13,18 @@ var framework = "netstandard2.0";
 var nugetSource = "https://api.nuget.org/v3/index.json";
 var nugetApiKey = Argument<string>("nugetApiKey", null);
 
-var isMasterBranch = StringComparer.OrdinalIgnoreCase.Equals("master",
-    BuildSystem.TravisCI.Environment.Build.Branch);
+var isMasterBranch = BuildSystem.TravisCI.IsRunningOnTravisCI 
+    ? StringComparer.OrdinalIgnoreCase.Equals("master", BuildSystem.TravisCI.Environment.Build.Branch)
+    : false;
+var isPullRequest = BuildSystem.TravisCI.IsRunningOnTravisCI
+    ? BuildSystem.TravisCI.Environment.PullRequest.IsPullRequest
+    : false;
     
 Task("Clean")
     .Does(() => 
-    {            
+    {
+        Information(isMasterBranch); 
+     
         DotNetCoreClean(solutionPath);        
         DirectoryPath[] cleanDirectories = new DirectoryPath[] {
             artifactsDir
@@ -110,7 +116,7 @@ Task("Publish")
     .IsDependentOn("Pack")
     .Does(() =>
     {
-        if (isMasterBranch)
+        if (isMasterBranch && isPullRequest)
         {
              var pushSettings = new DotNetCoreNuGetPushSettings 
              {
@@ -128,7 +134,7 @@ Task("Publish")
         }
         else
         {
-            Error("Can't publish because publishing configured only for TravisCI");
+            Error("Can't publish because publishing configured only for TravisCI and for master branch");
         }
  }); 
  
