@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Curiosity.Configuration;
 using Microsoft.AspNetCore.Http;
 
-namespace Curiosity.Tools.Web.Middleware.PreviewDetector.PreviewDetector
+namespace Curiosity.Tools.Web.Middleware
 {
     /// <summary>
     /// Options for the <see cref="PreviewDetectMiddleware"/>.

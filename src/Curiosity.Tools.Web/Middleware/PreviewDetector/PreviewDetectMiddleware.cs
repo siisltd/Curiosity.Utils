@@ -2,9 +2,8 @@ using System;
 using System.Threading.Tasks;
 using Curiosity.Configuration;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 
-namespace Curiosity.Tools.Web.Middleware.PreviewDetector.PreviewDetector
+namespace Curiosity.Tools.Web.Middleware
 {
     /// <summary>
     /// Middleware for detecting requests from bots/services that make preview pages.

@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Curiosity.AppInitializer;
 using Curiosity.Configuration;
+using Curiosity.Hosting.Performance;
 using Curiosity.Hosting.ThreadPool;
 using Curiosity.Tools.Web;
 using Microsoft.AspNetCore.Hosting;
@@ -78,6 +79,7 @@ namespace Curiosity.Hosting.Web
 
                     services.AddThreadPoolTuning(configuration.ThreadPool);
                     services.AddAppInitializer<FireAndForgetInitializer>();
+                    services.AddPerformanceMeasures();
                 })
                 .ConfigureAppConfiguration((context, configurationBuilder) =>
                 {

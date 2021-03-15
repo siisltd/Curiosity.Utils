@@ -2,9 +2,9 @@ using System;
 using Curiosity.Configuration;
 using Microsoft.AspNetCore.Builder;
 
-namespace Curiosity.Tools.Web.Middleware.PreviewDetector.PreviewDetector
+namespace Curiosity.Tools.Web.Middleware
 {
-    public static class ApplicationBuilderExtensions
+    public static partial class ApplicationBuilderExtensions
     {
         /// <summary>
         /// Adds middleware that detects requests from preview bots/services and redirects to the specified page.

@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.8] - 2021-03-15
+
+### Added
+
+- Added performance measurer and stuck code manager to bootstrapper.
+
 ## [1.1.7] - 2021-03-13
 
 ### Added 

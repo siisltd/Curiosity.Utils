@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Curiosity.AppInitializer;
 using Curiosity.Configuration;
+using Curiosity.Hosting.Performance;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -74,6 +75,7 @@ namespace Curiosity.Hosting
             services.TryAddSingleton(configuration);
             services.TryAddSingleton(arguments);
             services.TryAddSingleton(configurationProvider);
+            services.AddPerformanceMeasures();
 
             services.AddAppInitializer<FireAndForgetInitializer>();
             services.AddLogging(opt =>

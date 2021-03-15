@@ -4,7 +4,8 @@
 
 ### Added
 
-- Added Sensitive data protector to request logging middleware
+- Added Sensitive data protector to request logging middleware.
+- Added extension methods for middleware.
 
 ## [1.0.7] - 2021-03-10
 

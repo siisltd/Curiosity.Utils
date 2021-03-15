@@ -21,12 +21,11 @@ namespace Curiosity.Tools.Web.Middleware
         
         public async Task InvokeAsync(HttpContext context)
         {
-            long? userTraceId = null;
             // try to fetch user trace id from cookies
             // if no such cookie, create a new one
             if (!context.Request.Cookies.TryGetValue(UserTraceCookieName, out var userTraceIdCookieValue) || !PublicId.TryParse(userTraceIdCookieValue, out var temp))
             {
-                userTraceId = UniqueIdGenerator.Generate();
+                long? userTraceId = UniqueIdGenerator.Generate();
 
                 context.Response.Cookies.Append(
                     UserTraceCookieName,
