@@ -21,5 +21,10 @@ namespace Curiosity.Hosting.Web
         /// Thread pool options.
         /// </summary>
         ThreadPoolOptions ThreadPool { get; }
+        
+        /// <summary>
+        /// Name collection of the fields the data in which we want to hide
+        /// </summary>
+        public string[]? SensitiveDataFieldNames { get; }
     }
 }
