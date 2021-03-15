@@ -20,6 +20,11 @@ var isPullRequest = BuildSystem.TravisCI.IsRunningOnTravisCI
     ? BuildSystem.TravisCI.Environment.PullRequest.IsPullRequest
     : false;
     
+Information("Is building on TravisCI: " + BuildSystem.TravisCI.IsRunningOnTravisCI.ToString());    
+Information("Current branch: " + BuildSystem.TravisCI.Environment.Build.Branch);    
+Information("Is current branch master: " + isMasterBranch.ToString());    
+Information("Is PullRequest: " + isPullRequest.ToString());    
+    
 Task("Clean")
     .Does(() => 
     {
@@ -116,7 +121,7 @@ Task("Publish")
     .IsDependentOn("Pack")
     .Does(() =>
     {
-        if (isMasterBranch && isPullRequest)
+        if (isMasterBranch && !isPullRequest)
         {
              var pushSettings = new DotNetCoreNuGetPushSettings 
              {
