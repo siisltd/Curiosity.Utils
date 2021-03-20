@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.9] - 2021-03-20
+
+### Added
+
+- Added HTML Sanitizer
+
 ## [1.0.8] - 2021-03-13
 
 ### Added
