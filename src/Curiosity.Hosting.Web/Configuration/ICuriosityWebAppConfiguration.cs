@@ -1,4 +1,5 @@
 using Curiosity.Hosting.ThreadPool;
+using Curiosity.Tools;
 
 namespace Curiosity.Hosting.Web
 {
@@ -23,8 +24,16 @@ namespace Curiosity.Hosting.Web
         ThreadPoolOptions ThreadPool { get; }
         
         /// <summary>
-        /// Name collection of the fields the data in which we want to hide
+        /// Name collection of the fields the data in which we want to hide. Used by <see cref="SensitiveDataProtector"/>
         /// </summary>
         public string[]? SensitiveDataFieldNames { get; }
+        
+        /// <summary>
+        /// Do we need to enable IIS Integration.
+        /// </summary>
+        /// <remarks>
+        /// By calling UseIISIntegration for WebHostBuilder.
+        /// </remarks>
+        bool UseIISIntegration { get; }
     }
 }

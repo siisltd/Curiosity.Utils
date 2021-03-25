@@ -112,6 +112,12 @@ namespace Curiosity.Hosting.Web
                         .UseKestrel()
                         .UseUrls(configuration.Urls);
                 }
+                
+                // enable IIS integration on demand
+                if (configuration.UseIISIntegration)
+                {
+                    webHostBuilder.UseIISIntegration();
+                }
 
                 webHostBuilder
                     .UseNLog()
@@ -120,9 +126,6 @@ namespace Curiosity.Hosting.Web
 
             if (!String.IsNullOrWhiteSpace(customContentRootDirectory))
                 hostBuilder.UseContentRoot(customContentRootDirectory);
-
-            // configures logging
-            // NLogBuilder.ConfigureNLog(configuration.Log.LogConfigurationPath);
 
             return hostBuilder.Build();
         }

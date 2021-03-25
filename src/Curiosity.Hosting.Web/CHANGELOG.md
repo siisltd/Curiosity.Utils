@@ -1,10 +1,16 @@
 # Changelog
 
+## [1.1.10] - 2021-03-25
+
+### Added
+
+- Added option for using IIS Integration.
+
 ## [1.1.9] - 2021-03-15
 
 ### Added
 
-- Explicitly installed `Annotaitons` package.
+- Explicitly installed `System.Data.Annotaitons` package.
 
 ## [1.1.8] - 2021-03-15
 

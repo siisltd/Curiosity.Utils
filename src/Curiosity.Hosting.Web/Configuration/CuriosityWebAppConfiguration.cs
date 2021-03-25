@@ -20,6 +20,9 @@ namespace Curiosity.Hosting.Web
         public string[]? SensitiveDataFieldNames { get; set; }
 
         /// <inheritdoc />
+        public bool UseIISIntegration { get; set; } = false;
+
+        /// <inheritdoc />
         public override IReadOnlyCollection<ConfigurationValidationError> Validate(string? prefix = null)
         {
             return CuriosityWebAppConfigurationValidator.Validate(this, prefix);
