@@ -5,6 +5,7 @@
 ### Added
 
 - Added methods with file names list
+- Added avoiding name duplication in the archive
 
 ### Fixed
 

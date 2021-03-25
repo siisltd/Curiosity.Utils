@@ -147,11 +147,26 @@ namespace Curiosity.Archiver.SharpZip
             zipStream.SetLevel(ZipLevel);
             zipStream.UseZip64 = useZip64 ? UseZip64.On : UseZip64.Off;
 
+            var entryNames = new HashSet<string>();
             for (var i = 0; i < sourceFiles.Count; i++)
             {
                 var sourceFileName = sourceFiles[i].StorageFileName;
                 var entryFileName = sourceFiles[i].UserFileName;
 
+                // to avoid file name duplication in the archive
+                if (entryNames.Contains(entryFileName))
+                {
+                    var ix = 1;
+                    while (entryNames.Contains($"{entryFileName} {ix}"))
+                    {
+                        ix++;
+                    }
+                    entryFileName = $"{entryFileName} {ix}";
+                }
+                
+                entryNames.Add(entryFileName);
+
+                // archiving
                 var fileInfo = new FileInfo(sourceFileName);
                 var entry = new ZipEntry(ZipEntry.CleanName(entryFileName))
                 {
