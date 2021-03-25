@@ -29,5 +29,21 @@ namespace Curiosity.TempFiles
             
             return services;
         }
+        
+        /// <summary>
+        /// Adds temp directory cleaner as hosted service.
+        /// </summary>
+        public static IServiceCollection AddTempDirCleaner(this IServiceCollection services, TempFileOptions tempFileOptions)
+        {
+            if (services == null) throw new ArgumentNullException(nameof(services));
+            if (tempFileOptions == null) throw new ArgumentNullException(nameof(tempFileOptions));
+            
+            tempFileOptions.AssertValid();
+
+            services.TryAddSingleton(tempFileOptions);
+            services.AddHostedService<TempDirCleaner>();
+            
+            return services;
+        }
     }
 }
