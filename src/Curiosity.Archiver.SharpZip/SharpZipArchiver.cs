@@ -96,8 +96,6 @@ namespace Curiosity.Archiver.SharpZip
             IList<string>? zipFileNames = null, 
             CancellationToken cts = default)
         {
-            if (String.IsNullOrWhiteSpace(zipFileName))
-                throw new ArgumentNullException(nameof(zipFileName));
             if (sourceFiles == null) throw new ArgumentNullException(nameof(sourceFiles));
             if (zipFileNames != null && zipFileNames.Count != sourceFiles.Count)
                 throw new ArgumentException($"Items count in {sourceFiles} and {zipFileNames} must be equal");
