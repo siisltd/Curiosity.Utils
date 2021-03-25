@@ -1,4 +1,5 @@
 Urls: http://127.0.0.1:39122
+UseIISIntegration: true
 
 Log:
   LogConfigurationPath: ./NLog.config

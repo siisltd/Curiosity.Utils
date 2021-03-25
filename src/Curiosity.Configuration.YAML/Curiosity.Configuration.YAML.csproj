@@ -2,19 +2,44 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <RootNamespace>Curiosity.Configurations</RootNamespace>
-        <LangVersion>8</LangVersion>
-        <Nullable>enable</Nullable>
-        <Title>Curiosity.Configuration.YAML</Title>
-        <Authors>Max Markelow (@markeli)</Authors>
-        <Description>YAML configuration provider</Description>
-        <Copyright>SIIS Ltd, 2021</Copyright>
+
+        <PackageId>Curiosity.Configuration.YML</PackageId>
+        <Title>Curiosity.Configuration.YML</Title>
+        <Description>YAML configuration provider.</Description>
+        <Summary>YAML configuration provider.</Summary>
         <PackageTags>Curiosity; configuration; yaml; yml; siisltd</PackageTags>
+        <Language>English</Language>
+
+        <RootNamespace>Curiosity.Configurations</RootNamespace>
+
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.0.2</PackageVersion>
+        <PackageVersion>1.0.3</PackageVersion>
+
+        <Authors>Max Markelow (@markeli)</Authors>
+        <Copyright>SIIS Ltd, 2021</Copyright>
+
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+        <PackageProjectUrl>https://github.com/siisltd/Curiosity.Utils</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
+        <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Curiosity.Curiosity.Configuration.YML/CHANGELOG.md</PackageReleaseNotes>
+
+        <LangVersion>8</LangVersion>
+        <Nullable>enable</Nullable>
+        <IsPackable>true</IsPackable>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <PackageIcon>siisltd.png</PackageIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\siisltd.png" Pack="true" PackagePath="\" />
+    </ItemGroup>
+    
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <DocumentationFile>bin\Release\Curiosity.Configuration.YAML.xml</DocumentationFile>
     </PropertyGroup>

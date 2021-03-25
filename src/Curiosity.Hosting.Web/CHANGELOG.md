@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.11] - 2021-03-25
+
+### Changed
+
+- Changed bootstrapping when option `UseIISIntegration` is enabled.
+
 ## [1.1.10] - 2021-03-25
 
 ### Added

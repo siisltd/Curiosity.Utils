@@ -11,7 +11,7 @@ namespace Curiosity.Configurations
     /// <typeparam name="T">POCO configuration.</typeparam>
     public class YamlConfigurationProvider<T> : ConfigurationProviderBase<T> where T : class, new()
     {
-        public YamlConfigurationProvider(string? configurationBasePath, bool isConfigOptional = false): base(configurationBasePath, isConfigOptional)
+        public YamlConfigurationProvider(string? configurationBasePath, bool isConfigOptional = false, string[]? cliArgs = null): base(configurationBasePath, isConfigOptional, cliArgs)
         {
         }
         

@@ -20,6 +20,7 @@ namespace Curiosity.Configuration
         
         private IConfiguration? _configuration;
         private T? _typedConfiguration;
+        private readonly string[]? _cliArgs;
 
         /// <inheritdoc />
         public string PathToConfigurationFiles { get; }
@@ -29,11 +30,13 @@ namespace Curiosity.Configuration
         /// </summary>
         /// <param name="pathToConfigurationFiles">Path to directory where configurations are located.
         /// If params is <see langoword="null"/> or empty, current working directory will be used.</param>
+        /// <param name="cliArgs">Command line arguments.</param>
         /// <exception cref="ArgumentException">If directory does not exist</exception>
-        protected ConfigurationProviderBase(string? pathToConfigurationFiles = null, bool isConfigOptional = false)
+        protected ConfigurationProviderBase(string? pathToConfigurationFiles = null, bool isConfigOptional = false, string[]? cliArgs = null)
         {
             _isConfigOptional = isConfigOptional;
-            
+            _cliArgs = cliArgs;
+
             if (String.IsNullOrWhiteSpace(pathToConfigurationFiles))
             {
                 PathToConfigurationFiles = Environment.CurrentDirectory;
@@ -76,9 +79,9 @@ namespace Curiosity.Configuration
 
         public void ConfigureAppConfiguration(IConfigurationBuilder configuration)
         {
-            if (configuration == null) 
+            if (configuration == null)
                 throw new ArgumentNullException(nameof(configuration));
-            
+
             // configure path
             SetBasePath(configuration, PathToConfigurationFiles);
 
@@ -94,7 +97,7 @@ namespace Curiosity.Configuration
                 !String.Equals(environment, ProductionEnvironmentName, StringComparison.OrdinalIgnoreCase))
             {
                 files.Add((String.Format(EnvironmentConfigurationFileNameTemplate, environment), true));
-                
+
                 // if user was specified, add options environment specific config file for uer
                 var user = Environment.GetEnvironmentVariable("USER");
                 if (!String.IsNullOrWhiteSpace(user))
@@ -102,14 +105,23 @@ namespace Curiosity.Configuration
                     files.Add((String.Format(EnvironmentAndUserConfigurationFileNameTemplate, environment, user), true));
                 }
             }
-            
+
             // add files
             foreach (var (fileName, isOptional) in files)
             {
                 AddFile(configuration, fileName, isOptional);
             }
+
+            // add environment variable
+            configuration.AddEnvironmentVariables();
+            
+            // ddd CLI args
+            if (_cliArgs != null)
+            {
+                configuration.AddCommandLine(_cliArgs);
+            }
         }
-        
+
         /// <summary>
         /// Sets base path to directory with configurations.
         /// </summary>

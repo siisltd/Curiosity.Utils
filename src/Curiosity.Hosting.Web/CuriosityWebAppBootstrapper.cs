@@ -6,6 +6,7 @@ using Curiosity.Configuration;
 using Curiosity.Hosting.Performance;
 using Curiosity.Hosting.ThreadPool;
 using Curiosity.Tools.Web;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -59,6 +60,15 @@ namespace Curiosity.Hosting.Web
             hostBuilder
                 .ConfigureServices(services =>
                 {
+                    if (configuration.UseIISIntegration)
+                    {
+                        services.Configure<IISOptions>(options =>
+                        {
+                            options.AutomaticAuthentication = false;
+                            options.ForwardClientCertificate = false;
+                        });
+                    }
+                    
                     services.AddSingleton<ILogger>(c =>
                     {
                         var loggerFactory = c.GetRequiredService<ILoggerFactory>();
@@ -95,28 +105,31 @@ namespace Curiosity.Hosting.Web
             
             hostBuilder.ConfigureWebHost(webHostBuilder =>
             {
-                // use specified kestrel options
-                if (configuration.Kestrel != null)
-                {
-                    webHostBuilder
-                        .UseKestrel((context, severOptions) =>
-                        {
-                            // pass "raw" configuration section instead of pass POCO, because we don't need all options available from code
-                            // Kestrel will find all necessary options
-                            severOptions.Configure(configurationProvider.GetRawConfiguration().GetSection("Kestrel"));
-                        });
-                }
-                else // or just basic kestrel options with specified urls
-                {
-                    webHostBuilder
-                        .UseKestrel()
-                        .UseUrls(configuration.Urls);
-                }
-                
                 // enable IIS integration on demand
                 if (configuration.UseIISIntegration)
                 {
                     webHostBuilder.UseIISIntegration();
+                    webHostBuilder.UseKestrel();
+                }
+                else
+                {
+                    // use specified kestrel options
+                    if (configuration.Kestrel != null)
+                    {
+                        webHostBuilder
+                            .UseKestrel((context, severOptions) =>
+                            {
+                                // pass "raw" configuration section instead of pass POCO, because we don't need all options available from code
+                                // Kestrel will find all necessary options
+                                severOptions.Configure(configurationProvider.GetRawConfiguration().GetSection("Kestrel"));
+                            });
+                    }
+                    else // or just basic kestrel options with specified urls
+                    {
+                        webHostBuilder
+                            .UseKestrel()
+                            .UseUrls(configuration.Urls);
+                    }
                 }
 
                 webHostBuilder

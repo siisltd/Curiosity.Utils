@@ -17,20 +17,23 @@ namespace Curiosity.Hosting.Web
         {
             var errors = new ConfigurationValidationErrorCollection(prefix);
 
-            if (String.IsNullOrWhiteSpace(configuration.Urls) && configuration.Kestrel == null)
+            if (!configuration.UseIISIntegration)
             {
-                errors.AddError(nameof(configuration.Urls), $"{nameof(configuration.Urls)} or {nameof(configuration.Kestrel)} must be specified");
-            }
-            else if (configuration.Urls != null && configuration.Kestrel != null)
-            {
-                errors.AddError(nameof(configuration.Urls), $"{nameof(configuration.Urls)} and {nameof(configuration.Kestrel)} can't be used at same time");
+                if (String.IsNullOrWhiteSpace(configuration.Urls) && configuration.Kestrel == null)
+                {
+                    errors.AddError(nameof(configuration.Urls), $"{nameof(configuration.Urls)} or {nameof(configuration.Kestrel)} must be specified");
+                }
+                else if (configuration.Urls != null && configuration.Kestrel != null)
+                {
+                    errors.AddError(nameof(configuration.Urls), $"{nameof(configuration.Urls)} and {nameof(configuration.Kestrel)} can't be used at same time");
+                }
+
+                if (configuration.Kestrel != null)
+                {
+                    errors.AddErrors(configuration.Kestrel.Validate(prefix + $":{nameof(configuration.Kestrel)}"));
+                }
             }
 
-            if (configuration.Kestrel != null)
-            {
-                errors.AddErrors(configuration.Kestrel.Validate(prefix+$":{nameof(configuration.Kestrel)}"));
-            }
-            
             errors.AddErrors(configuration.ThreadPool.Validate(prefix + $":{nameof(configuration.ThreadPool)}"));
             errors.AddErrors(CuriosityAppConfigurationValidator.Validate(configuration, prefix));
 
