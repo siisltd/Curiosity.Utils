@@ -91,5 +91,16 @@ namespace Curiosity.TimeZone
         {
             return DateTimeZoneProviders.Tzdb.GetZoneOrNull(timeZoneId) ?? DateTimeZone.Utc;
         }
+
+        /// <summary>
+        /// Returns true when the NodaTime can get a time zone from time zone id
+        /// </summary>
+        /// <param name="timeZoneId">Time zone id.</param>
+        public static bool IsTimeZoneIdValid(string? timeZoneId)
+        {
+            if (timeZoneId == null) return false;
+            
+            return DateTimeZoneProviders.Tzdb.GetZoneOrNull(timeZoneId) != null;
+        }
     }
 }
