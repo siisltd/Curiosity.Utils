@@ -152,6 +152,27 @@ namespace Curiosity.SFTP.SSH.Net
                 }
             });
         }
+        
+        /// <inheritdoc />
+        public Stream? GetDownloadStream(string basePath, string fileName)
+        {
+            if (String.IsNullOrWhiteSpace(fileName)) throw new ArgumentNullException(nameof(fileName));
+            if (String.IsNullOrWhiteSpace(basePath)) throw new ArgumentNullException(nameof(basePath));
+
+            return _retryPolicy.Execute(() =>
+            {
+                EnsureConnected();
+
+                var filePath = GetFileFullPath(basePath, fileName);
+                if (!_sftpClient.Exists(filePath))
+                {
+                    _logger.LogWarning($"File \"{filePath}\" not found on SFTP server.");
+                    return null;
+                }
+
+                return _sftpClient.Open(filePath, FileMode.Open);
+            });
+        }
 
         /// <inheritdoc />
         public Task UploadFileToServerAsync(byte[] data, string basePath, string fileName, bool overwrite = false)
