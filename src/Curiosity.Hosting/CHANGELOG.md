@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.8] - 2021-03-26
+
+### Changed 
+
+- Changed log level at `ThreadPoolMonitoringService`.
+
 ## [1.1.7] - 2021-03-26
 
 ### Changed 

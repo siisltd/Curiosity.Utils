@@ -202,7 +202,7 @@ namespace Curiosity.Hosting.ThreadPool
             var usedWorkerThreads = maxWorkerThreads - availableWorkerThreads;
             var usedCompletionPortThreads = maxCompletionPortThreads - availableCompletionPortThreads;
             
-            _logger.LogInformation($"Thread pool: worker threads = {usedWorkerThreads} ({minWorkerThreads}...{maxWorkerThreads}), I/O threads = {usedCompletionPortThreads} ({minCompletionPortThreads}...{maxCompletionPortThreads})");
+            _logger.LogDebug($"Thread pool: worker threads = {usedWorkerThreads} [{minWorkerThreads}, {maxWorkerThreads}], I/O threads = {usedCompletionPortThreads} [{minCompletionPortThreads}, {maxCompletionPortThreads}]");
         }
 
         /// <inheritdoc />
