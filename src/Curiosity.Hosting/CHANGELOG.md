@@ -1,10 +1,16 @@
 # Changelog
 
+## [1.1.6] - 2021-03-25
+
+### Added 
+
+- Adding CLI args to app configuration.
+
 ## [1.1.5] - 2021-03-15
 
 ### Added 
 
-- Explicitly installed `Annotaitons` package.
+- Explicitly installed `System.Data.Annotaitons` package.
 
 ## [1.1.4] - 2021-03-15
 

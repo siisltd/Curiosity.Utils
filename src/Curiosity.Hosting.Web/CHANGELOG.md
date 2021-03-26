@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.12] - 2021-03-25
+
+### Changed
+
+- Use base bootstrapper from `Curiosity.Hosting.1.1.6`.
+
 ## [1.1.11] - 2021-03-25
 
 ### Changed

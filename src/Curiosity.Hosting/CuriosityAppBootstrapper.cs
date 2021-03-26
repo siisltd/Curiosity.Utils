@@ -51,7 +51,7 @@ namespace Curiosity.Hosting
             ApplicationHelper.ChangeCurrentDirectoryForDevelopment();
 
             // get configuration
-            var configurationProvider = new YamlConfigurationProvider<TConfiguration>(arguments.ConfigurationDirectory, IsConfigFileOptional);
+            var configurationProvider = new YamlConfigurationProvider<TConfiguration>(arguments.ConfigurationDirectory, IsConfigFileOptional, args);
             var configuration = configurationProvider.GetConfiguration();
 
             ApplicationHelper.SetDefaultCulture(configuration.Culture);
