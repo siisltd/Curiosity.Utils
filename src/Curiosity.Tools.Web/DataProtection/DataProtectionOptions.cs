@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Curiosity.Configuration;
 
 namespace Curiosity.Tools.Web.DataProtection
@@ -20,7 +21,7 @@ namespace Curiosity.Tools.Web.DataProtection
         public string? ApplicationName { get; set; }
         
         /// <summary>
-        /// The path to the file with the key ring.
+        /// The path to the directory with the key ring files.
         /// </summary>
         public string? KeyRingPath { get; set; }
         
@@ -32,7 +33,18 @@ namespace Curiosity.Tools.Web.DataProtection
             if (IsEnabled)
             {
                 errors.AddErrorIf(String.IsNullOrWhiteSpace(ApplicationName), nameof(ApplicationName), "Can't be empty or null");
-                errors.AddErrorIf(String.IsNullOrWhiteSpace(KeyRingPath), nameof(KeyRingPath), "Can't be empty or null");
+
+                if (String.IsNullOrWhiteSpace(KeyRingPath))
+                {
+                    errors.AddError(nameof(KeyRingPath), "Can't be empty or null");
+                }
+                else
+                {
+                    if (!Directory.Exists(KeyRingPath))
+                    {
+                        errors.AddError(nameof(KeyRingPath), "Specified directory doesn't exist");
+                    }
+                }
             }
             
             return errors;

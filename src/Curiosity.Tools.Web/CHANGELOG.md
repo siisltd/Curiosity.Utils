@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.11] - 2021-03-26
+
+### Added
+
+- Added key ring dir existence check.
+
 ## [1.0.10] - 2021-03-26
 
 ### Added

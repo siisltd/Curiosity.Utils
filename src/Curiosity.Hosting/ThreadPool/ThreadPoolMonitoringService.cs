@@ -18,7 +18,7 @@ namespace Curiosity.Hosting.ThreadPool
         /// <inheritdoc />
         public ThreadPoolMonitoringService(
             ThreadPoolOptions options,
-            ILogger logger)
+            ILogger<ThreadPoolMonitoringService> logger)
         {
             _options = options ?? throw new ArgumentNullException(nameof(options));
             options.AssertValid();

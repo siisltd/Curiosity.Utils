@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.7] - 2021-03-26
+
+### Changed 
+
+- Changed name of `ThreadPoolMonitoringService` logger.
+
 ## [1.1.6] - 2021-03-25
 
 ### Added 
