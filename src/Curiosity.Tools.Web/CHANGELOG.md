@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.10] - 2021-03-26
+
+### Added
+
+- Added ASP.NET Core data protection.
+
 ## [1.0.9] - 2021-03-20
 
 ### Added
