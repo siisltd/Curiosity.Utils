@@ -9,9 +9,7 @@ namespace Curiosity.Tools.Web.SiteMap
         {
             services.TryAddSingleton<TExtraPageProvider>();
             services.TryAddSingleton<SiteMapExtraPageProvider>(c => c.GetRequiredService<TExtraPageProvider>());
-            
-            // adds controller
-            mvcBuilder.AddApplicationPart(typeof(SiteMapController).Assembly);
+            services.TryAddSingleton<SiteMapBuilder>();
 
             return services;
         }

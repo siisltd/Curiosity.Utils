@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.0] - 2021-03-27
+
+### Changed
+
+- Made `MVCBaseController` abstract.
+
+### Removed
+
+- Replaced `SiteMapController` by `SiteMapBuilder`.
+
 ## [1.0.11] - 2021-03-26
 
 ### Added

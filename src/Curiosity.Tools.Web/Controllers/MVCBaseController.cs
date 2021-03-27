@@ -16,7 +16,7 @@ namespace Curiosity.Tools.Web.Controllers
     /// <summary>
     /// Basic controller for ASP.NET Core MVC.
     /// </summary>
-    public class MVCBaseController : Controller
+    public abstract class MVCBaseController : Controller
     {
         /// <summary>
         /// Редирект по указанному адресу либо на домашнюю страницу

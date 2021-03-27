@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -11,15 +12,15 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 namespace Curiosity.Tools.Web.SiteMap
 {
     /// <summary>
-    /// Sitemap
+    /// Site map builder.
     /// </summary>
-    public class SiteMapController : Controller
+    public class SiteMapBuilder
     {
         private readonly IActionDescriptorCollectionProvider _provider;
         private readonly IWebAppConfigurationWithPublicDomain _webAppConfiguration;
         private readonly SiteMapExtraPageProvider _siteMapExtraPageProvider;
 
-        public SiteMapController(
+        public SiteMapBuilder(
             IActionDescriptorCollectionProvider provider,
             IWebAppConfigurationWithPublicDomain webAppConfiguration,
             SiteMapExtraPageProvider siteMapExtraPageProvider)
@@ -29,11 +30,11 @@ namespace Curiosity.Tools.Web.SiteMap
             _siteMapExtraPageProvider = siteMapExtraPageProvider ?? throw new ArgumentNullException(nameof(siteMapExtraPageProvider));
         }
 
-        [HttpGet("/sitemap")]
-        [HttpGet("/sitemap.xml")]
-        [SkipSeoIndexing]
-        [ResponseCache(Duration = 600)]
-        public void Index()
+        /// <summary>
+        /// Builds response with site map xml data.
+        /// </summary>
+        /// <param name="httpContext"></param>
+        public void BuildSiteMap(HttpContext httpContext)
         {
             var fi = new FileInfo(Assembly.GetExecutingAssembly().Location);
             
@@ -68,14 +69,16 @@ namespace Curiosity.Tools.Web.SiteMap
             // write xml
             
             // enable sync io for request
-            var syncIoFeature = HttpContext.Features.Get<IHttpBodyControlFeature>();
+            var syncIoFeature = httpContext.Features.Get<IHttpBodyControlFeature>();
             if (syncIoFeature != null)
             {
                 syncIoFeature.AllowSynchronousIO = true;
             }
+
+            var response = httpContext.Response;
             
-            Response.ContentType = "application/xml";
-            using (var xml = XmlWriter.Create(Response.Body, new XmlWriterSettings { Indent = true }))
+            response.ContentType = "application/xml";
+            using (var xml = XmlWriter.Create(response.Body, new XmlWriterSettings { Indent = true }))
             {
                 xml.WriteStartDocument();
                 xml.WriteStartElement("urlset", "http://www.sitemaps.org/schemas/sitemap/0.9");
