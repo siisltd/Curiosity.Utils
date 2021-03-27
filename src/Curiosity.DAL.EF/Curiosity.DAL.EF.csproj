@@ -10,8 +10,6 @@
         <PackageTags>Curiosity; dal; ef; entity framework; siisltd</PackageTags>
         <Language>English</Language>
 
-        <RootNamespace>Curiosity.Configurations</RootNamespace>
-
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
         <PackageVersion>1.0.3</PackageVersion>
