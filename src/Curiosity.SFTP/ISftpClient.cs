@@ -29,8 +29,16 @@ namespace Curiosity.SFTP
         /// </summary>
         /// <param name="basePath">Base directory for combining path for file download.</param>
         /// <param name="fileName">Relative (from base directory) file name.</param>
-        /// <returns>File content in stream.</returns>
+        /// <returns>File content in temp file stream.</returns>
         Task<TempFileStream?> DownloadFileFromServerAsync(string basePath, string fileName);
+
+        /// <summary>
+        /// Gets file stream from SFTP.
+        /// </summary>
+        /// <param name="basePath">Base directory for combining path for file download.</param>
+        /// <param name="fileName">Relative (from base directory) file name.</param>
+        /// <returns>File content in stream.</returns>
+        Stream? GetDownloadStream(string basePath, string fileName);
 
         /// <summary>
         /// Uploads file to SFTP in async manner.

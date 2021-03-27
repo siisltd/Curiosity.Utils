@@ -1,7 +1,6 @@
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +20,7 @@ namespace Curiosity.Archiver.SharpZip
         /// Factory to create <see cref="TempFileStream"/>.
         /// </summary>
         private readonly ITempFileStreamFactory _tempFileStreamFactory;
-        
+
         /// <summary>
         /// Size of buffer for reading data from file.
         /// </summary>
@@ -41,9 +40,9 @@ namespace Curiosity.Archiver.SharpZip
         private readonly ArrayPool<byte> _arrayPool;
 
         private readonly TempFileOptions _tempFileOptions;
-        
+
         public SharpZipArchiver(
-            ITempFileStreamFactory tempFileStreamFactory, 
+            ITempFileStreamFactory tempFileStreamFactory,
             TempFileOptions tempFileOptions)
         {
             _tempFileStreamFactory = tempFileStreamFactory;
@@ -54,12 +53,12 @@ namespace Curiosity.Archiver.SharpZip
         /// <inheritdoc />
         public Task<TempFileStream> ZipDirAsync(
             string dirToCompressPath,
-            bool useZip64 = true, 
+            bool useZip64 = true,
             CancellationToken cts = default)
-        {                
+        {
             if (String.IsNullOrWhiteSpace(dirToCompressPath))
                 throw new ArgumentNullException(nameof(dirToCompressPath));
-            
+
             if (!Directory.Exists(dirToCompressPath))
                 throw new ArgumentException($"Directory does not exist: \"{dirToCompressPath}\"'");
 
@@ -74,8 +73,8 @@ namespace Curiosity.Archiver.SharpZip
                     RestoreAttributesOnExtract = true,
                     CompressionLevel = Deflater.CompressionLevel.BEST_COMPRESSION
                 };
-                
-                fastZip.CreateZip(archivePath, dirToCompressPath, true, (string)null!, null);
+
+                fastZip.CreateZip(archivePath, dirToCompressPath, true, (string) null!, null);
                 return Task.FromResult(new TempFileStream(archivePath, FileMode.Open));
             }
             catch
@@ -84,34 +83,39 @@ namespace Curiosity.Archiver.SharpZip
                 {
                     File.Delete(archivePath);
                 }
+
                 throw;
             }
         }
 
         /// <inheritdoc />
-        public async Task<TempFileStream> ZipFilesToStreamAsync(
+        public Task<TempFileStream> ZipFilesToStreamAsync(
             IList<string> sourceFiles,
             bool useZip64 = true,
             string? zipFileName = null,
-            IList<string>? zipFileNames = null, 
+            IList<string>? zipFileNames = null,
             CancellationToken cts = default)
         {
-            if (String.IsNullOrWhiteSpace(zipFileName))
-                throw new ArgumentNullException(nameof(zipFileName));
             if (sourceFiles == null) throw new ArgumentNullException(nameof(sourceFiles));
-            if (zipFileNames != null && zipFileNames.Count != sourceFiles.Count)
-                throw new ArgumentException($"Items count in {sourceFiles} and {zipFileNames} must be equal");
-            
-            
+
+            var sourceFileNames = Concatenate(sourceFiles, zipFileNames);
+
+            return ZipFilesToStreamAsync(sourceFileNames, useZip64, zipFileName, cts);
+        }
+
+        public async Task<TempFileStream> ZipFilesToStreamAsync(IReadOnlyList<FileNames> sourceFiles, bool useZip64 = true, string? zipFileName = null, CancellationToken cts = default)
+        {
+            if (sourceFiles == null) throw new ArgumentNullException(nameof(sourceFiles));
+
             var tempStream = _tempFileStreamFactory.CreateTempFileStream(GetZipFileName(zipFileName));
-            
             var buffer = _arrayPool.Rent(BufferSize);
+
             try
             {
                 using (var zipStream = new ZipOutputStream(tempStream))
                 {
                     zipStream.IsStreamOwner = false;
-                    await ZipFilesAsync(buffer, zipStream, sourceFiles, useZip64, zipFileNames, cts);
+                    await ZipFilesAsync(buffer, zipStream, sourceFiles, useZip64, cts);
                 }
 
                 // we need to set position to start because temp stream can be used in another places
@@ -132,27 +136,39 @@ namespace Curiosity.Archiver.SharpZip
                 ? $"{Guid.NewGuid()}.zip"
                 : zipFileName;
         }
-        
+
         private async Task ZipFilesAsync(
             byte[] buffer,
-            [NotNull] ZipOutputStream zipStream,
-            [NotNull] IList<string> sourceFiles,
+            ZipOutputStream zipStream,
+            IReadOnlyList<FileNames> sourceFiles,
             bool useZip64 = true,
-            IList<string>? zipFileNames = null,
             CancellationToken cts = default)
         {
             zipStream.SetLevel(ZipLevel);
             zipStream.UseZip64 = useZip64 ? UseZip64.On : UseZip64.Off;
 
+            var entryNames = new HashSet<string>();
             for (var i = 0; i < sourceFiles.Count; i++)
             {
-                var sourceFileName = sourceFiles[i];
-                var destFileName = zipFileNames != null 
-                    ? zipFileNames[i] 
-                    : new FileInfo(sourceFileName).Name;
+                var sourceFileName = sourceFiles[i].StorageFileName;
+                var entryFileName = sourceFiles[i].UserFileName;
 
+                // to avoid file name duplication in the archive
+                if (entryNames.Contains(entryFileName))
+                {
+                    var ix = 1;
+                    while (entryNames.Contains($"{entryFileName} {ix}"))
+                    {
+                        ix++;
+                    }
+                    entryFileName = $"{entryFileName} {ix}";
+                }
+                
+                entryNames.Add(entryFileName);
+
+                // archiving
                 var fileInfo = new FileInfo(sourceFileName);
-                var entry = new ZipEntry(ZipEntry.CleanName(destFileName))
+                var entry = new ZipEntry(ZipEntry.CleanName(entryFileName))
                 {
                     DateTime = fileInfo.LastWriteTime, // Note the zip format stores 2 second granularity
                     Size = fileInfo.Length,
@@ -165,31 +181,38 @@ namespace Curiosity.Archiver.SharpZip
                     await streamReader.CopyToAsync(zipStream, buffer, cts);
                 }
             }
+
             zipStream.Finish();
             zipStream.Close();
         }
 
-        /// <inheritdoc />
-        public async Task<string> ZipFilesToFileAsync(
+        [Obsolete("Use method with file names collection")]
+        public Task<string> ZipFilesToFileAsync(
             IList<string> sourceFiles,
             bool useZip64 = true,
             string? zipFileName = null,
-            IList<string>? zipFileNames = null, 
+            IList<string>? zipFileNames = null,
             CancellationToken cts = default)
         {
             if (sourceFiles == null) throw new ArgumentNullException(nameof(sourceFiles));
-            if (zipFileNames != null && zipFileNames.Count != sourceFiles.Count)
-                throw new ArgumentException($"Items count in {sourceFiles} and {zipFileNames} must be equal");
-            
-            
+
+            var sourceFileNames = Concatenate(sourceFiles, zipFileNames);
+
+            return ZipFilesToFileAsync(sourceFileNames, useZip64, zipFileName, cts);
+        }
+
+        public async Task<string> ZipFilesToFileAsync(IReadOnlyList<FileNames> sourceFiles, bool useZip64 = true, string? zipFileName = null, CancellationToken cts = default)
+        {
+            if (sourceFiles == null) throw new ArgumentNullException(nameof(sourceFiles));
+
             var zipFilePath = Path.Combine(_tempFileOptions.TempPath, GetZipFileName(zipFileName));
-            
             var buffer = _arrayPool.Rent(BufferSize);
+
             try
             {
                 using (var zipStream = new ZipOutputStream(File.Create(zipFilePath)))
                 {
-                    await ZipFilesAsync(buffer, zipStream, sourceFiles, useZip64, zipFileNames, cts);
+                    await ZipFilesAsync(buffer, zipStream, sourceFiles, useZip64, cts);
                 }
 
                 return zipFilePath;
@@ -200,10 +223,26 @@ namespace Curiosity.Archiver.SharpZip
                 {
                     File.Delete(zipFilePath);
                 }
-                
+
                 _arrayPool.Return(buffer);
                 throw;
             }
+        }
+
+        private static IReadOnlyList<FileNames> Concatenate(IList<string> sourceFiles, IList<string>? zipFileNames)
+        {
+            if (zipFileNames != null && zipFileNames.Count != sourceFiles.Count)
+                throw new ArgumentException($"Items count in {sourceFiles} and {zipFileNames} must be equal");
+
+            var sourceFileNames = new FileNames[sourceFiles.Count];
+            for (var i = 0; i < sourceFiles.Count; i++)
+            {
+                sourceFileNames[i] = zipFileNames == null
+                    ? new FileNames(sourceFiles[i])
+                    : new FileNames(sourceFiles[i], zipFileNames[i]);
+            }
+
+            return sourceFileNames;
         }
     }
 }

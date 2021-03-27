@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- Added method which returns file content as a stream.
+
 ## [1.0.4] - 2021-03-08
 
 ### Fixed
