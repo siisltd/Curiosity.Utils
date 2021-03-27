@@ -186,6 +186,7 @@ namespace Curiosity.Archiver.SharpZip
             zipStream.Close();
         }
 
+        /// <inheritdoc />
         [Obsolete("Use method with file names collection")]
         public Task<string> ZipFilesToFileAsync(
             IList<string> sourceFiles,
@@ -201,6 +202,7 @@ namespace Curiosity.Archiver.SharpZip
             return ZipFilesToFileAsync(sourceFileNames, useZip64, zipFileName, cts);
         }
 
+        /// <inheritdoc />
         public async Task<string> ZipFilesToFileAsync(IReadOnlyList<FileNames> sourceFiles, bool useZip64 = true, string? zipFileName = null, CancellationToken cts = default)
         {
             if (sourceFiles == null) throw new ArgumentNullException(nameof(sourceFiles));
@@ -232,7 +234,7 @@ namespace Curiosity.Archiver.SharpZip
         private static IReadOnlyList<FileNames> Concatenate(IList<string> sourceFiles, IList<string>? zipFileNames)
         {
             if (zipFileNames != null && zipFileNames.Count != sourceFiles.Count)
-                throw new ArgumentException($"Items count in {sourceFiles} and {zipFileNames} must be equal");
+                throw new ArgumentException($"Items count in {nameof(sourceFiles)} and {nameof(zipFileNames)} must be equal");
 
             var sourceFileNames = new FileNames[sourceFiles.Count];
             for (var i = 0; i < sourceFiles.Count; i++)

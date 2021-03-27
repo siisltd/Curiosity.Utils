@@ -2,18 +2,44 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <LangVersion>8</LangVersion>
-        <Nullable>enable</Nullable>
+        
+        <PackageId>Curiosity.DAL</PackageId>
         <Title>Curiosity.DAL</Title>
-        <Authors>Max Markelow (@markeli)</Authors>
-        <Description>Classes for working with data access layer</Description>
-        <Copyright>SIIS Ltd, 2021</Copyright>
+        <Description>Classes for working with data access layer: context abstractions, factory.</Description>
+        <Summary>Classes for working with data access layer: context abstractions, factory</Summary>
         <PackageTags>Curiosity; dal; siisltd</PackageTags>
+        <Language>English</Language>
+
+        <RootNamespace>Curiosity.Configurations</RootNamespace>
+
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.0.1</PackageVersion>
+        <PackageVersion>1.0.2</PackageVersion>
+
+        <Authors>Max Markelow (@markeli)</Authors>
+        <Copyright>SIIS Ltd, 2021</Copyright>
+
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+        <PackageProjectUrl>https://github.com/siisltd/Curiosity.Utils</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
+        <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Curiosity.DAL/CHANGELOG.md</PackageReleaseNotes>
+
+        <LangVersion>8</LangVersion>
+        <Nullable>enable</Nullable>
+        <IsPackable>true</IsPackable>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <PackageIcon>siisltd.png</PackageIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\siisltd.png" Pack="true" PackagePath="\" />
+    </ItemGroup>
+    
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <DocumentationFile>bin\Release\Curiosity.DAL.xml</DocumentationFile>
     </PropertyGroup>

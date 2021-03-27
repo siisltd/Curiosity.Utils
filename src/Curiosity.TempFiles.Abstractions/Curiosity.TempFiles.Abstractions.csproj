@@ -3,18 +3,45 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         <RootNamespace>Curiosity.TempFiles</RootNamespace>
-        <LangVersion>8</LangVersion>
-        <Nullable>enable</Nullable>
-        <Title>Curiosity.TempFiles.Abstractions</Title>
-        <Authors>Max Markelow (@markeli)</Authors>
+        
+        <PackageId>Curiosity.TempFiles.Abstractions</PackageId>
+        <Title>Curiosity.TempFiles</Title>
         <Description>Abstractions for working with temp files</Description>
-        <Copyright>SIIS Ltd, 2021</Copyright>
+        <Summary>Abstractions for working with temp files</Summary>
         <PackageTags>Curiosity; temp files; temp; siisltd</PackageTags>
+        <Language>English</Language>
+
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.0.1</PackageVersion>
+        <PackageVersion>1.1.0</PackageVersion>
+
+        <Authors>Max Markelow (@markeli)</Authors>
+        <Company>SIIS Ltd</Company>
+        <Copyright>SIIS Ltd, 2021</Copyright>
+
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+        <PackageProjectUrl>https://github.com/siisltd/Curiosity.Utils</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
+        <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Curiosity.TempFiles.Abstractions/CHANGELOG.md</PackageReleaseNotes>
+
+        <OutputType>Library</OutputType>
+        <LangVersion>8</LangVersion>
+        <Nullable>enable</Nullable>
+        <IsPackable>true</IsPackable>
+        
     </PropertyGroup>
 
+    <PropertyGroup>
+        <PackageIcon>siisltd.png</PackageIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\siisltd.png" Pack="true" PackagePath="\" />
+    </ItemGroup>
+    
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <DocumentationFile>bin\Release\Curiosity.TempFiles.Abstractions.xml</DocumentationFile>
     </PropertyGroup>

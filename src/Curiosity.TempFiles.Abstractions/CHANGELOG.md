@@ -4,4 +4,5 @@
 
 ### Added
 
+- Added Changelog and package icon.
 - Added the hosted service which cleans a temp directory
