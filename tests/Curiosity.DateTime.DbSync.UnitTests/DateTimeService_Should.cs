@@ -15,14 +15,14 @@ namespace Curiosity.DateTime.DbSync.UnitTests
         {
             var timeShift = TimeSpan.FromMinutes(5);
             
-            var contextMock = new Mock<ICuriosityReadOnlyDataContext>();
+            var contextMock = new Mock<ICuriosityDataContext>();
             contextMock
                 .Setup(c => c.GetImmediateServerTimeUtcAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(System.DateTime.UtcNow + timeShift));
             
             var contextFactoryMock = new Mock<ICuriosityDataContextFactory>();
             contextFactoryMock
-                .Setup(x => x.CreateReplicaContext())
+                .Setup(x => x.CreateContext(It.IsAny<bool>()))
                 .Returns(contextMock.Object);
 
             
@@ -43,17 +43,15 @@ namespace Curiosity.DateTime.DbSync.UnitTests
         {
             var timeShift = TimeSpan.FromMinutes(5);
             
-            var contextMock = new Mock<ICuriosityReadOnlyDataContext>();
+            var contextMock = new Mock<ICuriosityDataContext>();
             contextMock
                 .Setup(c => c.GetImmediateServerTimeUtcAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(System.DateTime.UtcNow - timeShift));
             
             var contextFactoryMock = new Mock<ICuriosityDataContextFactory>();
             contextFactoryMock
-                .Setup(x => x.CreateReplicaContext())
+                .Setup(x => x.CreateContext(It.IsAny<bool>()))
                 .Returns(contextMock.Object);
-            
-            var logger = Mock.Of<ILogger>();
             
             var service = new DbSyncDateTimeService(contextFactoryMock.Object);
             await service.InitAsync();

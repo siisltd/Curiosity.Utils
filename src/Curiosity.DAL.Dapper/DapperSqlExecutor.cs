@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
 
@@ -14,12 +15,13 @@ namespace Curiosity.DAL.Dapper
             ICuriosityDataContext context,
             string sqlTemplate,
             IDictionary<string, object>? parameters = null,
-            bool ignoreNulls = false)
+            bool ignoreNulls = false,
+            int? commandTimeoutSec = null)
         {
             var dynamicParams = parameters?.ConvertToDynamicParameters(ignoreNulls);
 
             var connection = context.Connection;
-            connection.Execute(sqlTemplate, dynamicParams);
+            connection.Execute(sqlTemplate, dynamicParams, commandTimeout: commandTimeoutSec);
         }
 
         /// <inheritdoc />
@@ -27,12 +29,16 @@ namespace Curiosity.DAL.Dapper
             ICuriosityDataContext context,
             string sqlTemplate,
             IDictionary<string, object>? parameters = null,
-            bool ignoreNulls = false)
+            bool ignoreNulls = false,
+            int? commandTimeoutSec = null,
+            CancellationToken cancellationToken = default)
         {
             var dynamicParams = parameters?.ConvertToDynamicParameters(ignoreNulls);
 
+            var command = new CommandDefinition(sqlTemplate, dynamicParams, commandTimeout: commandTimeoutSec, cancellationToken: cancellationToken);
+            
             var connection = context.Connection;
-            return connection.ExecuteAsync(sqlTemplate, dynamicParams);
+            return connection.ExecuteAsync(command);
         }
 
         /// <inheritdoc />
@@ -40,12 +46,13 @@ namespace Curiosity.DAL.Dapper
             ICuriosityReadOnlyDataContext context,
             string sqlTemplate,
             IDictionary<string, object>? parameters = null,
-            bool ignoreNulls = false)
+            bool ignoreNulls = false,
+            int? commandTimeoutSec = null)
         {
             var dynamicParams = parameters?.ConvertToDynamicParameters(ignoreNulls);
 
             var connection = context.Connection;
-            return connection.QuerySingleOrDefault<T>(sqlTemplate, dynamicParams);
+            return connection.QuerySingleOrDefault<T>(sqlTemplate, dynamicParams, commandTimeout: commandTimeoutSec);
         }
 
         /// <inheritdoc />
@@ -53,12 +60,16 @@ namespace Curiosity.DAL.Dapper
             ICuriosityReadOnlyDataContext context,
             string sqlTemplate,
             IDictionary<string, object>? parameters = null,
-            bool ignoreNulls = false)
+            bool ignoreNulls = false,
+            int? commandTimeoutSec = null,
+            CancellationToken cancellationToken = default)
         {
             var dynamicParams = parameters?.ConvertToDynamicParameters(ignoreNulls);
 
+            var command = new CommandDefinition(sqlTemplate, dynamicParams, commandTimeout: commandTimeoutSec, cancellationToken: cancellationToken);
+            
             var connection = context.Connection;
-            return connection.QuerySingleOrDefaultAsync<T>(sqlTemplate, dynamicParams);
+            return connection.QuerySingleOrDefaultAsync<T>(command);
         }
 
         /// <inheritdoc />
@@ -66,12 +77,13 @@ namespace Curiosity.DAL.Dapper
             ICuriosityReadOnlyDataContext context,
             string sqlTemplate,
             IDictionary<string, object>? parameters = null,
-            bool ignoreNulls = false)
+            bool ignoreNulls = false,
+            int? commandTimeoutSec = null)
         {
             var dynamicParams = parameters?.ConvertToDynamicParameters(ignoreNulls);
 
             var connection = context.Connection;
-            var result = connection.Query<T>(sqlTemplate, dynamicParams);
+            var result = connection.Query<T>(sqlTemplate, dynamicParams, commandTimeout: commandTimeoutSec);
 
             return result;
         }
@@ -81,22 +93,31 @@ namespace Curiosity.DAL.Dapper
             ICuriosityReadOnlyDataContext context,
             string sqlTemplate,
             IDictionary<string, object>? parameters = null,
-            bool ignoreNulls = true)
+            bool ignoreNulls = true,
+            int? commandTimeoutSec = null,
+            CancellationToken cancellationToken = default)
         {
             var dynamicParams = parameters?.ConvertToDynamicParameters(ignoreNulls);
 
+            var commandDefinition = new CommandDefinition(sqlTemplate, dynamicParams, commandTimeout: commandTimeoutSec, cancellationToken: cancellationToken);
+            
             var connection = context.Connection;
-            return connection.QueryAsync<T>(sqlTemplate, dynamicParams);
+            return connection.QueryAsync<T>(commandDefinition);
         }
         
         /// <inheritdoc />
         public Task<IEnumerable<T>> QueryManyAsync<T>(
             ICuriosityReadOnlyDataContext context,
             string sqlTemplate,
-            object? parameters)
+            object? parameters,
+            int? commandTimeoutSec = null,
+            CancellationToken cancellationToken = default)
         {
             var connection = context.Connection;
-            return connection.QueryAsync<T>(sqlTemplate, parameters);
+
+            var commandDefinition = new CommandDefinition(sqlTemplate, parameters, commandTimeout: commandTimeoutSec, cancellationToken: cancellationToken);
+            
+            return connection.QueryAsync<T>(commandDefinition);
         }
 
         /// <inheritdoc />
@@ -104,7 +125,7 @@ namespace Curiosity.DAL.Dapper
             ICuriosityDataContext context,
             string procedureName,
             IDictionary<string, object>? parameters = null,
-            int? timeoutSec = null,
+            int? commandTimeoutSec = null,
             bool ignoreNulls = true)
         {
             var connection = context.Connection;
@@ -114,7 +135,7 @@ namespace Curiosity.DAL.Dapper
             return connection.QuerySingleOrDefault<T>(
                 procedureName,
                 dynamicParams,
-                commandTimeout: timeoutSec,
+                commandTimeout: commandTimeoutSec,
                 commandType: CommandType.StoredProcedure);
         }
 
@@ -123,18 +144,22 @@ namespace Curiosity.DAL.Dapper
             ICuriosityDataContext context,
             string procedureName,
             IDictionary<string, object>? parameters = null,
-            int? timeoutSec = null,
-            bool ignoreNulls = true)
+            int? commandTimeoutSec = null,
+            bool ignoreNulls = true,
+            CancellationToken cancellationToken = default)
         {
             var connection = context.Connection;
 
             var dynamicParams = parameters?.ConvertToDynamicParameters(ignoreNulls);
 
-            return connection.QuerySingleOrDefaultAsync<T>(
+            var commandDefinition = new CommandDefinition(
                 procedureName,
                 dynamicParams,
-                commandTimeout: timeoutSec,
-                commandType: CommandType.StoredProcedure);
+                commandType: CommandType.StoredProcedure,
+                commandTimeout: commandTimeoutSec,
+                cancellationToken: cancellationToken);
+            
+            return connection.QuerySingleOrDefaultAsync<T>(commandDefinition);
         }
 
         /// <inheritdoc />
@@ -142,7 +167,7 @@ namespace Curiosity.DAL.Dapper
             ICuriosityDataContext context,
             string procedureName,
             IDictionary<string, object>? parameters = null,
-            int? timeoutSec = null,
+            int? commandTimeoutSec = null,
             bool ignoreNulls = true)
         {
             var connection = context.Connection;
@@ -152,7 +177,7 @@ namespace Curiosity.DAL.Dapper
             connection.QuerySingleOrDefault(
                 procedureName,
                 dynamicParams,
-                commandTimeout: timeoutSec,
+                commandTimeout: commandTimeoutSec,
                 commandType: CommandType.StoredProcedure);
         }
 
@@ -161,18 +186,22 @@ namespace Curiosity.DAL.Dapper
             ICuriosityDataContext context,
             string procedureName,
             IDictionary<string, object>? parameters = null,
-            int? timeoutSec = null,
-            bool ignoreNulls = true)
+            int? commandTimeoutSec = null,
+            bool ignoreNulls = true,
+            CancellationToken cancellationToken = default)
         {
             var connection = context.Connection;
 
             var dynamicParams = parameters?.ConvertToDynamicParameters(ignoreNulls);
 
-            return connection.QuerySingleOrDefaultAsync(
+            var commandDefinition = new CommandDefinition(
                 procedureName,
                 dynamicParams,
-                commandTimeout: timeoutSec,
-                commandType: CommandType.StoredProcedure);
+                commandTimeout: commandTimeoutSec,
+                commandType: CommandType.StoredProcedure,
+                cancellationToken: cancellationToken);
+            
+            return connection.QuerySingleOrDefaultAsync(commandDefinition);
         }
 
         /// <inheritdoc />
@@ -180,7 +209,7 @@ namespace Curiosity.DAL.Dapper
             ICuriosityReadOnlyDataContext context,
             string procedureName,
             IDictionary<string, object>? parameters = null,
-            int? timeoutSec = null,
+            int? commandTimeoutSec = null,
             bool ignoreNulls = true)
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
@@ -191,17 +220,18 @@ namespace Curiosity.DAL.Dapper
             return connection.Query<T>(
                 procedureName,
                 dynamicParams,
-                commandTimeout: timeoutSec,
+                commandTimeout: commandTimeoutSec,
                 commandType: CommandType.StoredProcedure);
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<T>> ExecuteStoredProcedureAsync<T>(
+        public Task<IEnumerable<T>> ExecuteStoredProcedureAsync<T>(
             ICuriosityReadOnlyDataContext context,
             string procedureName,
             IDictionary<string, object>? parameters = null,
-            int? timeoutSec = null,
-            bool ignoreNulls = true)
+            int? commandTimeoutSec = null,
+            bool ignoreNulls = true,
+            CancellationToken cancellationToken = default)
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
 
@@ -209,13 +239,14 @@ namespace Curiosity.DAL.Dapper
 
             var dynamicParams = parameters?.ConvertToDynamicParameters(ignoreNulls);
 
-            var result = await connection.QueryAsync<T>(
+            var commandDefinition = new CommandDefinition(
                 procedureName,
                 dynamicParams,
-                commandTimeout: timeoutSec,
-                commandType: CommandType.StoredProcedure);
+                commandTimeout: commandTimeoutSec,
+                commandType: CommandType.StoredProcedure,
+                cancellationToken: cancellationToken);
 
-            return result;
+            return connection.QueryAsync<T>(commandDefinition);
         }
     }
 }

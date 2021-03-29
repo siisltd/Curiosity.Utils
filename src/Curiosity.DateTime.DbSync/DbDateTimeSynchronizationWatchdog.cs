@@ -28,6 +28,7 @@ namespace Curiosity.DateTime.DbSync
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        /// <inheritdoc />
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation($"Starting date time with DB synchronization watchdog with check period of {_dbDateTimeOptions.SyncPeriodMin} minutes...");
@@ -37,6 +38,7 @@ namespace Curiosity.DateTime.DbSync
             _logger.LogInformation("Date time with DB synchronization watchdog started.");
         }
 
+        /// <inheritdoc />
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await Task.Yield();
@@ -59,9 +61,9 @@ namespace Curiosity.DateTime.DbSync
                     _logger.LogError(e, $"Error while sync data and time with DB. Reason: {e.Message}.");
                 }
             }
-            
         }
-        
+
+        /// <inheritdoc />
         public override async Task StopAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Stopping date time with DB synchronization watchdog...");
@@ -70,6 +72,5 @@ namespace Curiosity.DateTime.DbSync
             
             _logger.LogInformation("Date time with DB synchronization watchdog stopped.");
         }
-
     }
 }

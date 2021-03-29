@@ -26,14 +26,13 @@ namespace Curiosity.DAL.EF
         /// <inheritdoc />
         public IDbConnection Connection => base.Database.GetDbConnection();
 
-
         public CuriosityReadOnlyDataContext(DbContextOptions<T> options) : base(options)
         {
             
         }
 
         /// <inheritdoc />
-        public async Task<DateTime> GetImmediateServerTimeUtcAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<DateTime> GetImmediateServerTimeUtcAsync(CancellationToken cancellationToken = default)
         {
             using (var command = Connection.CreateCommand())
             {

@@ -20,9 +20,9 @@ namespace Curiosity.DAL
         public string ConnectionString { get; set; } = null!;
 
         /// <summary>
-        /// Connection string for read-only access from replica.
+        /// Connection string for read-only access.
         /// </summary>
-        public string ReplicaConnectionString { get; set; } = null!;
+        public string? ReadOnlyConnectionString { get; set; }
 
         /// <summary>
         /// Option for logging all SQL queries.

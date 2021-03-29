@@ -1,5 +1,6 @@
 using System.Data;
 using System.Data.Common;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,9 +26,9 @@ namespace Curiosity.DAL.EF
         }
 
         /// <inheritdoc />
-        public async Task<ICuriosityDataContextTransaction> BeginTransactionAsync(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+        public async Task<ICuriosityDataContextTransaction> BeginTransactionAsync(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, CancellationToken cancellationToken = default)
         {
-            var transaction = await base.Database.BeginTransactionAsync(isolationLevel);
+            var transaction = await base.Database.BeginTransactionAsync(isolationLevel, cancellationToken);
             
             return new CuriosityDbTransaction(transaction);
         }

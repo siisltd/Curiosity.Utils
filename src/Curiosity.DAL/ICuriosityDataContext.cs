@@ -18,12 +18,12 @@ namespace Curiosity.DAL
         /// <summary>
         /// Saves changes in async manner.
         /// </summary>
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Saves changes in async manner.
         /// </summary>
-        Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken);
+        Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Starts a new transaction.
@@ -33,7 +33,7 @@ namespace Curiosity.DAL
         /// <summary>
         /// Starts a new transaction in async manner.
         /// </summary>
-        Task<ICuriosityDataContextTransaction> BeginTransactionAsync(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted);
+        Task<ICuriosityDataContextTransaction> BeginTransactionAsync(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Attaches current data context to specified transaction.

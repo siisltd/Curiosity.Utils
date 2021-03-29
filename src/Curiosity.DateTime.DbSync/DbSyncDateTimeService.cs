@@ -31,7 +31,7 @@ namespace Curiosity.DateTime.DbSync
         {
             // don't consider request time to DB
             // we don't need high accuracy
-            using (var context = _dataContextFactory.CreateReplicaContext())
+            using (var context = _dataContextFactory.CreateContext())
             {
                 var serverTime = await context.GetImmediateServerTimeUtcAsync(cancellationToken);
                 var localTime = System.DateTime.UtcNow;
