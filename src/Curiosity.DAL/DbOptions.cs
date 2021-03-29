@@ -28,6 +28,11 @@ namespace Curiosity.DAL
         /// Option for logging all SQL queries.
         /// </summary>
         public bool IsGlobalLoggingEnabled { get; set; }
+        
+        /// <summary>
+        /// Option for logging sensitive data of SQL queries (mostly query params).
+        /// </summary>
+        public bool IsSensitiveDataLoggingEnabled { get; set; }
 
         /// <inheritdoc />
         public virtual IReadOnlyCollection<ConfigurationValidationError> Validate(string? prefix = null)

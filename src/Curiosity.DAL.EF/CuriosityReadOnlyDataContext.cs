@@ -28,7 +28,6 @@ namespace Curiosity.DAL.EF
 
         public CuriosityReadOnlyDataContext(DbContextOptions<T> options) : base(options)
         {
-            
         }
 
         /// <inheritdoc />
