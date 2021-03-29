@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Reflection;
 using Dapper;
 
@@ -23,8 +22,9 @@ namespace Curiosity.DAL.Dapper
         /// <param name="types"></param>
         public static void RegisterTypes(params Type[] types)
         {
-            foreach (var type in types)
+            for (var i = 0; i < types.Length; i++)
             {
+                var type = types[i];
                 SqlMapper.SetTypeMap(type, new DapperTypeMapper(type));
             }
         }
@@ -59,23 +59,29 @@ namespace Curiosity.DAL.Dapper
             return _internalMapper.GetMember(columnName);
         }
 
-        private readonly Func<Type, string, PropertyInfo> _propertyResolver = (type, name) =>
+        private readonly Func<Type, string, PropertyInfo?> _propertyResolver = (type, name) =>
         {
             var properties =
                 type.GetProperties(BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic |
                                    BindingFlags.Public);
 
-            return properties.FirstOrDefault(property =>
+            for (var i = 0; i < properties.Length; i++)
             {
+                var property = properties[i];
                 if (property.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                 {
-                    return true;
+                    return property;
                 }
 
                 var attribute = property.GetCustomAttribute<ColumnAttribute>();
 
-                return attribute?.Name?.Equals(name, StringComparison.OrdinalIgnoreCase) ?? false;
-            });
+                if (attribute?.Name?.Equals(name, StringComparison.OrdinalIgnoreCase) ?? false)
+                {
+                    return property;
+                }
+            }
+
+            return null;
         };
     }
 }
