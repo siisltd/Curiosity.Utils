@@ -22,7 +22,7 @@ namespace Curiosity.Tools
         }
         
         /// <summary>
-        /// Hide data in JSON
+        /// Hide string data in JSON
         /// </summary>
         public string? HideInJson(string? json)
         {
@@ -33,7 +33,7 @@ namespace Curiosity.Tools
                 var name = _sensitiveFieldNames[i];
                 json = Regex.Replace(
                     json,
-                    $"(\"{name}\":\\s*\".*\")+",
+                    $"(\"{name}\":\\s*\"[^\"]+?\")+",
                     $"\"{name}\": ***",
                     RegexOptions.IgnoreCase);
             }

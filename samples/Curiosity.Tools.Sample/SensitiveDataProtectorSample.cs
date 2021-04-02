@@ -13,6 +13,7 @@ namespace Curiosity.Tools.Sample
             {
                 Login = "Login",
                 Password = "Super secret password",
+                OtherField = "Other data",
             });
 
             var protectedJson = protector.HideInJson(json);
