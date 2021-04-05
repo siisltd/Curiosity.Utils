@@ -6,7 +6,7 @@ using Curiosity.Notification.Abstractions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Curiosity.Notification
+namespace Curiosity.Notification.Channels
 {
     public abstract class NotificationChannelBase<TNotification> : BackgroundService, INotificationChannel
         where TNotification : class, INotification
