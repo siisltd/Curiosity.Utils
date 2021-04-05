@@ -9,7 +9,7 @@ namespace Curiosity.Notification
     public class Notificator : INotificator
     {
         private readonly Dictionary<string, INotificationChannel> _channels;
-        private readonly Dictionary<int, Dictionary<string, INotificationBuilder>> _buildersPerType;
+        private readonly Dictionary<string, Dictionary<string, INotificationBuilder>> _buildersPerType;
         private readonly ILogger _logger;
 
         public Notificator(
@@ -33,7 +33,7 @@ namespace Curiosity.Notification
             }
 
             // add builders
-            _buildersPerType = new Dictionary<int, Dictionary<string, INotificationBuilder>>();
+            _buildersPerType = new Dictionary<string, Dictionary<string, INotificationBuilder>>();
             foreach (var notificationBuilder in notificationBuilders)
             {
                 if (!_buildersPerType.ContainsKey(notificationBuilder.NotificationType))

@@ -5,6 +5,6 @@ namespace Curiosity.Notification.Abstractions
     /// </summary>
     public interface INotificationMetadata
     {
-        int Type { get; }
+        string Type { get; }
     }
 }

@@ -8,7 +8,7 @@ namespace Curiosity.Notification.Builders
 {
     public abstract class BaseEmailNotificationBuilder<TMetadata> : INotificationBuilder where TMetadata : INotificationMetadata
     {
-        public abstract int NotificationType { get; }
+        public abstract string NotificationType { get; }
         public string ChannelType { get; } = EmailNotification.Type;
         
         public Task<IReadOnlyList<INotification>> BuildNotificationsAsync(INotificationMetadata notificationMetadata)

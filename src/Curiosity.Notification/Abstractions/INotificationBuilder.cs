@@ -8,7 +8,7 @@ namespace Curiosity.Notification.Abstractions
     /// </summary>
     public interface INotificationBuilder
     {
-        int NotificationType { get; }
+        string NotificationType { get; }
         
         string ChannelType { get; }
 
