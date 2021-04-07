@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.12] - 2021-04-07
+
+### Changed
+
+- Use `Curiosity.Configuration.YAML.1.0.6`.
+
 ## [1.1.12] - 2021-03-25
 
 ### Changed
