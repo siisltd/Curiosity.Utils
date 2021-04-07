@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.6] - 2021-04-07
+
+### Changed
+
+- Removed file existence check (base config provider usually made this check).
+
 ## [1.0.5] - 2021-04-07
 
 ### Fixed
