@@ -25,17 +25,17 @@ namespace Curiosity.Configurations
         protected override void AddFile(IConfigurationBuilder configurationBuilder, string fileNameWithoutExtension, bool isFileOptional)
         {
             var file = $"{fileNameWithoutExtension}.yml";
-                
+            var pathToMainConfiguration = Path.Combine(PathToConfigurationFiles, file);
+
             // check main configuration file existence because we want to throw more obvious exception 
             if (!isFileOptional)
             {
-                var pathToMainConfiguration = Path.Combine(PathToConfigurationFiles, file);
-                if (!File.Exists(file))
-                    throw new InvalidOperationException($"Configuration file \"{Path.GetFileName(file)}\" does not exist in directory \"{Path.GetDirectoryName(pathToMainConfiguration)}\"");
+                if (!File.Exists(pathToMainConfiguration))
+                    throw new InvalidOperationException($"Configuration file \"{Path.GetFileName(file)}\" does not exist in directory \"{Path.GetDirectoryName(pathToMainConfiguration)}\" (full path = \"{pathToMainConfiguration}\"");
 
             }
             
-            configurationBuilder.AddYamlFile(file, isFileOptional);
+            configurationBuilder.AddYamlFile(pathToMainConfiguration, isFileOptional);
         }
     }
 }

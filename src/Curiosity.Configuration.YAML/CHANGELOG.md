@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.5] - 2021-04-07
+
+### Fixed
+
+- Fixed setting base directory for configurations.
+
 ## [1.0.4] - 2021-03-29
 
 - Sync release.
