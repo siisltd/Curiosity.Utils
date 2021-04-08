@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.10] - 2021-04-08
+
+### Added
+
+- Added separate method for `AppName` in logging configuration.
+
 ## [1.1.9] - 2021-04-07
 
 ### Changed

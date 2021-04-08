@@ -6,7 +6,7 @@ namespace Curiosity.Hosting
     /// <summary>
     /// Class for configuring NLog.
     /// </summary>
-    public class MarvinNLogConfigurator
+    public class CuriosityNLogConfigurator
     {
         private const string MissingVarErrorMessageFormat = "NLog configuration file does not contain a \"{0}\" variable.";
             
@@ -20,12 +20,25 @@ namespace Curiosity.Hosting
         private const string SmtpPasswordVarName = "smtppassword";
         private const string SmtpServerVarName = "smtpserver";
 
-        public MarvinNLogConfigurator(string logConfigurationPath, Action<string> configureAction)
+        public CuriosityNLogConfigurator(string logConfigurationPath, Action<string> configureAction)
         {
             if (logConfigurationPath == null) throw new ArgumentNullException(nameof(logConfigurationPath));
             if (configureAction == null) throw new ArgumentNullException(nameof(configureAction));
             
             configureAction.Invoke(logConfigurationPath);
+        }
+
+        public CuriosityNLogConfigurator WithAppName(string appName)
+        {
+            if (String.IsNullOrWhiteSpace(appName))
+                throw new ArgumentNullException(nameof(appName));
+            
+            if (!LogManager.Configuration.Variables.ContainsKey(AppNameVarName))
+                throw new Exception(String.Format(MissingVarErrorMessageFormat, AppNameVarName));
+            
+            LogManager.Configuration.Variables[AppNameVarName] = appName;
+
+            return this;
         }
 
         /// <summary>
@@ -38,7 +51,7 @@ namespace Curiosity.Hosting
         /// <exception cref="ArgumentNullException">when <paramref name="logOutputDirectory"/> is null</exception>
         /// <exception cref="Exception">when "<strong>logOutputDirectory</strong>" variable is not defined inside NLog
         /// configuration file.</exception>
-        public MarvinNLogConfigurator WithLogOutputDirectory(string logOutputDirectory)
+        public CuriosityNLogConfigurator WithLogOutputDirectory(string logOutputDirectory)
         {
             if (logOutputDirectory == null)
                 throw new ArgumentNullException(nameof(logOutputDirectory));
@@ -70,15 +83,10 @@ namespace Curiosity.Hosting
         /// <exception cref="ArgumentNullException">when <paramref name="loggerMailOptions"/> is null</exception>
         /// <exception cref="Exception">when any of listed above variables is not defined inside NLog
         /// configuration file.</exception>
-        public MarvinNLogConfigurator WithMail(string appName, ILoggerMailOptions loggerMailOptions)
+        public CuriosityNLogConfigurator WithMail(ILoggerMailOptions loggerMailOptions)
         {
-            if (String.IsNullOrWhiteSpace(appName))
-                throw new ArgumentNullException(nameof(appName));
             if (loggerMailOptions == null)
                 throw new ArgumentNullException(nameof(loggerMailOptions));
-
-            if (!LogManager.Configuration.Variables.ContainsKey(AppNameVarName))
-                throw new Exception(String.Format(MissingVarErrorMessageFormat, AppNameVarName));
                 
             if (!LogManager.Configuration.Variables.ContainsKey(MailToVarName))
                 throw new Exception(String.Format(MissingVarErrorMessageFormat, MailToVarName));
@@ -94,8 +102,6 @@ namespace Curiosity.Hosting
                 
             if (!LogManager.Configuration.Variables.ContainsKey(SmtpServerVarName))
                 throw new Exception(String.Format(MissingVarErrorMessageFormat, SmtpServerVarName));
-
-            LogManager.Configuration.Variables[AppNameVarName] = appName;
                 
             // Set all options, except AppName, only if they are set in configuration.
             if (!String.IsNullOrWhiteSpace(loggerMailOptions.MailTo))

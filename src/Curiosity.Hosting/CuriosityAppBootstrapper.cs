@@ -57,13 +57,14 @@ namespace Curiosity.Hosting
             ApplicationHelper.SetDefaultCulture(configuration.Culture);
 
             // configure logs
-            var loggingConfiguration = new MarvinNLogConfigurator(configuration.Log.LogConfigurationPath, LoadLoggingConfiguration);
+            var loggingConfiguration = new CuriosityNLogConfigurator(configuration.Log.LogConfigurationPath, LoadLoggingConfiguration);
             loggingConfiguration.WithLogOutputDirectory(configuration.Log.LogOutputDirectory);
-            
+
+            loggingConfiguration.WithAppName(configuration.AppName);
             // ReSharper disable once SuspiciousTypeConversion.Global
             if (configuration is IConfigurationWithMailLogger configurationWithMailLogger)
             {
-                loggingConfiguration.WithMail(configuration.AppName, configurationWithMailLogger.LoggerMail);
+                loggingConfiguration.WithMail(configurationWithMailLogger.LoggerMail);
             }
             loggingConfiguration.Configure();
 
