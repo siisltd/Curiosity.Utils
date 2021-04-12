@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.11] - 2021-04-08
+
+### Added
+
+- Added `ConfigureServices` overload with arguments passing to `CuriosityToolAppBootstrapper`.
+
 ## [1.1.10] - 2021-04-08
 
 ### Added

@@ -35,6 +35,7 @@ namespace Curiosity.Hosting
     {
         private Action<IServiceCollection>? _configureServiceAction;
         private Action<IServiceCollection, TConfiguration>? _configureServiceActionWithConfig;
+        private Action<IServiceCollection, TConfiguration, TArgs>? _configureServiceActionWithConfigAndArgs;
         
         public CuriosityToolAppBootstrapper<TArgs, TConfiguration> ConfigureServices(Action<IServiceCollection> configureServiceAction)
         {
@@ -45,6 +46,12 @@ namespace Curiosity.Hosting
         public CuriosityToolAppBootstrapper<TArgs, TConfiguration> ConfigureServices(Action<IServiceCollection, TConfiguration> configureServiceAction)
         {
             _configureServiceActionWithConfig = configureServiceAction;
+            return this;
+        }
+        
+        public CuriosityToolAppBootstrapper<TArgs, TConfiguration> ConfigureServices(Action<IServiceCollection, TConfiguration, TArgs> configureServiceAction)
+        {
+            _configureServiceActionWithConfigAndArgs = configureServiceAction;
             return this;
         }
 
@@ -70,6 +77,7 @@ namespace Curiosity.Hosting
             });
             _configureServiceAction?.Invoke(services);
             _configureServiceActionWithConfig?.Invoke(services, configuration);
+            _configureServiceActionWithConfigAndArgs?.Invoke(services, configuration, arguments);
             services.AddAppInitialization();
                 
             services.TryAddSingleton(configuration);
