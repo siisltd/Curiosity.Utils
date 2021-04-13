@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.0] - 2021-04-13
+
+### Added
+
+- Added support for secret config files.
+
 ## [1.0.5] - 2021-03-29
 
 - Sync release.

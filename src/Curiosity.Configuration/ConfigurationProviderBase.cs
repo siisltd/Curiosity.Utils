@@ -15,6 +15,7 @@ namespace Curiosity.Configuration
         private const string ProductionEnvironmentName = "Production";
         
         private const string DefaultConfigurationFileName = "config";
+        private const string SecretFileNameTemplate = "{0}.secret";
         private const string EnvironmentConfigurationFileNameTemplate = "config.{0}";
         private const string EnvironmentAndUserConfigurationFileNameTemplate = "config.{0}.{1}";
         
@@ -86,9 +87,10 @@ namespace Curiosity.Configuration
             SetBasePath(configuration, PathToConfigurationFiles);
 
             // add default config file
-            var files = new List<(string fileName, bool isOptional)>(1)
+            var files = new List<(string fileName, bool isOptional)>(2)
             {
-                (DefaultConfigurationFileName, _isConfigOptional)
+                (DefaultConfigurationFileName, _isConfigOptional),
+                (String.Format(SecretFileNameTemplate, DefaultConfigurationFileName), true)
             };
 
             // add optional environment files
@@ -96,13 +98,17 @@ namespace Curiosity.Configuration
             if (!String.IsNullOrWhiteSpace(environment) &&
                 !String.Equals(environment, ProductionEnvironmentName, StringComparison.OrdinalIgnoreCase))
             {
-                files.Add((String.Format(EnvironmentConfigurationFileNameTemplate, environment), true));
+                var envConfigFileName = String.Format(EnvironmentConfigurationFileNameTemplate, environment);
+                files.Add((envConfigFileName, true));
+                files.Add((String.Format(SecretFileNameTemplate, envConfigFileName), true));
 
                 // if user was specified, add options environment specific config file for uer
                 var user = Environment.GetEnvironmentVariable("USER");
                 if (!String.IsNullOrWhiteSpace(user))
                 {
-                    files.Add((String.Format(EnvironmentAndUserConfigurationFileNameTemplate, environment, user), true));
+                    var userEnvConfigFileName = String.Format(EnvironmentAndUserConfigurationFileNameTemplate, environment, user);
+                    files.Add((userEnvConfigFileName, true));
+                    files.Add((String.Format(SecretFileNameTemplate, userEnvConfigFileName), true));
                 }
             }
 
