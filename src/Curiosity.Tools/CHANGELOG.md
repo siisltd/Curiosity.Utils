@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+
+- Fixed regex pattern which searches sensitive data in JSON
+
 ## [1.0.4] - 2021-03-15
 
 ### Added
