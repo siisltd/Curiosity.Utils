@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
 
+        <PackageId>Curiosity.Notifications.EMail</PackageId>
         <Title>Curiosity.Notifications.EMail</Title>
         <Description>EMail notifications.</Description>
         <Summary>EMail notifications.</Summary>

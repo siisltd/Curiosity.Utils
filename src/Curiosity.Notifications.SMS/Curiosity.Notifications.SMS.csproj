@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
 
+        <PackageId>Curiosity.Notifications.SMS</PackageId>
         <Title>Curiosity.Notifications.SMS</Title>
         <Description>SMS notifications.</Description>
         <Summary>SMS notifications.</Summary>
