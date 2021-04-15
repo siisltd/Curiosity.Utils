@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.1] - 2021-04-15
+
+### Changed
+
+- Printing `ViewBag.ErrorText` as raw html at `AjaxError` view.
+
 ## [1.1.0] - 2021-03-27
 
 ### Changed

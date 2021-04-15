@@ -5,10 +5,10 @@
 
 @if (ViewBag.ErrorText != null)
 {
-    <div class="alert alert-danger">@ViewBag.ErrorText</div>
+    <div class="alert alert-danger">@Html.Raw(ViewBag.ErrorText)</div>
 }
 
-@if (Model != null && Model.Exception != null)
+@if (Model?.Exception != null)
 {
     <div class="alert alert-danger">@Model.Exception.Message</div>
 }
