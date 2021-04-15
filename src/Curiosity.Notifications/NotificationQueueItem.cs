@@ -1,8 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using Curiosity.Notification.Abstractions;
 
-namespace Curiosity.Notification
+namespace Curiosity.Notifications
 {
     internal class NotificationQueueItem<T> where T : class, INotification
     {

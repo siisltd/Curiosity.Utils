@@ -70,7 +70,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.SampleWebApp", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.Tools.Sample", "samples\Curiosity.Tools.Sample\Curiosity.Tools.Sample.csproj", "{9BF89006-7E88-43D6-80AC-A9F0C3057CAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.Notification", "src\Curiosity.Notification\Curiosity.Notification.csproj", "{195BE082-B01A-44B6-BF57-98FA78C4996B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.Notifications", "src\Curiosity.Notifications\Curiosity.Notifications.csproj", "{195BE082-B01A-44B6-BF57-98FA78C4996B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.Notifications.EMail", "src\Curiosity.Notifications.EMail\Curiosity.Notifications.EMail.csproj", "{66B11726-93BE-43E0-BFC3-B31D3DEA863B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.Notifications.SMS", "src\Curiosity.Notifications.SMS\Curiosity.Notifications.SMS.csproj", "{E05E26B8-89E1-4F27-A6AB-A9A59D59C4FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,6 +115,8 @@ Global
 		{9C3EFD51-4681-4CBC-8CB1-0DD69FA9899A} = {A7A87B49-2E4C-4A0A-92F4-7C7849F36A84}
 		{9BF89006-7E88-43D6-80AC-A9F0C3057CAB} = {A7A87B49-2E4C-4A0A-92F4-7C7849F36A84}
 		{195BE082-B01A-44B6-BF57-98FA78C4996B} = {7C485CBA-A08F-4A0E-835A-4505CBBB7EA8}
+		{66B11726-93BE-43E0-BFC3-B31D3DEA863B} = {7C485CBA-A08F-4A0E-835A-4505CBBB7EA8}
+		{E05E26B8-89E1-4F27-A6AB-A9A59D59C4FA} = {7C485CBA-A08F-4A0E-835A-4505CBBB7EA8}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DB8D86C6-4FA0-48BA-AFA6-7403D7762FD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -233,5 +239,13 @@ Global
 		{195BE082-B01A-44B6-BF57-98FA78C4996B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{195BE082-B01A-44B6-BF57-98FA78C4996B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{195BE082-B01A-44B6-BF57-98FA78C4996B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66B11726-93BE-43E0-BFC3-B31D3DEA863B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66B11726-93BE-43E0-BFC3-B31D3DEA863B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66B11726-93BE-43E0-BFC3-B31D3DEA863B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66B11726-93BE-43E0-BFC3-B31D3DEA863B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E05E26B8-89E1-4F27-A6AB-A9A59D59C4FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E05E26B8-89E1-4F27-A6AB-A9A59D59C4FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E05E26B8-89E1-4F27-A6AB-A9A59D59C4FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E05E26B8-89E1-4F27-A6AB-A9A59D59C4FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

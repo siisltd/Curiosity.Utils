@@ -1,15 +1,40 @@
 using System;
-using Curiosity.Notification.Abstractions;
 
-namespace Curiosity.Notification.Types
+namespace Curiosity.Notifications.EMail
 {
+    /// <summary>
+    /// EMai notification.
+    /// </summary>
     public class EmailNotification : INotification
     {
-        public const string Type = "curiosity.notification.types.email";
+        /// <summary>
+        /// Type of an EMail notification.
+        /// </summary>
+        public static readonly string Type = "curiosity.notifications.email";
+        
+        /// <summary>
+        /// The type of channel through which the notification will be sent
+        /// </summary>
         public string ChannelType => Type;
+        
+        /// <summary>
+        /// EMail to send notification to.
+        /// </summary>
         public string Email { get; }
+        
+        /// <summary>
+        /// EMail subject.
+        /// </summary>
         public string Subject { get; }
+        
+        /// <summary>
+        /// The body of a EMail message.
+        /// </summary>
         public string Body { get; }
+        
+        /// <summary>
+        /// Is <see cref="Body"/> content present in a HTML format.
+        /// </summary>
         public bool IsBodyHtml { get; }
 
         public EmailNotification(

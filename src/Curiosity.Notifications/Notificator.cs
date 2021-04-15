@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Curiosity.Notification.Abstractions;
 using Microsoft.Extensions.Logging;
 
-namespace Curiosity.Notification
+namespace Curiosity.Notifications
 {
+    /// <inheritdoc />
     public class Notificator : INotificator
     {
         private readonly Dictionary<string, INotificationChannel> _channels;
@@ -51,6 +51,7 @@ namespace Curiosity.Notification
             if (_buildersPerType.Count == 0) throw new ArgumentException("Can't be empty", nameof(notificationBuilders));
         }
 
+        /// <inheritdoc />
         public async Task NotifyAsync(INotificationMetadata notificationMetadata)
         {
             if (notificationMetadata == null) throw new ArgumentNullException(nameof(notificationMetadata));
@@ -68,7 +69,7 @@ namespace Curiosity.Notification
                 }
 
                 var notifications = await builder.BuildNotificationsAsync(notificationMetadata);
-                if (notifications == null || notifications.Count == 0)
+                if (notifications.Count == 0)
                 {
                     _logger.LogWarning($"No notification have been built for {notificationMetadata.Type} for channel {channelType}");
                     continue;
@@ -79,8 +80,9 @@ namespace Curiosity.Notification
                     notificationsMap[channelType] = new List<INotification>();
                 }
 
-                foreach (var notification in notifications)
+                for (var i = 0; i < notifications.Count; i++)
                 {
+                    var notification = notifications[i];
                     if (notification != null)
                     {
                         notificationsMap[channelType].Add(notification);
@@ -93,8 +95,9 @@ namespace Curiosity.Notification
             foreach (var (channelType, notifications) in notificationsMap)
             {
                 var channel = _channels[channelType];
-                foreach (var notification in notifications)
+                for (var i = 0; i < notifications.Count; i++)
                 {
+                    var notification = notifications[i];
                     sendingTasks.Add(channel.SendNotificationAsync(notification));
                 }
             }
@@ -103,6 +106,7 @@ namespace Curiosity.Notification
             await Task.WhenAll(sendingTasks);
         }
 
+        /// <inheritdoc />
         public void NotifyAndForgot(INotificationMetadata notificationMetadata)
         {
             if (notificationMetadata == null) throw new ArgumentNullException(nameof(notificationMetadata));
@@ -111,12 +115,12 @@ namespace Curiosity.Notification
             {
                 if (task.IsFaulted)
                 {
-                    _logger.LogError(task.Exception, "Notification task faulted");
+                    _logger.LogError(task.Exception, $"Notification task faulted (NotificationType=\"{notificationMetadata.Type}\")");
                 }
 
                 if (task.IsCanceled)
                 {
-                    _logger.LogError("Notification task was canceled");
+                    _logger.LogError($"Notification task was canceled (NotificationType=\"{notificationMetadata.Type}\")");
                 }
             });
         }

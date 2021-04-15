@@ -1,16 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Curiosity.Notification.Abstractions;
-using Curiosity.Notification.Types;
 
-namespace Curiosity.Notification.Builders
+namespace Curiosity.Notifications.EMail
 {
-    public abstract class BaseSmsNotificationBuilder<TMetadata> : INotificationBuilder where TMetadata : INotificationMetadata
+    /// <summary>
+    /// Base class for building SMS notifications from metadata.
+    /// </summary>
+    /// <typeparam name="TMetadata">Type of a notifications metadata.</typeparam>
+    public abstract class EmailNotificationBuilderBase<TMetadata> : INotificationBuilder where TMetadata : INotificationMetadata
     {
+        /// <inheritdoc />
         public abstract string NotificationType { get; }
-        public string ChannelType { get; } = SmsNotification.Type;
-        
+
+        /// <inheritdoc />
+        public string ChannelType { get; } = EmailNotification.Type;
+
+        /// <inheritdoc />
         public Task<IReadOnlyList<INotification>> BuildNotificationsAsync(INotificationMetadata notificationMetadata)
         {
             if (notificationMetadata == null) throw new ArgumentNullException(nameof(notificationMetadata));
@@ -20,6 +26,9 @@ namespace Curiosity.Notification.Builders
             return BuildNotificationsAsync(metadata);
         }
 
+        /// <summary>
+        /// Builds a notification from specified metadata.
+        /// </summary>
         protected abstract Task<IReadOnlyList<INotification>> BuildNotificationsAsync(TMetadata metadata);
     }
 }
