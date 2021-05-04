@@ -31,6 +31,14 @@ namespace Curiosity.TempFiles
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation($"Starting {nameof(TempDirCleaner)}...");
+
+            // to avoid failure while executing
+            if (!Directory.Exists(_tempPath))
+            {
+                Directory.CreateDirectory(_tempPath);
+                _logger.LogInformation($"Directory \"{_tempPath}\" was successfully created");
+            }
+            
             await base.StartAsync(cancellationToken);
             _logger.LogInformation($"Starting {nameof(TempDirCleaner)} completed.");
         }
