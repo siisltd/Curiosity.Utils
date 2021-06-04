@@ -24,7 +24,7 @@ namespace Curiosity.Hosting
         protected TimeSpan ExceptionDelay { get; } = TimeSpan.FromMinutes(10);
 
         /// <summary>
-        /// 
+        /// A base class for services that perform some function on a timer.
         /// </summary>
         /// <param name="logger">Logger</param>
         /// <param name="watchdogPeriod">Interval between task executions <see cref="ProcessAsync"/></param>

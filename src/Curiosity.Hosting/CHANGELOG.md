@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.12] - 2021-06-04
+
+### Added
+
+- Added `Watchdog` for periodic tasks.
+
 ## [1.1.11] - 2021-04-08
 
 ### Added
