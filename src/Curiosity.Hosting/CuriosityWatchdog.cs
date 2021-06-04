@@ -46,7 +46,7 @@ namespace Curiosity.Hosting
         /// <summary>
         /// Handles the exception with the set interval <see cref="ExceptionDelay"/>.
         /// </summary>
-        protected virtual async Task HandleExceptionAsync(Exception e, CancellationToken stoppingToken)
+        protected virtual async Task HandleExceptionAsync(Exception e, CancellationToken stoppingToken = default)
         {
             Logger.LogError(e, $"Critical error in {GetType().Name}");
             // So that it doesn't throw 500 exceptions per second, but also doesn't die forever
@@ -79,14 +79,14 @@ namespace Curiosity.Hosting
             }
         }
 
-        public override async Task StartAsync(CancellationToken cancellationToken)
+        public override async Task StartAsync(CancellationToken cancellationToken = default)
         {
             Logger.LogInformation($"Starting {GetType().Name}...");
             await base.StartAsync(cancellationToken);
             Logger.LogInformation($"Starting {GetType().Name} completed.");
         }
 
-        public override async Task StopAsync(CancellationToken cancellationToken)
+        public override async Task StopAsync(CancellationToken cancellationToken = default)
         {
             Logger.LogInformation($"Stopping {GetType().Name}...");
             await base.StopAsync(cancellationToken);
