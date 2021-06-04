@@ -7,48 +7,58 @@ using System.Threading.Tasks;
 namespace Curiosity.Hosting
 {
     /// <summary>
-    /// Базовый класс для сервисов, которые выполняют какую-то функцию по таймеру.
+    /// A base class for services that perform some function on a timer.
     /// </summary>
     public abstract class CuriosityWatchdog : BackgroundService
     {
-        protected readonly ILogger _logger;
-        protected readonly TimeSpan _timer;
-        protected readonly TimeSpan _attemptTimer;
+        protected ILogger Logger { get; }
+
+        /// <summary>
+        /// Interval between task executions
+        /// </summary>
+        protected TimeSpan WatchdogPeriod { get; }
+
+        /// <summary>
+        /// Restart interval when an error occurs, default is 10 minutes
+        /// </summary>
+        protected TimeSpan ExceptionDelay { get; } = TimeSpan.FromMinutes(10);
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="logger">Логгер</param>
-        /// <param name="timer">Интервал между выполнениями задачи <see cref="ProcessAsync"/></param>
-        /// <param name="attemptTimer">Интервал перезапуска при возникновении ошибки</param>
-        public CuriosityWatchdog(ILogger logger, TimeSpan timer, TimeSpan attemptTimer)
+        /// <param name="logger">Logger</param>
+        /// <param name="watchdogPeriod">Interval between task executions <see cref="ProcessAsync"/></param>
+        /// <param name="exceptionDelay">Restart interval when an error occurs, default is 10 minutes</param>
+        public CuriosityWatchdog(ILogger logger, TimeSpan watchdogPeriod, TimeSpan? exceptionDelay = null)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _timer = timer;
-            _attemptTimer = attemptTimer;
+            Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            WatchdogPeriod = watchdogPeriod;
+
+            if (exceptionDelay.HasValue)
+                ExceptionDelay = exceptionDelay.Value;
         }
 
         /// <summary>
-        /// Выполняется циклично с установленым интревалом <see cref="_timer"/>.
+        /// It is performed cyclically with a set interval <see cref="WatchdogPeriod"/>.
         /// </summary>
         protected abstract Task ProcessAsync();
 
         /// <summary>
-        /// Устанавливает интервал <see cref="_attemptTimer"/> при возникновении ошибки.
+        /// Handles the exception with the set interval <see cref="ExceptionDelay"/>.
         /// </summary>
-        protected virtual async Task OnAttemptExceptionAsync(Exception e, CancellationToken stoppingToken)
+        protected virtual async Task HandleExceptionAsync(Exception e, CancellationToken stoppingToken)
         {
-            _logger.LogError(e, $"Critical error in {GetType().Name}");
-            // чтоб не дубасил по 500 исключений в секунду, но и не умирал на вечно
-            _logger.LogInformation($"{GetType().Name} is waiting for 10 minutes and then is going to try again.");
-            await Task.Delay(_attemptTimer, stoppingToken);
-            _logger.LogInformation($"{GetType().Name} try to execute again.");
+            Logger.LogError(e, $"Critical error in {GetType().Name}");
+            // So that it doesn't throw 500 exceptions per second, but also doesn't die forever
+            Logger.LogInformation($"{GetType().Name} is waiting for 10 minutes and then is going to try again.");
+            await Task.Delay(ExceptionDelay, stoppingToken);
+            Logger.LogInformation($"{GetType().Name} try to execute again.");
         }
 
         /// <summary>
-        /// Безопасно ловит исключение и перезапускается установленный интервал <see cref="_attemptTimer"/>.
+        /// Safely catches the exception and restarts the set interval <see cref="ExceptionDelay"/>.
         /// </summary>
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken = default)
         {
             await Task.Yield();
             while (!stoppingToken.IsCancellationRequested)
@@ -56,31 +66,31 @@ namespace Curiosity.Hosting
                 try
                 {
                     await ProcessAsync();
-                    await Task.Delay(_timer, stoppingToken);
+                    await Task.Delay(WatchdogPeriod, stoppingToken);
                 }
                 catch (Exception e) when (stoppingToken.IsCancellationRequested)
                 {
-                    _logger.LogWarning(e, $"Stopping {GetType().Name}");
+                    Logger.LogWarning(e, $"Stopping {GetType().Name}");
                 }
                 catch (Exception e)
                 {
-                    await OnAttemptExceptionAsync(e, stoppingToken);
+                    await HandleExceptionAsync(e, stoppingToken);
                 }
             }
         }
 
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Starting {GetType().Name}...");
+            Logger.LogInformation($"Starting {GetType().Name}...");
             await base.StartAsync(cancellationToken);
-            _logger.LogInformation($"Starting {GetType().Name} completed.");
+            Logger.LogInformation($"Starting {GetType().Name} completed.");
         }
 
         public override async Task StopAsync(CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Stopping {GetType().Name}...");
+            Logger.LogInformation($"Stopping {GetType().Name}...");
             await base.StopAsync(cancellationToken);
-            _logger.LogInformation($"Stopping {GetType().Name} completed.");
+            Logger.LogInformation($"Stopping {GetType().Name} completed.");
         }
     }
 }
