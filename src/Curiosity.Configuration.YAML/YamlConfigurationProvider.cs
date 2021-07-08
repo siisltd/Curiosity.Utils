@@ -1,9 +1,6 @@
-using System;
-using System.IO;
-using Curiosity.Configuration;
 using Microsoft.Extensions.Configuration;
 
-namespace Curiosity.Configurations
+namespace Curiosity.Configuration
 {
     /// <summary>
     /// Provides configuration from YAML files.

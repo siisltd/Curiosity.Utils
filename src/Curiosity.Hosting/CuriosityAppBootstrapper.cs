@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using EntryPoint;
 using Curiosity.Configuration;
-using Curiosity.Configurations;
 using Curiosity.Tools;
 using NLog;
 
