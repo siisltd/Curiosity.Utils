@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.7] - 2021-07-09
+
+### Changed
+
+- Changed namespace to `Curiosity.Configuration`.
+
 ## [1.0.6] - 2021-04-07
 
 ### Changed
