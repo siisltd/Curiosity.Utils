@@ -1,10 +1,16 @@
 # Changelog
 
+## [1.0.6] - 2021-07-28
+
+### Added
+
+- Added `IsScrambledEquals` for `IReadOnlyList<T>`.
+
 ## [1.0.5] - 2021-04-15
 
 ### Fixed
 
-- Fixed regex pattern which searches sensitive data in JSON
+- Fixed regex pattern which searches sensitive data in JSON.
 
 ## [1.0.4] - 2021-03-15
 

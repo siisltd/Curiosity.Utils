@@ -27,7 +27,7 @@ namespace Curiosity.Tools
         }
 
         /// <summary>
-        /// Converts Guid to to string
+        /// Converts Guid to the string
         /// </summary>
         /// <param name="guid"></param>
         /// <returns></returns>
