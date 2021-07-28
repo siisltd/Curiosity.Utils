@@ -3,6 +3,9 @@ namespace Curiosity.Tools
     /// <summary>
     /// Sequence counter that is used when converting
     /// </summary>
+    /// <remarks>
+    /// Not thread safe.
+    /// </remarks>
     public class SequenceCounter
     {
         private int _sequenceNumber;
