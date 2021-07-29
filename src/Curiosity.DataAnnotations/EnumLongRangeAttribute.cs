@@ -8,15 +8,16 @@ namespace Curiosity.DataAnnotations
     /// Attribute for enum validation. Checks that value contains only allowed for specified enum values.
     /// </summary>
     /// <remarks>
+    /// For enum that inherited from long.
     /// Simplifies <see cref="RangeAttribute"/> usage.
     /// </remarks>
-    public class EnumRangeAttribute : RangeAttribute
+    public class EnumLongRangeAttribute : RangeAttribute
     {
-        public EnumRangeAttribute(int minValue, Type enumType) : base(minValue, GetMax(enumType))
+        public EnumLongRangeAttribute(int minValue, Type enumType) : base(minValue, GetMax(enumType))
         {
         }
         
-        public EnumRangeAttribute(Type enumType) : base(1, GetMax(enumType))
+        public EnumLongRangeAttribute(Type enumType) : base(1, GetMax(enumType))
         {
         }
 
@@ -25,7 +26,7 @@ namespace Curiosity.DataAnnotations
             if (enumType == null) throw new ArgumentNullException(nameof(enumType));
             if (!enumType.IsEnum) throw new ArgumentException($"Can't get max value for {nameof(EnumRangeAttribute)} because {enumType.Name} must be enum.");
             
-            return Enum.GetValues(enumType).Cast<int>().Max();
+            return Enum.GetValues(enumType).Cast<long>().Max();
         }
     }
 }
