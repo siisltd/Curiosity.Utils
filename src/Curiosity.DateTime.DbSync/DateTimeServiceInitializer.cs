@@ -9,14 +9,16 @@ namespace Curiosity.DateTime.DbSync
     /// <summary>
     /// Initializer of <see cref="DbSyncDateTimeService"/>.
     /// </summary>
-    public class DateTimeServiceInitializer : IAppInitializer
+    public class DateTimeServiceInitializer<T>
+        : IAppInitializer
+        where T: DbSyncDateTimeService
     {
         private readonly DbSyncDateTimeService _dateTimeService;
         private readonly ILogger _logger;
 
         public DateTimeServiceInitializer(
-            DbSyncDateTimeService dateTimeService, 
-            ILogger<DateTimeServiceInitializer> logger)
+            T dateTimeService,
+            ILogger<DateTimeServiceInitializer<T>> logger)
         {
             _dateTimeService = dateTimeService ?? throw new ArgumentNullException(nameof(dateTimeService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

@@ -10,16 +10,16 @@ namespace Curiosity.DateTime.DbSync
     /// <summary>
     /// Service of periodic synchronization date and time with database.
     /// </summary>
-    public class DbDateTimeSynchronizationWatchdog : BackgroundService
+    public class DbDateTimeSynchronizationWatchdog<T> : BackgroundService where T: DbSyncDateTimeService
     {
         private readonly DbDateTimeOptions _dbDateTimeOptions;
-        private readonly DbSyncDateTimeService _dateTimeService;
+        private readonly T _dateTimeService;
         private readonly ILogger _logger;
 
         public DbDateTimeSynchronizationWatchdog(
             DbDateTimeOptions dbDateTimeOptions,
-            DbSyncDateTimeService dateTimeService,
-            ILogger<DbDateTimeSynchronizationWatchdog> logger)
+            T dateTimeService,
+            ILogger<DbDateTimeSynchronizationWatchdog<T>> logger)
         {
             _dbDateTimeOptions = dbDateTimeOptions ?? throw new ArgumentNullException(nameof(dbDateTimeOptions));
             _dbDateTimeOptions.AssertValid();
