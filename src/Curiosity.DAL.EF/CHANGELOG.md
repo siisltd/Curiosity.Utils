@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.2] - 2021-07-29
+
+### Fixed
+
+- Updated dependencies.
+
 ## [1.1.1] - 2021-07-29
 
 ### Added
