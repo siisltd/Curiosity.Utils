@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.3] - 2021-07-29
+
+### Added
+
+- Added `DelimitedArrayModelBinder`.
+
 ## [1.1.2] - 2021-07-29
 
 ### Added
