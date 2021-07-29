@@ -41,7 +41,7 @@ namespace Curiosity.Hosting
         /// <summary>
         /// It is performed cyclically with a set interval <see cref="WatchdogPeriod"/>.
         /// </summary>
-        protected abstract Task ProcessAsync();
+        protected abstract Task ProcessAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Handles the exception with the set interval <see cref="ExceptionDelay"/>.
@@ -58,35 +58,35 @@ namespace Curiosity.Hosting
         /// <summary>
         /// Safely catches the exception and restarts the set interval <see cref="ExceptionDelay"/>.
         /// </summary>
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken = default)
+        protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
             await Task.Yield();
-            while (!stoppingToken.IsCancellationRequested)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
-                    await ProcessAsync();
-                    await Task.Delay(WatchdogPeriod, stoppingToken);
+                    await ProcessAsync(cancellationToken);
+                    await Task.Delay(WatchdogPeriod, cancellationToken);
                 }
-                catch (Exception e) when (stoppingToken.IsCancellationRequested)
+                catch (Exception e) when (cancellationToken.IsCancellationRequested)
                 {
                     Logger.LogWarning(e, $"Stopping {GetType().Name}");
                 }
                 catch (Exception e)
                 {
-                    await HandleExceptionAsync(e, stoppingToken);
+                    await HandleExceptionAsync(e, cancellationToken);
                 }
             }
         }
 
-        public override async Task StartAsync(CancellationToken cancellationToken = default)
+        public override async Task StartAsync(CancellationToken cancellationToken)
         {
             Logger.LogInformation($"Starting {GetType().Name}...");
             await base.StartAsync(cancellationToken);
             Logger.LogInformation($"Starting {GetType().Name} completed.");
         }
 
-        public override async Task StopAsync(CancellationToken cancellationToken = default)
+        public override async Task StopAsync(CancellationToken cancellationToken)
         {
             Logger.LogInformation($"Stopping {GetType().Name}...");
             await base.StopAsync(cancellationToken);

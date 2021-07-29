@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.14] - 2021-07-29
+
+### Changed
+
+- Added cancellation token to `ProcessAsync` of `CuriosityWatchdog`.
+
 ## [1.0.13] - 2021-07-09
 
 ### Changed
