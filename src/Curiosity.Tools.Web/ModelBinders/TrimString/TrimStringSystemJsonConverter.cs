@@ -11,7 +11,7 @@ namespace Curiosity.Tools.Web.ModelBinders
     /// <remarks>
     /// Add attribute [JsonConverter(typeof(TrimStringConverter))] for string property.
     /// </remarks>
-    public class TrimStringConverter : JsonConverter<string?>
+    public class TrimStringSystemJsonConverter : JsonConverter<string?>
     {
         public override string? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
