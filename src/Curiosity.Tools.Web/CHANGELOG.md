@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.2] - 2021-07-29
+
+### Added
+
+- Added `TrimStringNewtonsoftConverter`.
+
+### Changed
+
+- Renamed `TrimStringConverter` to `TrimStringSystemJsonConverter`.
+
 ## [1.1.1] - 2021-04-15
 
 ### Changed

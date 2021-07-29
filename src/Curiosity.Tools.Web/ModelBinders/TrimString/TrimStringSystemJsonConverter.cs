@@ -9,7 +9,8 @@ namespace Curiosity.Tools.Web.ModelBinders
     /// It works only for models binding [FromBody].
     /// </summary>
     /// <remarks>
-    /// Add attribute [JsonConverter(typeof(TrimStringConverter))] for string property.
+    /// Works only with System.Json serialization.
+    /// Add attribute [JsonConverter(typeof(TrimStringSystemJsonConverter))] for string property.
     /// </remarks>
     public class TrimStringSystemJsonConverter : JsonConverter<string?>
     {

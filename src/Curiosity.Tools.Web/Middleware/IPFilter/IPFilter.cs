@@ -1,4 +1,4 @@
-namespace Curiosity.Tools.Web.Middleware.IPFilter
+namespace Curiosity.Tools.Web.Middleware
 {
     public class IPFilter
     {

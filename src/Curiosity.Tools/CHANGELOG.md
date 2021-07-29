@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.7] - 2021-07-29
+
+### Added
+
+- Added page, error and response models.
+
 ## [1.0.6] - 2021-07-28
 
 ### Added
