@@ -15,7 +15,7 @@ namespace Curiosity.Notifications.SMS
         public abstract string NotificationType { get; }
 
         /// <inheritdoc />
-        public string ChannelType { get; } = SmsNotification.Type;
+        public string ChannelType => SmsNotification.Type;
 
         /// <inheritdoc />
         public Task<IReadOnlyList<INotification>> BuildNotificationsAsync(INotificationMetadata notificationMetadata, CancellationToken cancellationToken = default)
