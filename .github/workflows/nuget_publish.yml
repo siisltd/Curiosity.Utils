@@ -12,8 +12,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Pack
-      shell: bash
+      run: ./build.sh -t GitHub --nugetApiKey=$nugetApiKey
       with:
         nugetApiKey: ${{ secrets.NUGETAPIKEY }}
-      run: |
-        ./build.sh -t GitHub --nugetApiKey=$nugetApiKey
