@@ -7,7 +7,11 @@ namespace Curiosity.SMS.Smsc
     /// </summary>
     public class SmscExtraParams : ISmsExtraParams
     {
+        /// <summary>
+        /// Login to account at https://smsc.ru.
+        /// </summary>
         public string? SmscLogin { get; }
+
         public string? SmscPassword { get; }
         public string? SenderName { get; }
 
