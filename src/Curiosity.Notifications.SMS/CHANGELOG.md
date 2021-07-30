@@ -4,7 +4,7 @@
 
 ### Added
 
-- Added `SmsChannel`.
+- Added `SmsChannel` with post processors.
 
 ## [1.0.0] - 2021-03-15
 

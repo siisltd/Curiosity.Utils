@@ -48,8 +48,8 @@ namespace Curiosity.Notifications
                 buildersPerChannel[notificationBuilder.ChannelType] = notificationBuilder;
             }
             
-            if (_channels.Count == 0) throw new ArgumentException("Can't be empty", nameof(channels));
-            if (_buildersPerType.Count == 0) throw new ArgumentException("Can't be empty", nameof(notificationBuilders));
+            if (_channels.Count == 0) throw new ArgumentException($"You should add to IoC at least 1 implementation of {typeof(INotificationChannel)}", nameof(channels));
+            if (_buildersPerType.Count == 0) throw new ArgumentException($"You should add to IoC at least 1 implementation of {typeof(INotificationBuilder)}", nameof(notificationBuilders));
         }
 
         /// <inheritdoc />

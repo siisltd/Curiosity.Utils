@@ -5,8 +5,8 @@
 
         <PackageId>Curiosity.Notifications.SMS</PackageId>
         <Title>Curiosity.Notifications.SMS</Title>
-        <Description>SMS notifications.</Description>
-        <Summary>SMS notifications.</Summary>
+        <Description>SMS notifications channel.</Description>
+        <Summary>SMS notifications channel.</Summary>
         <PackageTags>Curiosity; Notifications; Channels; SMS; siisltd</PackageTags>
         <Language>English</Language>
 

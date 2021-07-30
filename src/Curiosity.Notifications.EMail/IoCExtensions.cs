@@ -1,6 +1,7 @@
 using System;
 using Curiosity.EMail;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Curiosity.Notifications.EMail
 {
@@ -17,6 +18,19 @@ namespace Curiosity.Notifications.EMail
             if (services == null) throw new ArgumentNullException(nameof(services));
 
             services.AddCuriosityNotificationChannel<EmailNotificationChannel>();
+
+            return services;
+        }
+
+        /// <summary>
+        /// Adds to IoC specified EMail notification post processor.
+        /// </summary>
+        /// <typeparam name="T">Type of post processor.</typeparam>
+        public static IServiceCollection AddEMailNotificationPostProcessor<T>(this IServiceCollection services) where T: class, IEMailNotificationPostProcessor
+        {
+            if (services == null) throw new ArgumentNullException(nameof(services));
+
+            services.TryAddSingleton<IEMailNotificationPostProcessor, T>();
 
             return services;
         }

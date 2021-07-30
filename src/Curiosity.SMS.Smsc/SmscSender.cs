@@ -63,8 +63,7 @@ namespace Curiosity.SMS.Smsc
             decimal? messageCost = null;
             if (response.IsSuccessful)
             {
-                resultJson =
-                    JsonConvert.SerializeObject(response.Data, SmsConstants.JsonSerializerSettings);
+                resultJson = JsonConvert.SerializeObject(response.Data, SmsConstants.JsonSerializerSettings);
                 _logger.LogDebug(resultJson);
                 if ((response.Data.error_code ?? 0) == 0)
                 {

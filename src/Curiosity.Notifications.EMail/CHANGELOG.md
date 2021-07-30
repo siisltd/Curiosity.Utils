@@ -6,6 +6,7 @@
 
 - Added `IEMailExtraParams` implementation.
 - Added `CancellationToken` to sender.
+- Added `IEMailNotificationPostProcessor`.
 
 ## [1.0.0] - 2021-03-15
 

@@ -21,7 +21,7 @@ namespace Curiosity.SMS
         /// Response from remote SMS service.
         /// </summary>
         /// <remarks>
-        /// Usefull for debugging.
+        /// Useful for debugging.
         /// </remarks>
         public string ResponseJson { get; }
 

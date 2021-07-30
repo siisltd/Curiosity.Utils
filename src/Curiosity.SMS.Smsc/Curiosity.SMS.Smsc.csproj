@@ -32,6 +32,10 @@
         <IsPackable>true</IsPackable>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\netstandard2.1\Curiosity.SMS.Smsc.xml</DocumentationFile>
+    </PropertyGroup>
+
     <ItemGroup>
       <Content Include="..\..\siisltd.png">
         <Link>siisltd.png</Link>

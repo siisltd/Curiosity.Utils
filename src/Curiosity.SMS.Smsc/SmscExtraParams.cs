@@ -1,3 +1,5 @@
+using System;
+
 namespace Curiosity.SMS.Smsc
 {
     /// <summary>
@@ -11,6 +13,13 @@ namespace Curiosity.SMS.Smsc
 
         public SmscExtraParams(string? smscLogin, string? smscPassword, string? senderName)
         {
+            var isLoginSpecified = !String.IsNullOrWhiteSpace(smscLogin);
+            var isPasswordSpecified = !String.IsNullOrWhiteSpace(smscPassword);
+            if (isLoginSpecified && !isPasswordSpecified)
+                throw new ArgumentException("Password must be specified if login was specified", nameof(smscPassword));
+            if (!isLoginSpecified && isPasswordSpecified)
+                throw new ArgumentException("Login must be specified if password was specified", nameof(smscLogin));
+
             SmscLogin = smscLogin;
             SmscPassword = smscPassword;
             SenderName = senderName;
