@@ -1,0 +1,17 @@
+name: Publish packages to Nuget
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: [self-hosted, linux]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Pack
+      with:
+        nugetApiKey: ${{ secrets.NUGETAPIKEY }}
+      run: ./build.sh -t GitHub --nugetApiKey=$nugetApiKey
