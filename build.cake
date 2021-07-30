@@ -16,9 +16,7 @@ var nugetApiKey = Argument<string>("nugetApiKey", null);
 Task("Clean")
     .Does(() => 
     {
-        Information(isMasterBranch); 
-     
-        DotNetCoreClean(solutionPath);        
+        DotNetCoreClean(solutionPath);
         DirectoryPath[] cleanDirectories = new DirectoryPath[] {
             artifactsDir
         };
