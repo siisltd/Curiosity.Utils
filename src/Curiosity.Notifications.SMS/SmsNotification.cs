@@ -1,5 +1,4 @@
 using System;
-using Curiosity.Notifications;
 using Curiosity.SMS;
 
 namespace Curiosity.Notifications.SMS
