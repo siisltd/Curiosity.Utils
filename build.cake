@@ -13,18 +13,6 @@ var framework = "netstandard2.1";
 var nugetSource = "https://api.nuget.org/v3/index.json";
 var nugetApiKey = Argument<string>("nugetApiKey", null);
 
-var isMasterBranch = BuildSystem.TravisCI.IsRunningOnTravisCI 
-    ? StringComparer.OrdinalIgnoreCase.Equals("master", BuildSystem.TravisCI.Environment.Build.Branch)
-    : false;
-var isPullRequest = BuildSystem.TravisCI.IsRunningOnTravisCI
-    ? BuildSystem.TravisCI.Environment.PullRequest.IsPullRequest
-    : false;
-    
-Information("Is building on TravisCI: " + BuildSystem.TravisCI.IsRunningOnTravisCI.ToString());    
-Information("Current branch: " + BuildSystem.TravisCI.Environment.Build.Branch);    
-Information("Is current branch master: " + isMasterBranch.ToString());    
-Information("Is PullRequest: " + isPullRequest.ToString());    
-    
 Task("Clean")
     .Does(() => 
     {
@@ -38,7 +26,6 @@ Task("Clean")
         CleanDirectories(cleanDirectories);
     
         foreach(var path in cleanDirectories) { EnsureDirectoryExists(path); }
-    
     });
 
 Task("Build")
@@ -121,27 +108,20 @@ Task("Publish")
     .IsDependentOn("Pack")
     .Does(() =>
     {
-        if (isMasterBranch && !isPullRequest)
-        {
-             var pushSettings = new DotNetCoreNuGetPushSettings 
-             {
-                 Source = nugetSource,
-                 ApiKey = nugetApiKey,
-                 SkipDuplicate = true
-             };
-             
-             var pkgs = GetFiles($"{packages}/*.nupkg");
-             foreach(var pkg in pkgs) 
-             {     
-                 Information($"Publishing \"{pkg}\".");
-                 DotNetCoreNuGetPush(pkg.FullPath, pushSettings);
-             }
-        }
-        else
-        {
-            Error("Can't publish because publishing configured only for TravisCI and for master branch and not pull requests.");
-        }
- }); 
+         var pushSettings = new DotNetCoreNuGetPushSettings
+         {
+             Source = nugetSource,
+             ApiKey = nugetApiKey,
+             SkipDuplicate = true
+         };
+
+         var pkgs = GetFiles($"{packages}/*.nupkg");
+         foreach(var pkg in pkgs)
+         {
+             Information($"Publishing \"{pkg}\".");
+             DotNetCoreNuGetPush(pkg.FullPath, pushSettings);
+         }
+ });
  
 Task("ForcePublish")
     .IsDependentOn("Pack")
