@@ -46,11 +46,12 @@ namespace Curiosity.Notifications
         /// Send notification via this channel and wait for sending completion.
         /// </summary>
         /// <param name="notifications">Notification to send.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">If args are incorrect</exception>
         /// <exception cref="InvalidOperationException">If channel is not started.</exception>
         /// <exception cref="AggregateException">If type of channel specified in notification doesn't match channel's type.</exception>
-        public Task SendNotificationAsync(INotification notifications)
+        public Task SendNotificationAsync(INotification notifications, CancellationToken cancellationToken = default)
         {
             if (notifications == null) throw new ArgumentNullException(nameof(notifications));
             if (!_isChannelReady) throw new InvalidOperationException($"Channel is not ready. Use {nameof(StartAsync)} to make channel ready");
@@ -61,7 +62,15 @@ namespace Curiosity.Notifications
             var tcs = new TaskCompletionSource<bool>();
 
             var queueItem = new NotificationQueueItem<TNotification>(typedNotifications, tcs);
-            _notificationQueue.Add(queueItem);
+            _notificationQueue.Add(queueItem, cancellationToken);
+
+            cancellationToken.Register(() =>
+            {
+                if (!tcs.TrySetCanceled())
+                {
+                    Logger.LogWarning($"Failed to set task for sending notification for channel \"{notifications.ChannelType}\"");
+                }
+            });
 
             return tcs.Task;
         }
@@ -84,7 +93,7 @@ namespace Curiosity.Notifications
 
                     try
                     {
-                        await ProcessNotificationAsync(notifications);
+                        await ProcessNotificationAsync(notifications, stoppingToken);
                         tcs.SetResult(true);
                     }
                     catch (Exception e)
@@ -101,14 +110,14 @@ namespace Curiosity.Notifications
             {
                 _isChannelReady = false;
                 Logger.LogInformation($"Processing notification by channel \"{ChannelType}\" was canceled");
-                currentTcs?.SetCanceled();
+                currentTcs?.TrySetCanceled();
                 ProcessQueueOnChannelStop(true);
             }
             catch (Exception ex)
             {
                 _isChannelReady = false;
                 Logger.LogError(ex, $"Error while processing notifications by channel \"{ChannelType}\". Reason: {ex.Message}");
-                currentTcs?.SetException(ex);
+                currentTcs?.TrySetException(ex);
                 ProcessQueueOnChannelStop(false, ex);
             }
         }
@@ -116,7 +125,7 @@ namespace Curiosity.Notifications
         /// <summary>
         /// Processed specified notification.
         /// </summary>
-        protected abstract Task ProcessNotificationAsync(TNotification notification);
+        protected abstract Task ProcessNotificationAsync(TNotification notification, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Processes queued notification on channel stop.

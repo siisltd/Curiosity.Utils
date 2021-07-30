@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MailKit.Security;
@@ -26,7 +27,7 @@ namespace Curiosity.EMail.Smtp
         }
 
         /// <inheritdoc />
-        public async Task<bool> SendAsync(string toAddress, string subject, string body, bool isBodyHtml = false)
+        public Task<bool> SendAsync(string toAddress, string subject, string body, bool isBodyHtml = false, CancellationToken cancellationToken = default)
         {
             if (String.IsNullOrWhiteSpace(toAddress))
                 throw new ArgumentNullException(nameof(toAddress));
@@ -35,7 +36,24 @@ namespace Curiosity.EMail.Smtp
             if (String.IsNullOrWhiteSpace(body))
                 throw new ArgumentNullException(nameof(body));
 
-            _logger.LogInformation("Sending EMail to {0} with the subject \"{1}\", text.Length = {2}", 
+            var senderName = _emailOptions.SenderName.Trim();
+            var emailFrom = _emailOptions.EMailFrom.Trim();
+            var replyTo = _emailOptions.ReplyTo?.Trim();
+
+            return SendAsync(toAddress, subject, body, isBodyHtml, senderName, emailFrom, replyTo, cancellationToken);
+        }
+
+        private async Task<bool> SendAsync(
+            string toAddress,
+            string subject,
+            string body,
+            bool isBodyHtml,
+            string senderName,
+            string emailFrom,
+            string? replyTo,
+            CancellationToken cancellationToken = default)
+        {
+            _logger.LogInformation("Sending EMail to {0} with the subject \"{1}\", text.Length = {2}",
                 toAddress,
                 subject,
                 body.Length);
@@ -45,11 +63,11 @@ namespace Curiosity.EMail.Smtp
             {
                 var message = new MimeMessage();
                 message.To.Add(MailboxAddress.Parse(toAddress.Trim()));
-                message.From.Add(new MailboxAddress(_emailOptions.SenderName.Trim(), _emailOptions.EMailFrom.Trim()));
+                message.From.Add(new MailboxAddress(senderName, emailFrom));
 
-                if (!String.IsNullOrWhiteSpace(_emailOptions.ReplyTo))
+                if (!String.IsNullOrWhiteSpace(replyTo))
                 {
-                    message.ReplyTo.Add(new MailboxAddress(_emailOptions.SenderName.Trim(), _emailOptions.ReplyTo.Trim()));
+                    message.ReplyTo.Add(new MailboxAddress(senderName, replyTo.Trim()));
                 }
 
                 message.Subject = subject;
@@ -70,11 +88,12 @@ namespace Curiosity.EMail.Smtp
                     await smtpClient.ConnectAsync(
                         _emailOptions.SmtpServer,
                         _emailOptions.SmtpPort,
-                        SecureSocketOptions.Auto);
+                        SecureSocketOptions.Auto,
+                        cancellationToken);
 
-                    await smtpClient.AuthenticateAsync(_emailOptions.SmtpLogin, _emailOptions.SmtpPassword);
-                    await smtpClient.SendAsync(message);
-                    await smtpClient.DisconnectAsync(true);
+                    await smtpClient.AuthenticateAsync(_emailOptions.SmtpLogin, _emailOptions.SmtpPassword, cancellationToken);
+                    await smtpClient.SendAsync(message, cancellationToken);
+                    await smtpClient.DisconnectAsync(true, cancellationToken);
                 }
 
                 _logger.LogInformation("EMail message was successfully sent to {0}", toAddress);
@@ -86,6 +105,26 @@ namespace Curiosity.EMail.Smtp
             }
 
             return !hasError;
+        }
+
+        public Task<bool> SendAsync(string toAddress, string subject, string body, bool isBodyHtml, IEMailExtraParams emailExtraParams, CancellationToken cancellationToken = default)
+        {
+            if (String.IsNullOrWhiteSpace(toAddress))
+                throw new ArgumentNullException(nameof(toAddress));
+            if (String.IsNullOrWhiteSpace(subject))
+                throw new ArgumentNullException(nameof(subject));
+            if (String.IsNullOrWhiteSpace(body))
+                throw new ArgumentNullException(nameof(body));
+
+            if (emailExtraParams == null) throw new ArgumentNullException(nameof(emailExtraParams));
+            if (!(emailExtraParams is SmtpEMailExtraParams smtpEMailExtraParams))
+                throw new ArgumentException($"Only {typeof(SmtpEMailExtraParams)} is supported.", nameof(emailExtraParams));
+
+            var senderName = smtpEMailExtraParams.SenderName?.Trim() ?? _emailOptions.SenderName.Trim();
+            var emailFrom = smtpEMailExtraParams.EMailFrom?.Trim() ?? _emailOptions.EMailFrom.Trim();
+            var replyTo = smtpEMailExtraParams.ReplyTo?.Trim() ?? _emailOptions.ReplyTo?.Trim();
+
+            return SendAsync(toAddress, subject, body, isBodyHtml, senderName, emailFrom, replyTo, cancellationToken);
         }
     }
 }

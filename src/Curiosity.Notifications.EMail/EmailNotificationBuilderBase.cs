@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Curiosity.Notifications.EMail
@@ -14,21 +15,21 @@ namespace Curiosity.Notifications.EMail
         public abstract string NotificationType { get; }
 
         /// <inheritdoc />
-        public string ChannelType { get; } = EmailNotification.Type;
+        public string ChannelType => EmailNotification.Type;
 
         /// <inheritdoc />
-        public Task<IReadOnlyList<INotification>> BuildNotificationsAsync(INotificationMetadata notificationMetadata)
+        public Task<IReadOnlyList<INotification>> BuildNotificationsAsync(INotificationMetadata notificationMetadata, CancellationToken cancellationToken = default)
         {
             if (notificationMetadata == null) throw new ArgumentNullException(nameof(notificationMetadata));
             if (!(notificationMetadata is TMetadata metadata))
                 throw new ArgumentException($"{GetType().Name} supports only {typeof(TMetadata).Name}");
 
-            return BuildNotificationsAsync(metadata);
+            return BuildNotificationsAsync(metadata, cancellationToken);
         }
 
         /// <summary>
         /// Builds a notification from specified metadata.
         /// </summary>
-        protected abstract Task<IReadOnlyList<INotification>> BuildNotificationsAsync(TMetadata metadata);
+        protected abstract Task<IReadOnlyList<INotification>> BuildNotificationsAsync(TMetadata metadata, CancellationToken cancellationToken = default);
     }
 }

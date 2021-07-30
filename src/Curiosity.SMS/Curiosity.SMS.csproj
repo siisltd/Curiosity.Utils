@@ -2,12 +2,12 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        
-        <PackageId>Curiosity.EMail.Mailgun</PackageId>
-        <Title>Curiosity.EMail.Mailgun</Title>
-        <Description>Mailgun EMail sender</Description>
-        <Summary>Mailgun EMail sender</Summary>
-        <PackageTags>Curiosity; EMail; Mailgun; siisltd</PackageTags>
+
+        <PackageId>Curiosity.SMS</PackageId>
+        <Title>Curiosity.SMS</Title>
+        <Description>Base classes for sendind SMS.</Description>
+        <Summary>Base classes for sendind SMS.</Summary>
+        <PackageTags>Curiosity; SMS; siisltd</PackageTags>
         <Language>English</Language>
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
@@ -24,35 +24,31 @@
         <PackageProjectUrl>https://github.com/siisltd/Curiosity.Utils</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
-        <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Curiosity.EMail.Mailgun/CHANGELOG.md</PackageReleaseNotes>
+        <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Curiosity.SMS/CHANGELOG.md</PackageReleaseNotes>
 
+        <OutputType>Library</OutputType>
         <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
         
     </PropertyGroup>
 
-    <PropertyGroup>
-        <PackageIcon>siisltd.png</PackageIcon>
-    </PropertyGroup>
-
-    <ItemGroup>
-        <None Include="..\..\siisltd.png" Pack="true" PackagePath="\" />
-    </ItemGroup>
-    
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\Curiosity.EMail.Mailgun.xml</DocumentationFile>
+      <DocumentationFile>bin\Release\netstandard2.1\Curiosity.SMS.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Curiosity.Configuration\Curiosity.Configuration.csproj" />
-      <ProjectReference Include="..\Curiosity.EMail\Curiosity.EMail.csproj" />
+      <ProjectReference Include="..\Curiosity.Tools\Curiosity.Tools.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.10" />
+      <Content Include="..\..\siisltd.png">
+        <Link>siisltd.png</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
       <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-      <PackageReference Include="RestSharp" Version="106.11.7" />
     </ItemGroup>
 
 </Project>

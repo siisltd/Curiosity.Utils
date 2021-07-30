@@ -98,5 +98,16 @@ namespace Curiosity.Tools.Models
 
             return new Response<T>(default!, false, new[] { error });
         }
+
+        /// <summary>
+        /// Creates response for failed case.
+        /// </summary>
+        public static Response<T> Failed(Error error, T body)
+        {
+            if (error == null) throw new ArgumentNullException(nameof(error));
+            if (body == null) throw new ArgumentNullException(nameof(body));
+
+            return new Response<T>(body, false, new[] { error });
+        }
     }
 }

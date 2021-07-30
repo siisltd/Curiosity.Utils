@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 using Curiosity.Configuration;
 using Microsoft.Extensions.Logging;
@@ -34,24 +35,39 @@ namespace Curiosity.EMail.Mailgun
         }
 
         /// <inheritdoc />
-        public async Task<bool> SendAsync(string toAddress, string subject, string body, bool isBodyHtml = false)
+        public Task<bool> SendAsync(string toAddress, string subject, string body, bool isBodyHtml = false, CancellationToken cancellationToken = default)
+        {
+            if (String.IsNullOrWhiteSpace(toAddress)) throw new ArgumentNullException(nameof(toAddress));
+            if (String.IsNullOrWhiteSpace(subject)) throw new ArgumentNullException(nameof(subject));
+            if (String.IsNullOrWhiteSpace(body)) throw new ArgumentNullException(nameof(body));
+
+            return SendAsync(toAddress, subject, body, _mailgunEMailOptions.MailGunApiKey, _mailgunEMailOptions.EMailFrom, cancellationToken);
+        }
+
+        private async Task<bool> SendAsync(
+            string toAddress,
+            string subject,
+            string body,
+            string mailGunApiKey,
+            string emailFrom,
+            CancellationToken cancellationToken = default)
         {
             var restClient = new RestClient
             {
                 BaseUrl = new Uri(_mailgunEMailOptions.MailGunApiUrl),
-                Authenticator = new HttpBasicAuthenticator("api", _mailgunEMailOptions.MailGunApiKey)
+                Authenticator = new HttpBasicAuthenticator("api", mailGunApiKey)
             };
 
             var restRequest = new RestRequest();
             restRequest.AddParameter("domain", _mailgunEMailOptions.MailGunDomain, ParameterType.UrlSegment);
             restRequest.Resource = "{domain}/messages";
-            restRequest.AddParameter("from", _mailgunEMailOptions.EMailFrom);
+            restRequest.AddParameter("from", emailFrom);
             restRequest.AddParameter("to", toAddress);
             restRequest.AddParameter("subject", subject);
             restRequest.AddParameter("text", body);
             restRequest.Method = Method.POST;
 
-            var response = await restClient.ExecuteAsync(restRequest);
+            var response = await restClient.ExecuteAsync(restRequest, cancellationToken);
             if (response.IsSuccessful)
             {
                 _logger.LogDebug($"Message is successfully sent to {toAddress}");
@@ -74,6 +90,22 @@ namespace Curiosity.EMail.Mailgun
             _logger.LogError($"StatusCode = {response.StatusCode.ToString()}");
 
             return false;
+        }
+
+        public Task<bool> SendAsync(string toAddress, string subject, string body, bool isBodyHtml, IEMailExtraParams emailExtraParams, CancellationToken cancellationToken = default)
+        {
+            if (String.IsNullOrWhiteSpace(toAddress)) throw new ArgumentNullException(nameof(toAddress));
+            if (String.IsNullOrWhiteSpace(subject)) throw new ArgumentNullException(nameof(subject));
+            if (String.IsNullOrWhiteSpace(body)) throw new ArgumentNullException(nameof(body));
+            if (emailExtraParams == null) throw new ArgumentNullException(nameof(emailExtraParams));
+
+            if (!(emailExtraParams is MailGunEMailExtraParams mailGunEMailExtraParams))
+                throw new ArgumentException($"Only {typeof(MailGunEMailExtraParams)} is supported for this sender.", nameof(emailExtraParams));
+
+            var apiKey = mailGunEMailExtraParams.MailGunApiKey ?? _mailgunEMailOptions.MailGunApiKey;
+            var emailFrom = mailGunEMailExtraParams.EMailFrom ?? _mailgunEMailOptions.EMailFrom;
+
+            return SendAsync(toAddress, subject, body, apiKey, emailFrom, cancellationToken);
         }
     }
 }

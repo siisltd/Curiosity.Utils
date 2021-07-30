@@ -1,5 +1,6 @@
 using System;
 using Curiosity.Notifications;
+using Curiosity.SMS;
 
 namespace Curiosity.Notifications.SMS
 {
@@ -28,15 +29,26 @@ namespace Curiosity.Notifications.SMS
         /// </summary>
         public string Message { get; }
 
+        /// <summary>
+        /// Extra params for sending SMS.
+        /// </summary>
+        /// <remarks>
+        /// For example, specific credentials.
+        /// </remarks>
+        public ISmsExtraParams? ExtraParams { get; }
+
         public SmsNotification(
             string phoneNumber, 
-            string message)
+            string message,
+            ISmsExtraParams? smsExtraParams = null)
         {
             if (String.IsNullOrWhiteSpace(phoneNumber)) throw new ArgumentNullException(nameof(phoneNumber));
             if (String.IsNullOrWhiteSpace(message)) throw new ArgumentNullException(nameof(message));
 
             PhoneNumber = phoneNumber;
             Message = message;
+
+            ExtraParams = smsExtraParams;
         }
     }
 }

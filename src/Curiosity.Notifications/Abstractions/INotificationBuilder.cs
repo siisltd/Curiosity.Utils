@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Curiosity.Notifications
@@ -21,6 +22,6 @@ namespace Curiosity.Notifications
         /// <summary>
         /// Builds a notification from specified metadata.
         /// </summary>
-        Task<IReadOnlyList<INotification>> BuildNotificationsAsync(INotificationMetadata notificationMetadata);
+        Task<IReadOnlyList<INotification>> BuildNotificationsAsync(INotificationMetadata notificationMetadata, CancellationToken cancellationToken = default);
     }
 }

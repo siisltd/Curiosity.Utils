@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Curiosity.Notifications
@@ -11,11 +12,12 @@ namespace Curiosity.Notifications
         /// Type of the channel.
         /// </summary>
         string ChannelType { get; }
-        
+
         /// <summary>
         /// Sends notification via this channel.
         /// </summary>
         /// <param name="notifications">Notification to send.</param>
-        Task SendNotificationAsync(INotification notifications);
+        /// <param name="cancellationToken">Cancellation token.</param>
+        Task SendNotificationAsync(INotification notifications, CancellationToken cancellationToken = default);
     }
 }

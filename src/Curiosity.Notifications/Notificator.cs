@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
@@ -52,7 +53,7 @@ namespace Curiosity.Notifications
         }
 
         /// <inheritdoc />
-        public async Task NotifyAsync(INotificationMetadata notificationMetadata)
+        public async Task NotifyAsync(INotificationMetadata notificationMetadata, CancellationToken cancellationToken = default)
         {
             if (notificationMetadata == null) throw new ArgumentNullException(nameof(notificationMetadata));
 
@@ -68,7 +69,7 @@ namespace Curiosity.Notifications
                     throw new InvalidOperationException($"No channels for type {channelType}. Notification would not be build");
                 }
 
-                var notifications = await builder.BuildNotificationsAsync(notificationMetadata);
+                var notifications = await builder.BuildNotificationsAsync(notificationMetadata, cancellationToken);
                 if (notifications.Count == 0)
                 {
                     _logger.LogWarning($"No notification have been built for {notificationMetadata.Type} for channel {channelType}");
@@ -98,7 +99,7 @@ namespace Curiosity.Notifications
                 for (var i = 0; i < notifications.Count; i++)
                 {
                     var notification = notifications[i];
-                    sendingTasks.Add(channel.SendNotificationAsync(notification));
+                    sendingTasks.Add(channel.SendNotificationAsync(notification, cancellationToken));
                 }
             }
 

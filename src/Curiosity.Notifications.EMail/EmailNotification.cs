@@ -1,4 +1,5 @@
 using System;
+using Curiosity.EMail;
 
 namespace Curiosity.Notifications.EMail
 {
@@ -37,11 +38,20 @@ namespace Curiosity.Notifications.EMail
         /// </summary>
         public bool IsBodyHtml { get; }
 
+        /// <summary>
+        /// Extra params for sending EMails.
+        /// </summary>
+        /// <remarks>
+        /// Params must be compatible with underlying EMail sender.
+        /// </remarks>
+        public IEMailExtraParams? ExtraParams { get; }
+
         public EmailNotification(
             string email, 
             string subject, 
             string body, 
-            bool isBodyHtml = false)
+            bool isBodyHtml = false,
+            IEMailExtraParams? extraParams = null)
         {
             if (String.IsNullOrWhiteSpace(email)) throw new ArgumentNullException(nameof(email));
             if (String.IsNullOrWhiteSpace(subject)) throw new ArgumentNullException(nameof(subject));
@@ -51,6 +61,8 @@ namespace Curiosity.Notifications.EMail
             Subject = subject;
             Body = body;
             IsBodyHtml = isBodyHtml;
+
+            ExtraParams = extraParams;
         }
     }
 }

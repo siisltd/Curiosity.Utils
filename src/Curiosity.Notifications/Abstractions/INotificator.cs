@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Curiosity.Notifications
@@ -19,7 +20,7 @@ namespace Curiosity.Notifications
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">Is arguments are incorrect.</exception>
         /// <exception cref="InvalidOperationException">If no channels available.</exception>
-        Task NotifyAsync(INotificationMetadata notificationMetadata);
+        Task NotifyAsync(INotificationMetadata notificationMetadata, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Sends notification without waiting for sending completion.

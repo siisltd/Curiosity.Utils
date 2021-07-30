@@ -12,7 +12,7 @@
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.0.0</PackageVersion>
+        <PackageVersion>1.1.0</PackageVersion>
 
         <Authors>Max Markelow (@markeli), Andrey Ioch (@DevCorvette)</Authors>
         <Company>SIIS Ltd</Company>
@@ -34,6 +34,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Curiosity.Notifications\Curiosity.Notifications.csproj" />
+      <ProjectReference Include="..\Curiosity.SMS\Curiosity.SMS.csproj" />
     </ItemGroup>
 
     <PropertyGroup>
