@@ -5,7 +5,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  publish:
 
     runs-on: [self-hosted, linux]
 
