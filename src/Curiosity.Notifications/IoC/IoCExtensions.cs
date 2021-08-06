@@ -40,5 +40,17 @@ namespace Curiosity.Notifications
 
             return services;
         }
+
+        /// <summary>
+        /// Adds specified notification builder to IoC.
+        /// </summary>
+        public static IServiceCollection AddCuriosityNotificationBuilder<T>(this IServiceCollection services) where T : class, INotificationBuilder
+        {
+            if (services == null) throw new ArgumentNullException(nameof(services));
+
+            services.AddSingleton<INotificationBuilder, T>();
+
+            return services;
+        }
     }
 }
