@@ -4,7 +4,7 @@
 
 ### Changed
 
-- Convert `Permute` to extensions method .
+- Convert `Permute` to extensions method.
 
 ## [1.0.8] - 2021-08-13
 
