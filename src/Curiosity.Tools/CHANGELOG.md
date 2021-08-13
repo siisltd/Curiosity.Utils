@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.9] - 2021-08-13
+
+### Changed
+
+- Convert `Permute` to extensions method .
+
 ## [1.0.8] - 2021-08-13
 
 ### Added

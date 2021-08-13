@@ -61,7 +61,7 @@ namespace Curiosity.Tools.Collections
         /// <remarks>
         /// On changes also update <see cref="IListExtensions"/>.
         /// </remarks>
-        public static IEnumerable<IReadOnlyList<T>> Permute<T>(IReadOnlyList<T> items)
+        public static IEnumerable<IReadOnlyList<T>> Permute<T>(this IReadOnlyList<T> items)
         {
             foreach (var readOnlyList in Permute(items, 0, new List<T>(items.Count), new bool[items.Count]))
             {
