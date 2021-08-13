@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.8] - 2021-08-13
+
+### Added
+
+- Added `Permute` method for `IReadOnlyList<T>` and `IList<T>`.
+
 ## [1.0.7] - 2021-07-29
 
 ### Added

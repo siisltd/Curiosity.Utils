@@ -33,9 +33,9 @@ namespace Curiosity.Tools.Collections
             {  
                 n--;  
                 var k = Random.Value.Next(n + 1);  
-                var value = list[k];  
-                list[k] = list[n];  
-                list[n] = value;  
+                var value = list[k];
+                list[k] = list[n];
+                list[n] = value;
             }  
         }
         
@@ -114,6 +114,50 @@ namespace Curiosity.Tools.Collections
                     list[i] = list[i - 1];
                 }
                 list[0] = last;
+            }
+        }
+
+        /// <summary>
+        /// Get all combinations from specified collection.
+        /// </summary>
+        /// <param name="items">Collection</param>
+        /// <typeparam name="T">Type of item</typeparam>
+        /// <returns>All combinations</returns>
+        /// <remarks>
+        /// On changes also update <see cref="IReadOnlyListExtensions"/>.
+        /// </remarks>
+        public static IEnumerable<IReadOnlyList<T>> Permute<T>(IList<T> items)
+        {
+            foreach (var readOnlyList in Permute(items, 0, new List<T>(items.Count), new bool[items.Count]))
+            {
+                yield return readOnlyList;
+            }
+        }
+
+        private static IEnumerable<IReadOnlyList<T>> Permute<T>(IList<T> items, int index, List<T> permutation, bool[] used)
+        {
+            for (int i = 0; i < items.Count; ++i)
+            {
+                if (used[i]) continue;
+
+                var newPermutation = new List<T>(permutation);
+
+                used[i] = true;
+                newPermutation.Add(items[i]);
+
+                if (index < items.Count - 1)
+                {
+                    foreach (var result in Permute(items, index + 1, newPermutation, used))
+                    {
+                        yield return result;
+                    }
+                }
+                else
+                {
+                    yield return newPermutation;
+                }
+
+                used[i] = false;
             }
         }
     }

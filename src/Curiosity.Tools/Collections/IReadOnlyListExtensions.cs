@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Curiosity.Tools.Collections
@@ -49,6 +50,50 @@ namespace Curiosity.Tools.Collections
             }
 
             return cnt.Values.All(c => c == 0);
+        }
+
+        /// <summary>
+        /// Get all combinations from specified collection.
+        /// </summary>
+        /// <param name="items">Collection</param>
+        /// <typeparam name="T">Type of item</typeparam>
+        /// <returns>All combinations</returns>
+        /// <remarks>
+        /// On changes also update <see cref="IListExtensions"/>.
+        /// </remarks>
+        public static IEnumerable<IReadOnlyList<T>> Permute<T>(IReadOnlyList<T> items)
+        {
+            foreach (var readOnlyList in Permute(items, 0, new List<T>(items.Count), new bool[items.Count]))
+            {
+                yield return readOnlyList;
+            }
+        }
+
+        private static IEnumerable<IReadOnlyList<T>> Permute<T>(IReadOnlyList<T> items, int index, List<T> permutation, bool[] used)
+        {
+            for (int i = 0; i < items.Count; ++i)
+            {
+                if (used[i]) continue;
+
+                var newPermutation = new List<T>(permutation);
+
+                used[i] = true;
+                newPermutation.Add(items[i]);
+
+                if (index < items.Count - 1)
+                {
+                    foreach (var result in Permute(items, index + 1, newPermutation, used))
+                    {
+                        yield return result;
+                    }
+                }
+                else
+                {
+                    yield return newPermutation;
+                }
+
+                used[i] = false;
+            }
         }
     }
 }
