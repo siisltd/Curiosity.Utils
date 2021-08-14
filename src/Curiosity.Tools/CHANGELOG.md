@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.10] - 2021-08-14
+
+### Added
+
+- Added `CircularBuffer`.
+
 ## [1.0.9] - 2021-08-13
 
 ### Changed
