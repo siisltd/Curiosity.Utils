@@ -1,4 +1,6 @@
-﻿namespace Curiosity.Tools.Models
+﻿using System;
+
+namespace Curiosity.Tools.Models
 {
     /// <summary>
     /// Model of business logic error
@@ -21,25 +23,31 @@
         public string? Key { get; }
 
         /// <summary>
-        /// Create a new Error
+        /// Creates a new Error
         /// </summary>
         /// <param name="code"></param>
         /// <param name="description"></param>
         public Error(int code, string description)
         {
+            if (String.IsNullOrWhiteSpace(description))
+                throw new ArgumentNullException(nameof(description));
+
             Code = code;
             Description = description;
             Key = null;
         }
 
         /// <summary>
-        /// Create a new Error
+        /// Creates a new Error
         /// </summary>
         /// <param name="code"></param>
         /// <param name="description"></param>
         /// <param name="key"></param>
         public Error(int code, string description, string? key)
         {
+            if (String.IsNullOrWhiteSpace(description))
+                throw new ArgumentNullException(nameof(description));
+
             Code = code;
             Description = description;
             Key = key;
