@@ -1,9 +1,12 @@
 namespace Curiosity.Localization
 {
+    /// <summary>
+    /// Options for configuring localization.
+    /// </summary>
     public class LocalizationOptions
     {
         /// <summary>
-        /// Folder with the resources.
+        /// Folder in project with the resources.
         /// </summary>
         public string ResourcesFolder { get; set; } = "Resources";
         

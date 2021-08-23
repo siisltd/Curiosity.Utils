@@ -4,9 +4,10 @@ using Microsoft.Extensions.Localization;
 
 namespace Curiosity.Localization
 {
+    [Obsolete("Need to delete after all localization will be migrated to new LNG way.")]
     public static class LocalizationProvider
     {
-        private static IServiceProvider _serviceProvider;
+        private static IServiceProvider _serviceProvider = null!;
 
         public static void SetServiceProvider(IServiceProvider serviceProvider)
         {

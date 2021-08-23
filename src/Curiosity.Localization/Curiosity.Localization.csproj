@@ -5,8 +5,8 @@
 
     <PackageId>Curiosity.Localization</PackageId>
     <Title>Curiosity.Localization</Title>
-    <Description>Localization.</Description>
-    <Summary>Localization.</Summary>
+    <Description>Classes for localizing applications in more efficient way than Microsfot's way.</Description>
+    <Summary>Classes for localizing applications in more efficient way than Microsfot's way.</Summary>
     <PackageTags>Curiosity; Localization; siisltd</PackageTags>
     <Language>English</Language>
 
@@ -14,7 +14,7 @@
     <FileVersion>1.0.0</FileVersion> 
     <PackageVersion>1.0.0</PackageVersion>
 
-    <Authors>Max Markelow (@markeli), Andrey Ioch (@DevCorvette)</Authors>
+    <Authors>Max Markelow (@markeli), Andrei Vinogradov (@anri-vin), Adil Mir (@AdilMirSz)</Authors>
     <Company>SIIS Ltd</Company>
     <Copyright>SIIS Ltd, 2021</Copyright>
 
@@ -37,7 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Curiosity.Tools\Curiosity.Tools.csproj" />
+    <ProjectReference Include="..\Curiosity.Tools\Curiosity.Tools.csproj" />
   </ItemGroup>
 
 </Project>

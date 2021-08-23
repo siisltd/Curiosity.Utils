@@ -5,17 +5,6 @@ namespace Curiosity.Localization
 {
     public static class LocalizerExtensions
     {
-        public static LocalizedHtmlString GetQuantityString(this IViewLocalizer localizer, string key, int quantity, params object[] args)
-        {
-            return localizer.GetQuantityString(key, (long) quantity, args);
-        }
-
-        public static LocalizedHtmlString GetQuantityString(this IViewLocalizer localizer, string key, long quantity, params object[] args)
-        {
-            var normalizedQuantity = GetNormalizedQuantity(quantity);
-            return localizer[$"{key}_{normalizedQuantity}", args];
-        }
-
         public static string GetQuantityString(this IStringLocalizer localizer, string key, int quantity, params object[] args)
         {
             return localizer.GetQuantityString(key, (long) quantity, args);
@@ -27,7 +16,7 @@ namespace Curiosity.Localization
             return localizer[$"{key}_{normalizedQuantity}", args];
         }
 
-        private static long GetNormalizedQuantity(long quantity)
+        public static long GetNormalizedQuantity(long quantity)
         {
             quantity = Math.Abs(quantity) % 100;
 
