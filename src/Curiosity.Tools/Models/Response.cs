@@ -75,7 +75,7 @@ namespace Curiosity.Tools.Models
         /// <summary>
         /// Creates response for failed case.
         /// </summary>
-        public new static Response<T> Failed<T>(IReadOnlyList<Error> errors)
+        public  static Response<T> Failed<T>(IReadOnlyList<Error> errors)
         {
             if (errors == null) throw new ArgumentNullException(nameof(errors));
 
@@ -85,7 +85,7 @@ namespace Curiosity.Tools.Models
         /// <summary>
         /// Creates response for failed case.
         /// </summary>
-        public new static Response<T> Failed<T>(Error error)
+        public static Response<T> Failed<T>(Error error)
         {
             if (error == null) throw new ArgumentNullException(nameof(error));
 

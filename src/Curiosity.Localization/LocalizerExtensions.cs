@@ -3,15 +3,22 @@ using Microsoft.Extensions.Localization;
 
 namespace Curiosity.Localization
 {
+    /// <summary>
+    /// Extension methods for <see cref="IStringLocalizer"/>.
+    /// </summary>
     public static class LocalizerExtensions
     {
         public static string GetQuantityString(this IStringLocalizer localizer, string key, int quantity, params object[] args)
         {
+            if (localizer == null) throw new ArgumentNullException(nameof(localizer));
+
             return localizer.GetQuantityString(key, (long) quantity, args);
         }
 
         public static string GetQuantityString(this IStringLocalizer localizer, string key, long quantity, params object[] args)
         {
+            if (localizer == null) throw new ArgumentNullException(nameof(localizer));
+
             var normalizedQuantity = GetNormalizedQuantity(quantity);
             return localizer[$"{key}_{normalizedQuantity}", args];
         }

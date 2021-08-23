@@ -6,8 +6,14 @@ using Microsoft.AspNetCore.Mvc.Localization;
 
 namespace Curiosity.Localization.MVC
 {
+    /// <summary>
+    /// Base class for localizing HTML via ASP.NET Core localization infrastructure.
+    /// </summary>
     public class MvcLocalizerCore : LocalizerCore
     {
+        /// <summary>
+        ///
+        /// </summary>
         public MvcLocalizerCore(Assembly assembly, LocalizationOptions options) : base(assembly, options)
         {
         }

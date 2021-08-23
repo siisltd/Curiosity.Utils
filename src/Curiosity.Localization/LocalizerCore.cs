@@ -16,6 +16,9 @@ namespace Curiosity.Localization
         protected ConcurrentDictionary<string, ConcurrentDictionary<string, string>> CachedStrings { get; }
         protected ResourceManager ResourceManager { get; }
 
+        /// <summary>
+        ///
+        /// </summary>
         public LocalizerCore(Assembly assembly, LocalizationOptions options)
         {
             var baseName = $"{assembly.GetName().Name}.{options.ResourcesFolder}.{options.ResourcesFileName}";

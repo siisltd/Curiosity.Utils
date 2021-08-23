@@ -2,7 +2,10 @@ using Microsoft.AspNetCore.Mvc.Localization;
 
 namespace Curiosity.Localization.MVC
 {
-    public static class MvcLocalizerExtensions
+    /// <summary>
+    /// Extension methods for <see cref="IViewLocalizer"/>.
+    /// </summary>
+    public static class ViewLocalizerExtensions
     {
         public static LocalizedHtmlString GetQuantityString(this IViewLocalizer localizer, string key, int quantity, params object[] args)
         {
