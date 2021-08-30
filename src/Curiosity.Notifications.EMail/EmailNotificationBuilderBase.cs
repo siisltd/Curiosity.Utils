@@ -12,7 +12,7 @@ namespace Curiosity.Notifications.EMail
     public abstract class EmailNotificationBuilderBase<TMetadata> : INotificationBuilder where TMetadata : INotificationMetadata
     {
         /// <inheritdoc />
-        public abstract string NotificationType { get; }
+        public Type NotificationType { get; } = typeof(TMetadata);
 
         /// <inheritdoc />
         public string ChannelType => EmailNotification.Type;

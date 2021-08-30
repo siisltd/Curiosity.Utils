@@ -10,7 +10,7 @@ namespace Curiosity.Notifications
     public class Notificator : INotificator
     {
         private readonly Dictionary<string, INotificationChannel> _channels;
-        private readonly Dictionary<string, Dictionary<string, INotificationBuilder>> _buildersPerType;
+        private readonly Dictionary<Type, Dictionary<string, INotificationBuilder>> _buildersPerType;
         private readonly ILogger _logger;
 
         public Notificator(
@@ -34,7 +34,7 @@ namespace Curiosity.Notifications
             }
 
             // add builders
-            _buildersPerType = new Dictionary<string, Dictionary<string, INotificationBuilder>>();
+            _buildersPerType = new Dictionary<Type, Dictionary<string, INotificationBuilder>>();
             foreach (var notificationBuilder in notificationBuilders)
             {
                 if (!_buildersPerType.ContainsKey(notificationBuilder.NotificationType))
@@ -57,8 +57,9 @@ namespace Curiosity.Notifications
         {
             if (notificationMetadata == null) throw new ArgumentNullException(nameof(notificationMetadata));
 
-            if (!_buildersPerType.TryGetValue(notificationMetadata.Type, out var builders))
-                throw new InvalidOperationException($"Notification builder for notification {notificationMetadata.Type} not found");
+            var metadataType = notificationMetadata.GetType();
+            if (!_buildersPerType.TryGetValue(metadataType, out var builders))
+                throw new InvalidOperationException($"Notification builder for notification {metadataType} not found");
 
             // build notification for all channels
             var notificationsMap = new Dictionary<string, List<INotification>>();
@@ -72,7 +73,7 @@ namespace Curiosity.Notifications
                 var notifications = await builder.BuildNotificationsAsync(notificationMetadata, cancellationToken);
                 if (notifications.Count == 0)
                 {
-                    _logger.LogWarning($"No notification have been built for {notificationMetadata.Type} for channel {channelType}");
+                    _logger.LogWarning($"No notification have been built for {metadataType} for channel {channelType}");
                     continue;
                 }
 
@@ -116,12 +117,12 @@ namespace Curiosity.Notifications
             {
                 if (task.IsFaulted)
                 {
-                    _logger.LogError(task.Exception, $"Notification task faulted (NotificationType=\"{notificationMetadata.Type}\")");
+                    _logger.LogError(task.Exception, $"Notification task faulted (NotificationType=\"{notificationMetadata.GetType()}\")");
                 }
 
                 if (task.IsCanceled)
                 {
-                    _logger.LogError($"Notification task was canceled (NotificationType=\"{notificationMetadata.Type}\")");
+                    _logger.LogError($"Notification task was canceled (NotificationType=\"{notificationMetadata.GetType()}\")");
                 }
             });
         }

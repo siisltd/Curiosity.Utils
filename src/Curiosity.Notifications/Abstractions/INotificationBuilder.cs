@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace Curiosity.Notifications
         /// <summary>
         /// Type of the notification that will be created.
         /// </summary>
-        string NotificationType { get; }
+        Type NotificationType { get; }
         
         /// <summary>
         /// Type of the channel for which the notification is being created.
