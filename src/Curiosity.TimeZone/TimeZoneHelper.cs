@@ -198,5 +198,6 @@ namespace Curiosity.TimeZone
                 "UA-40" => "Europe/Moscow",
                 _ => null,
             };
+        }
     }
 }
