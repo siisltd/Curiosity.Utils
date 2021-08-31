@@ -109,7 +109,7 @@ namespace Curiosity.TimeZone
         /// </summary>
         public static string? FromRuRegion(string? isoCode)
         {
-            return isoCode switch
+            return isoCode?.ToUpper() switch
             {
                 "RU-AD" => "Europe/Moscow",
                 "RU-AL" => "Asia/Omsk",
