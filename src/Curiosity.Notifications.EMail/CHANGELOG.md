@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.0] - 2021-08-31
+
+### Changed
+
+- Notification infrastructure uses type of metadata class to match metadata and notification builders.
+
 ## [1.1.0] - 2021-07-30
 
 ### Added

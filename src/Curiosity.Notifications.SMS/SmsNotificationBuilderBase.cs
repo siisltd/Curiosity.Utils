@@ -12,7 +12,7 @@ namespace Curiosity.Notifications.SMS
     public abstract class SmsNotificationBuilderBase<TMetadata> : INotificationBuilder where TMetadata : INotificationMetadata
     {
         /// <inheritdoc />
-        public abstract string NotificationType { get; }
+        public Type NotificationType { get; } = typeof(TMetadata);
 
         /// <inheritdoc />
         public string ChannelType => SmsNotification.Type;

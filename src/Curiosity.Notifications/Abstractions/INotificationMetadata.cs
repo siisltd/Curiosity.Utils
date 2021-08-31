@@ -5,9 +5,5 @@ namespace Curiosity.Notifications
     /// </summary>
     public interface INotificationMetadata
     {
-        /// <summary>
-        /// Type of a notification.
-        /// </summary>
-        string Type { get; }
     }
 }
