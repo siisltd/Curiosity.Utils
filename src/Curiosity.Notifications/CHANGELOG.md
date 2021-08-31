@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.2.0] - 2021-08-31
+
+### Changed
+
+- Notification infrastructure uses type of metadata class to match metadata and notification builders.
+
+### Removed
+
+- Removed `Type` property from `INotificationMetadata`.
+
 ## [1.1.1] - 2021-08-06
 
 ### Added
