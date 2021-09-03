@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.12] - 2021-09-03
+
+### Added
+
+- Added new methods to `Period` to check overlaps with separate `DateTime` or another `Period`.
+
 ## [1.0.11] - 2021-08-23
 
 ### Added

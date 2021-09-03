@@ -5,7 +5,7 @@ namespace Curiosity.Tools
     /// <summary>
     /// Period of time.
     /// </summary>
-    public struct DateTimePeriod
+    public struct DateTimePeriod : IEquatable<DateTimePeriod>
     {
         /// <summary>
         /// Start of period.
@@ -46,12 +46,74 @@ namespace Curiosity.Tools
                 throw new ArgumentException($"{nameof(Start)} can not be greater than {nameof(End)}");
         }
 
+        /// <summary>
+        /// Duration of period.
+        /// </summary>
         public TimeSpan Duration => End - Start;
 
+        /// <summary>
+        /// Deconstructs period into separate start and end date times.
+        /// </summary>
         public void Deconstruct(out DateTime start, out DateTime end)
         {
             start = Start;
             end = End;
         }
+
+        /// <summary>
+        /// Checks if period contains specified date time.
+        /// </summary>
+        public bool Contains(DateTime dateTime)
+        {
+            return Start <= dateTime && dateTime <= End;
+        }
+
+        /// <summary>
+        /// Checks if current period contains specified period.
+        /// </summary>
+        public bool Contains(DateTimePeriod period)
+        {
+            return Start <= period.Start && period.End <= End;
+        }
+
+        /// <summary>
+        /// Checks if current period overlaps with specified period.
+        /// </summary>
+        public bool Overlaps(DateTimePeriod period)
+        {
+            return Start <= period.Start && period.Start <= End || Start <= period.End && period.End <= End;
+        }
+
+        #region Equals methods
+
+        /// <inheritdoc />
+        public bool Equals(DateTimePeriod other)
+        {
+            return Start.Equals(other.Start) && End.Equals(other.End);
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object? obj)
+        {
+            return obj is DateTimePeriod other && Equals(other);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Start, End);
+        }
+
+        public static bool operator ==(DateTimePeriod left, DateTimePeriod right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(DateTimePeriod left, DateTimePeriod right)
+        {
+            return !left.Equals(right);
+        }
+
+        #endregion
     }
 }
