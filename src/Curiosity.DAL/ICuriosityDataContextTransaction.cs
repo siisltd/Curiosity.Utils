@@ -10,6 +10,11 @@ namespace Curiosity.DAL
     public interface ICuriosityDataContextTransaction : IDisposable, IAsyncDisposable
     {
         /// <summary>
+        /// Notifies when transaction successfully completed.
+        /// </summary>
+        event Action OnTransactionCompleted;
+
+        /// <summary>
         /// Gets the transaction identifier.
         /// </summary>
         Guid TransactionId { get; }

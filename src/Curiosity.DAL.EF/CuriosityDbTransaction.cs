@@ -18,6 +18,9 @@ namespace Curiosity.DAL.EF
         }
 
         /// <inheritdoc />
+        public event Action? OnTransactionCompleted;
+
+        /// <inheritdoc />
         public Guid TransactionId => _efDbContextTransaction.TransactionId;
 
         /// <inheritdoc />
@@ -27,12 +30,16 @@ namespace Curiosity.DAL.EF
         public void Commit()
         {
             _efDbContextTransaction.Commit();
+
+            OnTransactionCompleted?.Invoke();
         }
-        
+
         /// <inheritdoc />
-        public Task CommitAsync(CancellationToken cancellationToken = default)
+        public async Task CommitAsync(CancellationToken cancellationToken = default)
         {
-            return _efDbContextTransaction.CommitAsync(cancellationToken);
+            await _efDbContextTransaction.CommitAsync(cancellationToken);
+
+            OnTransactionCompleted?.Invoke();
         }
 
         /// <inheritdoc />
@@ -61,7 +68,6 @@ namespace Curiosity.DAL.EF
             if (_wasDisposed) return new ValueTask();
 
             _wasDisposed = true;
-            
             return _efDbContextTransaction.DisposeAsync();
         }
     }

@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.0] - 2021-09-08
+
+### Added
+
+- Added `OnTransactionCompleted` to transaction and context.
+
 ## [1.1.2] - 2021-07-29
 
 ### Fixed

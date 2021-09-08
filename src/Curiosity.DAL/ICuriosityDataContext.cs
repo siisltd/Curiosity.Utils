@@ -1,3 +1,4 @@
+using System;
 using System.Data;
 using System.Data.Common;
 using System.Threading;
@@ -10,6 +11,11 @@ namespace Curiosity.DAL
     /// </summary>
     public interface ICuriosityDataContext : ICuriosityReadOnlyDataContext
     {
+        /// <summary>
+        /// Notifies when transaction successfully completed.
+        /// </summary>
+        event Action OnTransactionCompleted;
+
         /// <summary>
         /// Saves changes.
         /// </summary>
