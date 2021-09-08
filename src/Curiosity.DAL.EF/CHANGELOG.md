@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1] - 2021-09-08
+
+### Fixed
+
+- Fixed raising  `OnTransactionCompleted` event on transaction completed.
+
 ## [1.2.0] - 2021-09-08
 
 ### Added

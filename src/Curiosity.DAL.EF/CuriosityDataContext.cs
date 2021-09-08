@@ -33,7 +33,7 @@ namespace Curiosity.DAL.EF
 
             var curiosityTransaction = new CuriosityDbTransaction(transaction);
             _transaction = curiosityTransaction;
-            _transaction.OnTransactionCompleted += OnTransactionCompleted;
+            _transaction.OnTransactionCompleted += () => OnTransactionCompleted?.Invoke();
 
             return curiosityTransaction;
         }
@@ -45,7 +45,7 @@ namespace Curiosity.DAL.EF
 
             var curiosityTransaction = new CuriosityDbTransaction(transaction);
             _transaction = curiosityTransaction;
-            _transaction.OnTransactionCompleted += OnTransactionCompleted;
+            _transaction.OnTransactionCompleted += () => OnTransactionCompleted?.Invoke();
 
             return curiosityTransaction;
         }
@@ -57,7 +57,7 @@ namespace Curiosity.DAL.EF
 
             var curiosityTransaction = new CuriosityDbTransaction(efTransaction);
             _transaction = curiosityTransaction;
-            _transaction.OnTransactionCompleted += OnTransactionCompleted;
+            _transaction.OnTransactionCompleted += () => OnTransactionCompleted?.Invoke();
         }
 
         /// <inheritdoc />
