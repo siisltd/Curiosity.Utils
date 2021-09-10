@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.12] - 2021-09-10
+
+### Changed
+
+- Replaced `Duration` field of `Period` be method `GetDuration`.
+
 ## [1.0.12] - 2021-09-03
 
 ### Added

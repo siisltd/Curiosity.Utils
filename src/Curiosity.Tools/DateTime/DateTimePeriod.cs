@@ -49,7 +49,10 @@ namespace Curiosity.Tools
         /// <summary>
         /// Duration of period.
         /// </summary>
-        public TimeSpan Duration => End - Start;
+        /// <remarks>
+        /// This is method because we don't want to make this field serializable. This field is calculable.
+        /// </remarks>
+        public TimeSpan GetDuration() => End - Start;
 
         /// <summary>
         /// Deconstructs period into separate start and end date times.

@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;
@@ -113,6 +114,33 @@ namespace Curiosity.DAL.EF.UnitTests.OnTransactionCompleted
                 context.SaveChanges();
 
                 transaction.Commit();
+            }
+
+            // assert
+            triggerCount.Should().Be(1, "we committed transaction");
+        }
+
+        /// <summary>
+        /// Checks that event will be fired when changes will be saved on context without explicit transaction creation.
+        /// </summary>
+        [Fact]
+        public async Task DataContext_WithTransaction_WithCommitAsync_OnSaveChangesAsync_Triggered()
+        {
+            var triggerCount = 0;
+
+            CancellationToken cancellationToken = default;
+
+            // arrange
+            using (var context = _fixture.CreateContext())
+            using (var transaction = await context.BeginTransactionAsync(cancellationToken: cancellationToken))
+            {
+                // act
+
+                await context.SaveChangesAsync(cancellationToken);
+
+                context.OnTransactionCompleted += () => triggerCount++;
+
+                await transaction.CommitAsync(cancellationToken);
             }
 
             // assert
