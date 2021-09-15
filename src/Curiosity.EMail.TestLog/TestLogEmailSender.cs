@@ -10,25 +10,38 @@ namespace Curiosity.EMail.TestLog
     /// </summary>
     public class TestLogEmailSender : IEMailSender
     {
-        private readonly ILogger<TestLogEmailSender> _logger;
+        private readonly ILogger _logger;
 
+        ///
         public TestLogEmailSender(ILogger<TestLogEmailSender> logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public Task<bool> SendAsync(string toAddress, string subject, string body, bool isBodyHtml, IEMailExtraParams emailExtraParams, CancellationToken cancellationToken = default)
+        /// <inheritdoc />
+        public Task<bool> SendAsync(
+            string toAddress,
+            string subject,
+            string body,
+            bool isBodyHtml,
+            IEMailExtraParams emailExtraParams,
+            CancellationToken cancellationToken = default)
         {
             return SendAsync(toAddress, subject, body, isBodyHtml, cancellationToken);
         }
         
-        public Task<bool> SendAsync(string toAddress, string subject, string body, bool isBodyHtml = false, CancellationToken cancellationToken = default)
+        public Task<bool> SendAsync(
+            string toAddress,
+            string subject,
+            string body,
+            bool isBodyHtml = false,
+            CancellationToken cancellationToken = default)
         {
             _logger.LogWarning("The email was not sent, but just wrote to the log: \n" +
                                $"\tToAddress: \"{toAddress}\", \n" +
                                $"\tSubject: \"{subject}\", \n" +
                                $"\tIsBodyHtml: {isBodyHtml}, \n" +
-                               $"Body: \"{body}\"");
+                               $"\tBody: \"{body}\"");
 
             return Task.FromResult(true);
         }
