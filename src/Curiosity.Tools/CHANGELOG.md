@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.13] - 2021-09-20
+
+### Added
+
+- Added `UniqueUrlGenerator`.
+
 ## [1.0.12] - 2021-09-10
 
 ### Changed
