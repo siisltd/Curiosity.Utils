@@ -12,7 +12,7 @@
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.0.0</PackageVersion>
+        <PackageVersion>1.0.1</PackageVersion>
 
         <Authors>Max Markelow (@markeli), Andrey Ioch (@DevCorvette)</Authors>
         <Company>SIIS Ltd</Company>
@@ -30,6 +30,10 @@
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
 
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageIcon>siisltd.png</PackageIcon>
     </PropertyGroup>
 
     <ItemGroup>

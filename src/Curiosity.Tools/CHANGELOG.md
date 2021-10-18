@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.0] - 2021-10-18
+
+### Changed
+
+- Moved classes from `Curiosity.Tools.Models` namespace to `Curiosity.Tools`.
+
 ## [1.0.13] - 2021-09-20
 
 ### Added

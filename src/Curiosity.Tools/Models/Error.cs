@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Curiosity.Tools.Models
+namespace Curiosity.Tools
 {
     /// <summary>
     /// Model of business logic error
