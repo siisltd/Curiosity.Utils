@@ -32,10 +32,6 @@
         <IsPackable>true</IsPackable>
         
     </PropertyGroup>
-
-    <PropertyGroup>
-        <PackageIcon>siisltd.png</PackageIcon>
-    </PropertyGroup>
     
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <DocumentationFile>bin\Release\netstandard2.1\Curiosity.SMS.xml</DocumentationFile>
@@ -46,13 +42,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="..\..\siisltd.png">
-        <Link>siisltd.png</Link>
-      </None>
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     </ItemGroup>
 
+    <PropertyGroup>
+        <PackageIcon>siisltd.png</PackageIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\siisltd.png" Pack="true" PackagePath="\"/>
+    </ItemGroup>
 </Project>

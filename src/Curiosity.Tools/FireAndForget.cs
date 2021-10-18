@@ -144,5 +144,27 @@ namespace Curiosity.Tools
                     errorLogger.LogError(e, $"Task crashed with an error after FireAndForget:{e.Message}");
                 });
         }
+
+        /// <summary>
+        /// Correctly and safely adds to task action that will be executed on task completion.
+        /// </summary>
+        public static void WithCompletion(this Task task, Action<Task> action)
+        {
+            if (task == null) throw new ArgumentNullException(nameof(task));
+            if (action == null) throw new ArgumentNullException(nameof(action));
+
+            task.ConfigureAwait(false);
+            task.ContinueWith(t =>
+            {
+                try
+                {
+                    action.Invoke(t);
+                }
+                catch (Exception e)
+                {
+                    _logger?.LogError(e, $"Не удалось корректно обработать завершение Task'и в FireAndForget. Причина: {e.Message}");
+                }
+            }, TaskContinuationOptions.ExecuteSynchronously);
+        }
     }
 }
