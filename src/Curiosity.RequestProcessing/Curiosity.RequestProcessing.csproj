@@ -3,11 +3,11 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
 
-        <PackageId>Curiosity.RequestProcessing.Postgres</PackageId>
-        <Title>Curiosity.RequestProcessing.Postgres</Title>
-        <Description>Services to receive reqesut from Postgres</Description>
-        <Summary>Services to receive reqesut from Postgres.</Summary>
-        <PackageTags>Curiosity; Request; Queue; Workers; Processors; Postgres</PackageTags>
+        <PackageId>Curiosity.RequestProcessing</PackageId>
+        <Title>Curiosity.RequestProcessing</Title>
+        <Description>Infrastructure for processing request from an queue.</Description>
+        <Summary>Infrastructure for processing request from a queue.</Summary>
+        <PackageTags>Curiosity; Request; Queue; Workers; Processors</PackageTags>
         <Language>English</Language>
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
@@ -24,25 +24,20 @@
         <PackageProjectUrl>https://github.com/siisltd/Curiosity.Utils</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
-        <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Curiosity.RequestProcessing.Postgres/CHANGELOG.md</PackageReleaseNotes>
+        <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Curiosity.RequestProcessing/CHANGELOG.md</PackageReleaseNotes>
 
         <OutputType>Library</OutputType>
         <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
-        <RootNamespace>Curiosity.RequestProcessing.Postgres</RootNamespace>
     </PropertyGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Curiosity.RequestProcessing\Curiosity.RequestProcessing.csproj" />
-    </ItemGroup>
 
     <PropertyGroup>
         <PackageIcon>siisltd.png</PackageIcon>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\netstandard2.1\Curiosity.RequestProcessing.Postgres.xml</DocumentationFile>
+      <DocumentationFile>bin\Release\netstandard2.1\Curiosity.RequestProcessing.xml</DocumentationFile>
     </PropertyGroup>
     
     <ItemGroup>
@@ -51,6 +46,17 @@
         <PackagePath>/</PackagePath>
         <Link>siisltd.png</Link>
       </None>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\Curiosity.Configuration\Curiosity.Configuration.csproj" />
+      <ProjectReference Include="..\Curiosity.DAL.NpgSQL\Curiosity.DAL.NpgSQL.csproj" />
+      <ProjectReference Include="..\Curiosity.Tools\Curiosity.Tools.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.10" />
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.10" />
     </ItemGroup>
 
 </Project>

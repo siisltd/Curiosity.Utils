@@ -1,28 +1,24 @@
 using System;
 
-namespace SIISLtd.RequestProcessing
+namespace Curiosity.RequestProcessing.Postgres
 {
     /// <summary>
     /// Аргументы события получения уведомления от БД, на которую мы подписаны.
     /// </summary>
-    public class DbEventReceivedArgs
+    public class DbEvent : IRequestProcessingEvent
     {
         /// <summary>
         /// Информация о БД.
         /// </summary>
         public MonitoredDatabase DatabaseInfo { get; }
 
-        /// <summary>
-        /// Название события/канала уведомления.
-        /// </summary>
+        /// <inheritdoc />
         public string EventName { get; }
 
-        /// <summary>
-        /// Аргументы события.
-        /// </summary>
+        /// <inheritdoc />
         public string? Payload { get; }
 
-        public DbEventReceivedArgs(
+        public DbEvent(
             MonitoredDatabase databaseInfo,
             string eventName,
             string? payload)

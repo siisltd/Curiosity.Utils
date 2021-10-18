@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.Logging;
 
-namespace SIISLtd.RequestProcessing.Workers
+namespace Curiosity.RequestProcessing.Workers
 {
     /// <summary>
     /// Доп.параметры для любого воркера, которые он не сможет получить из DI.

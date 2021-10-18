@@ -4,12 +4,12 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Curiosity.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Npgsql;
-using SIISLtd.RequestProcessing.Options;
 
-namespace SIISLtd.RequestProcessing
+namespace Curiosity.RequestProcessing.Postgres
 {
     /// <summary>
     /// Подписчик на события БД.
@@ -19,10 +19,10 @@ namespace SIISLtd.RequestProcessing
     /// При получении события от БД уведомляет своих подписчиков об этом.
     /// В случае любых ошибок пытается переподключиться к БД.
     /// </remarks>
-    public class DbEventListener : BackgroundService
+    public class DbEventReceiver : BackgroundService, IEventReceiver
     {
+        private readonly PostgresEventReceiverOptions _eventReceiverOptions;
         private readonly MonitoredDatabase _dbOptions;
-        private readonly RequestProcessorNodeOptions _processingOptions;
         private readonly ILogger _logger;
 
         /// <summary>
@@ -33,25 +33,22 @@ namespace SIISLtd.RequestProcessing
         /// <summary>
         /// Получение события от Postgres, на которое мы подписаны.
         /// </summary>
-        public event EventHandler<DbEventReceivedArgs>? OnEventReceived;
+        public event EventHandler<IRequestProcessingEvent>? OnEventReceived;
 
         private string? _databaseName;
         private string? _databaseHost;
 
-        public DbEventListener(
-            MonitoredDatabase dbOptions,
-            RequestProcessorNodeOptions processingOptions,
-            ILogger<DbEventListener> logger,
-            IReadOnlyList<string> eventsToSubscribe)
+        public DbEventReceiver(
+            PostgresEventReceiverOptions eventReceiverOptions,
+            MonitoredDatabase monitoredDatabase,
+            ILogger<DbEventReceiver> logger)
         {
-            _dbOptions = dbOptions ?? throw new ArgumentNullException(nameof(dbOptions));
-
-            if (eventsToSubscribe == null) throw new ArgumentNullException(nameof(eventsToSubscribe));
-            if (eventsToSubscribe.Count == 0) throw new ArgumentException("Необходимо указать минимум 1 событие для подписки", nameof(eventsToSubscribe));
-            _eventsToSubscribe = new HashSet<string>(eventsToSubscribe);
-
-            _processingOptions = processingOptions ?? throw new ArgumentNullException(nameof(processingOptions));
+            _eventReceiverOptions = eventReceiverOptions ?? throw new ArgumentNullException(nameof(eventReceiverOptions));
+            eventReceiverOptions.AssertValid();
+            _dbOptions = monitoredDatabase ?? throw new ArgumentNullException(nameof(monitoredDatabase));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+            _eventsToSubscribe = new HashSet<string>(eventReceiverOptions.EventNames);
         }
         
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -64,7 +61,7 @@ namespace SIISLtd.RequestProcessing
                 {
                     var strBuilder = new NpgsqlConnectionStringBuilder(_dbOptions.ConnectionString)
                     {
-                        KeepAlive = _processingOptions.KeepAliveSec
+                        KeepAlive = _eventReceiverOptions.KeepAliveSec
                     };
 
                     await using (var connection = new NpgsqlConnection(strBuilder.ConnectionString))
@@ -101,8 +98,8 @@ namespace SIISLtd.RequestProcessing
                 {
                     _logger.LogError(ex, $"Возникла ошибка при поддержании или установлении подключения к БД {GetDbLogName()} для обработки событий. Причина: {ex.Message}");
 
-                    _logger.LogInformation($"Восстановление соединение с БД {GetDbLogName()} произойдет через {_processingOptions.ReconnectionPauseMs} мс...");
-                    await Task.Delay(TimeSpan.FromMilliseconds(_processingOptions.ReconnectionPauseMs), stoppingToken);
+                    _logger.LogInformation($"Восстановление соединение с БД {GetDbLogName()} произойдет через {_eventReceiverOptions.ReconnectionPauseMs} мс...");
+                    await Task.Delay(TimeSpan.FromMilliseconds(_eventReceiverOptions.ReconnectionPauseMs), stoppingToken);
                 }
             }
             
@@ -151,7 +148,7 @@ namespace SIISLtd.RequestProcessing
                 try
                 {
                     _logger.LogTrace($"Вызов обработчика для события от БД {GetDbLogName()} с PID = {e.PID} (channel = \"{e.Channel}\")...");
-                    OnEventReceived?.Invoke(this, new DbEventReceivedArgs(_dbOptions, e.Channel, e.Payload));
+                    OnEventReceived?.Invoke(this, new DbEvent(_dbOptions, e.Channel, e.Payload));
                     _logger.LogTrace($"Вызов обработчика для события от БД {GetDbLogName()} с PID = {e.PID} (channel = \"{e.Channel}\") завершен");
                 }
                 catch (Exception ex)

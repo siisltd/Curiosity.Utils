@@ -5,35 +5,13 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Curiosity.RequestProcessing.Workers;
 using Curiosity.Tools;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using SIISLtd.RequestProcessing.Options;
-using SIISLtd.RequestProcessing.Workers;
 
-namespace SIISLtd.RequestProcessing
+namespace Curiosity.RequestProcessing
 {
-    /// <summary>
-    /// Базовый класс диспетчера обработки запросов из очереди. Распределяет запросы по нужным воркерам.
-    /// </summary>
-    /// <typeparam name="TRequest">Тип запроса для обработки (POCO класс)</typeparam>
-    /// <typeparam name="TRequestEntity">
-    ///     Entity запроса, которая достаётся из очереди в базе и превращается в <typeparam name="TRequest"/> для обработки воркером.
-    /// </typeparam>
-    /// <typeparam name="TWorker">Тип воркера, который используется в обработке</typeparam>
-    public abstract class RequestDispatcherBase<TRequest, TRequestEntity, TWorker> : RequestDispatcherBase<TRequest, TRequestEntity, TWorker, WorkerBasicExtraParams, ProcessingRequestInfo>
-        where TRequest : IRequest
-        where TWorker : WorkerBase<TRequest, WorkerBasicExtraParams, ProcessingRequestInfo>
-    {
-        protected RequestDispatcherBase(
-            RequestProcessorNodeOptions nodeOptions,
-            EventWaitHandle manualResetEvent,
-            IReadOnlyList<TWorker> workers,
-            ILogger logger) : base(nodeOptions, manualResetEvent, workers, logger)
-        {
-        }
-    }
-
     /// <summary>
     /// Базовый класс диспетчера обработки запросов из очереди. Распределяет запросы по нужным воркерам.
     /// </summary>
@@ -48,7 +26,7 @@ namespace SIISLtd.RequestProcessing
         where TRequest : IRequest
         where TWorkerExtraParams : IWorkerExtraParams
         where TWorker : WorkerBase<TRequest, TWorkerExtraParams, TProcessingRequestInfo>
-        where TProcessingRequestInfo : ProcessingRequestInfo
+        where TProcessingRequestInfo : class, IProcessingRequestInfo
     {
         /// <summary>
         /// Периодичность записи в лог текущего состояния диспетчера (сколько воркеров загружено).

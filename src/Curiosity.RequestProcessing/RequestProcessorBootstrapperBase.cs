@@ -5,39 +5,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Curiosity.Configuration;
+using Curiosity.RequestProcessing.Workers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using SIISLtd.RequestProcessing.Options;
-using SIISLtd.RequestProcessing.Workers;
 
-namespace SIISLtd.RequestProcessing
+namespace Curiosity.RequestProcessing
 {
-    /// <summary>
-    /// Бустрапер сервисов обработки запросов: подключается к БД, слушает события и управляет жизненным циклом диспетчера обработки запросов, а также созаёт воркеры.
-    /// </summary>
-    /// <typeparam name="TRequest">Тип POCO класса запроса, который будет обрабатывать <see cref="TWorker"/>.</typeparam>
-    /// <typeparam name="TRequestEntity">Тип Entity сущности запроса, который будет доставаться из БД. Нужен для того, чтобы работала фильтрация запросов.</typeparam>
-    /// <typeparam name="TWorker">Тип воркера, который будет обрабатывать запросы.</typeparam>
-    /// <typeparam name="TDispatcher">Тип диспетчера, который будет раскидывать запросы <see cref="TRequest"/> по воркерам <see cref="TWorker"/>.</typeparam>
-    public abstract class RequestProcessorBootstrapperBase<TRequest, TRequestEntity, TWorker, TDispatcher> : RequestProcessorBootstrapperBase<TRequest, TRequestEntity, WorkerBasicExtraParams, TWorker, TDispatcher, ProcessingRequestInfo>
-        where TRequest : IRequest
-        where TWorker : WorkerBase<TRequest, WorkerBasicExtraParams, ProcessingRequestInfo>
-        where TDispatcher : RequestDispatcherBase<TRequest, TRequestEntity, TWorker, WorkerBasicExtraParams, ProcessingRequestInfo>, IHostedService
-    {
-        protected RequestProcessorBootstrapperBase(
-            RequestProcessorNodeOptions nodeOptions,
-            ILoggerFactory loggerFactory,
-            IServiceProvider serviceProvider) : base(nodeOptions, loggerFactory, serviceProvider)
-        {
-        }
-
-        protected override WorkerBasicExtraParams CreateWorkerParams(ILogger logger)
-        {
-            return new WorkerBasicExtraParams(logger);
-        }
-    }
-
     /// <summary>
     /// Бустрапер сервисов обработки запросов: подключается к БД, слушает события и управляет жизненным циклом диспетчера обработки запросов, а также созаёт воркеры.
     /// </summary>
@@ -47,17 +21,23 @@ namespace SIISLtd.RequestProcessing
     /// <typeparam name="TWorker">Тип воркера, который будет обрабатывать запросы.</typeparam>
     /// <typeparam name="TDispatcher">Тип диспетчера, который будет раскидывать запросы <see cref="TRequest"/> по воркерам <see cref="TWorker"/>.</typeparam>
     /// <typeparam name="TProcessingRequestInfo">Информация о запросе, который воркер обрабатывает в данный момент.</typeparam>
-    public abstract class RequestProcessorBootstrapperBase<TRequest, TRequestEntity, TWorkerParams, TWorker, TDispatcher, TProcessingRequestInfo> : BackgroundService
+    public abstract class RequestProcessorBootstrapperBase<
+        TRequest,
+        TRequestEntity,
+        TWorkerParams,
+        TWorker,
+        TDispatcher,
+        TProcessingRequestInfo> : BackgroundService
         where TRequest : IRequest
         where TWorker : WorkerBase<TRequest, TWorkerParams, TProcessingRequestInfo>
         where TWorkerParams : IWorkerExtraParams
         where TDispatcher: RequestDispatcherBase<TRequest, TRequestEntity, TWorker, TWorkerParams, TProcessingRequestInfo>, IHostedService
-        where TProcessingRequestInfo : ProcessingRequestInfo
+        where TProcessingRequestInfo : class, IProcessingRequestInfo
     {
         /// <summary>
         /// Слушатели событий в БД (можно одновременно слушать события из разных БД).
         /// </summary>
-        private readonly ConcurrentDictionary<MonitoredDatabase, DbEventListener> _dbEventListeners;
+        protected readonly ConcurrentDictionary<IEventSource, IEventReceiver> EventReceivers;
 
         protected IServiceProvider ServiceProvider { get; }
 
@@ -77,7 +57,7 @@ namespace SIISLtd.RequestProcessing
         /// <summary>
         /// Отдельные БД, к которым мы подключаемся для получения новых событий.
         /// </summary>
-        protected IReadOnlyList<MonitoredDatabase> MonitoredDatabase => _dbEventListeners.Keys.ToArray();
+        protected IReadOnlyList<IEventSource> EventSources => EventReceivers.Keys.ToArray();
 
         /// <summary>
         /// Штука для уведомления о появлении в очереди новых событий, чтобы диспетчер мог раскидать запросы по воркероам.
@@ -101,7 +81,7 @@ namespace SIISLtd.RequestProcessing
             Logger = loggerFactory.CreateLogger(GetType().Name) ?? throw new ArgumentNullException(nameof(loggerFactory));
 
             EventWaitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
-            _dbEventListeners = new ConcurrentDictionary<MonitoredDatabase, DbEventListener>();
+            EventReceivers = new ConcurrentDictionary<IEventSource, IEventReceiver>();
         }
 
         public sealed override async Task StartAsync(CancellationToken cancellationToken)
@@ -109,22 +89,22 @@ namespace SIISLtd.RequestProcessing
             Logger.LogDebug($"Запуск {NodeOptions.Name}...");
 
             // получим список БД, за которым надо следить
-            var monitoredDatabases = GetMonitoredDatabases();
+            var eventSources = GetEventSources();
 
             // сбросим залипшие задачи
-            await ResetStuckRequestsAsync(monitoredDatabases, cancellationToken);
+            await ResetStuckRequestsAsync(eventSources, cancellationToken);
 
             // создадим и запустим диспетчер запросов
-            Dispatcher = CreateDispatcher(monitoredDatabases);
+            Dispatcher = CreateDispatcher(eventSources);
             await Dispatcher.StartAsync(cancellationToken);
 
             // запустим прослушивание событий БД
-            var dbEventListenerStartTasks = new List<Task>();
-            foreach (var monitoredDatabase in monitoredDatabases)
+            var eventReceiverStartTasks = new List<Task>(eventSources.Count);
+            foreach (var monitoredDatabase in eventSources)
             {
-                dbEventListenerStartTasks.Add(StartListenDbAsync(monitoredDatabase, cancellationToken));
+                eventReceiverStartTasks.Add(StartEventReceiverAsync(monitoredDatabase, cancellationToken));
             }
-            await Task.WhenAll(dbEventListenerStartTasks);
+            await Task.WhenAll(eventReceiverStartTasks);
 
             // запустим главный поток - периодический опрос БД
             await base.StartAsync(cancellationToken);
@@ -141,7 +121,7 @@ namespace SIISLtd.RequestProcessing
         /// <remarks>
         /// В этом методе нужно реализовать формирование списка БД, события в которых мы будем слушать.
         /// </remarks>
-        protected abstract IReadOnlyList<MonitoredDatabase> GetMonitoredDatabases();
+        protected abstract IReadOnlyList<IEventSource> GetEventSources();
 
         /// <summary>
         /// Создаёт диспетчер обработки запросов.
@@ -149,7 +129,7 @@ namespace SIISLtd.RequestProcessing
         /// <remarks>
         /// В этом методе нужно создать и настроить диспетчера, который будет раскидывать запросы по воркерам.
         /// </remarks>
-        protected abstract TDispatcher CreateDispatcher(IReadOnlyList<MonitoredDatabase> monitoredDatabases);
+        protected abstract TDispatcher CreateDispatcher(IReadOnlyList<IEventSource> monitoredDatabases);
 
         /// <summary>
         /// Сбрасывает "залипшие" запросы (т.е. взятые в работу, но не сброшенные после остановки приложения).
@@ -158,7 +138,7 @@ namespace SIISLtd.RequestProcessing
         /// В этом методе нужно реализовать логику по возврату запросов, которые в прошлые запуски брались в работу,
         /// но из-за внезапной ошибки не были корректны завершены и были возвращены обратно в очередь.
         /// </remarks>
-        protected virtual Task ResetStuckRequestsAsync(IReadOnlyList<MonitoredDatabase> monitoredDatabases, CancellationToken cancellationToken = default)
+        protected virtual Task ResetStuckRequestsAsync(IReadOnlyList<IEventSource> monitoredDatabases, CancellationToken cancellationToken = default)
         {
             // по умолчанию мы ничего не знаем о запросах, поэтому ничего и не сбрасываем
             // наследники класса переопределят, если надо
@@ -172,29 +152,7 @@ namespace SIISLtd.RequestProcessing
         /// </summary>
         /// <param name="monitoredDatabase">БД, события от которой надо слушать.</param>
         /// <param name="cancellationToken">Токен отмены.</param>
-        protected async Task StartListenDbAsync(MonitoredDatabase monitoredDatabase, CancellationToken cancellationToken = default)
-        {
-            if (monitoredDatabase == null) throw new ArgumentNullException(nameof(monitoredDatabase));
-
-            if (_dbEventListeners.TryGetValue(monitoredDatabase, out _))
-                throw new InvalidOperationException($"БД {monitoredDatabase} уже добавлена в список и прослушивается.");
-
-            var dbEventListenerLogger = LoggerFactory.CreateLogger<DbEventListener>();
-
-            var dbEventListener = new DbEventListener(
-                monitoredDatabase,
-                NodeOptions,
-                dbEventListenerLogger,
-                NodeOptions.EventNames);
-
-            // подпишемся на события в этой БД и запустим слушателя
-            dbEventListener.OnEventReceived += HandleDbEventReceived;
-
-            await dbEventListener.StartAsync(cancellationToken);
-
-            // добавим слушателя в список, чтобы потом корректно завершить работу
-            _dbEventListeners[monitoredDatabase] = dbEventListener;
-        }
+        protected abstract Task StartEventReceiverAsync(IEventSource monitoredDatabase, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Обрабатывает получения события ид БД.
@@ -202,7 +160,7 @@ namespace SIISLtd.RequestProcessing
         /// <remarks>
         /// Базовая реализация просто сетит событие, чтобы диспетчер мог взять запросы в работу.
         /// </remarks>
-        protected virtual void HandleDbEventReceived(object sender, DbEventReceivedArgs e)
+        protected virtual void HandleDbEventReceived(object sender, IRequestProcessingEvent e)
         {
             EventWaitHandle.Set();
         }
@@ -224,7 +182,7 @@ namespace SIISLtd.RequestProcessing
                     await Task.Delay(TimeSpan.FromSeconds(NodeOptions.EventsPeriodicCheckSec), stoppingToken);
 
                     Logger.LogTrace("Выполняем периодическую проверку очередей...");
-                    await PeriodicDbCheckActionAsync(stoppingToken);
+                    await PeriodicEventSourceCheckActionAsync(stoppingToken);
                     Logger.LogTrace("Периодическая проверка очередей завершена");
                 }
                 // Идет остановка, все под контролем
@@ -247,7 +205,7 @@ namespace SIISLtd.RequestProcessing
 
             // остановим всех слушателей БД
             var dbEventListerStopTasks = new List<Task>();
-            foreach (var monitoredDatabase in MonitoredDatabase)
+            foreach (var monitoredDatabase in EventSources)
             {
                 dbEventListerStopTasks.Add(StopListenDbAsync(monitoredDatabase, cancellationToken));
             }
@@ -265,18 +223,18 @@ namespace SIISLtd.RequestProcessing
             Logger.LogDebug($"{NodeOptions.Name} остановлен");
         }
 
-        protected async Task StopListenDbAsync(MonitoredDatabase database, CancellationToken cancellationToken = default)
+        protected async Task StopListenDbAsync(IEventSource eventSource, CancellationToken cancellationToken = default)
         {
-            if (database == null) throw new ArgumentNullException(nameof(database));
+            if (eventSource == null) throw new ArgumentNullException(nameof(eventSource));
 
-            if (!_dbEventListeners.TryRemove(database, out var dbEventListener))
-                throw new InvalidOperationException($"БД {database} не была добавлена в список и не прослушивается.");
+            if (!EventReceivers.TryRemove(eventSource, out var eventReceiver))
+                throw new InvalidOperationException($"БД {eventSource} не была добавлена в список и не прослушивается.");
 
             // остановимся
-            await dbEventListener.StopAsync(cancellationToken);
+            await eventReceiver.StopAsync(cancellationToken);
 
             // отпишемся от событий
-            dbEventListener.OnEventReceived -= HandleDbEventReceived;
+            eventReceiver.OnEventReceived -= HandleDbEventReceived;
         }
 
         /// <summary>
@@ -286,7 +244,7 @@ namespace SIISLtd.RequestProcessing
         /// В базовой реализации просто сетит событие, чтобы выполнилась проверка БД.
         /// Можно переопределить метод, если нужны дополнительное действия.
         /// </remarks>
-        protected virtual Task PeriodicDbCheckActionAsync(CancellationToken stoppingToken = default)
+        protected virtual Task PeriodicEventSourceCheckActionAsync(CancellationToken stoppingToken = default)
         {
             EventWaitHandle.Set();
 

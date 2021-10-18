@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace SIISLtd.RequestProcessing.Workers
+namespace Curiosity.RequestProcessing.Workers
 {
     /// <summary>
     /// Доп. параметры для воркера, которые он не может получить из DI (например, настроенный логгер с его именем).

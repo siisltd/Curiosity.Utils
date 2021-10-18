@@ -1,11 +1,11 @@
 using System;
 
-namespace SIISLtd.RequestProcessing
+namespace Curiosity.RequestProcessing.Postgres
 {
     /// <summary>
     /// Информация о БД, события от которой мы слушаем.
     /// </summary>
-    public class MonitoredDatabase : IEquatable<MonitoredDatabase>
+    public class MonitoredDatabase : IEventSource<MonitoredDatabase>
     {
         /// <summary>
         /// Строка подключения к БД.

@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace SIISLtd.RequestProcessing
+namespace Curiosity.RequestProcessing
 {
     /// <summary>
     /// Запрос, который надо обработать.

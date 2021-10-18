@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Curiosity.Configuration;
 
-namespace SIISLtd.RequestProcessing.Options
+namespace Curiosity.RequestProcessing
 {
     /// <summary>
     /// Настройки фильтрации запросов.

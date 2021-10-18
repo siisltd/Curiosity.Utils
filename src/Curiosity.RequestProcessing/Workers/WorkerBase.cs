@@ -2,22 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using SIISLtd.RequestProcessing.Options;
 
-namespace SIISLtd.RequestProcessing.Workers
+namespace Curiosity.RequestProcessing.Workers
 {
-    /// <summary>
-    /// Базовый класс обработчика запросов из очереди. Он получает запрос <typeparam name="TRequest"/> и обрабатывает его.
-    /// </summary>
-    /// <typeparam name="TRequest">Тип запроса</typeparam>
-    public abstract class WorkerBase<TRequest> : WorkerBase<TRequest, WorkerBasicExtraParams, ProcessingRequestInfo>
-        where TRequest : IRequest
-    {
-        protected WorkerBase(RequestProcessorNodeOptions nodeOptions) : base(nodeOptions)
-        {
-        }
-    }
-
     /// <summary>
     /// Базовый класс обработчика запросов из очереди. Он получает запрос <typeparam name="TRequest"/> и обрабатывает его.
     /// </summary>
@@ -27,7 +14,7 @@ namespace SIISLtd.RequestProcessing.Workers
     public abstract class WorkerBase<TRequest, TWorkerParams, TProcessingRequestInfo>
         where TRequest : IRequest
         where TWorkerParams : IWorkerExtraParams
-        where TProcessingRequestInfo : ProcessingRequestInfo
+        where TProcessingRequestInfo : class, IProcessingRequestInfo
     {
         /// <summary>
         /// Воркер в данный момент обрабатывает новый запрос?
