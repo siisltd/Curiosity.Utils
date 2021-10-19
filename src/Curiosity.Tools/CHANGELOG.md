@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.2.0] - 2021-10-18
+    
+### Added
+
+- Added `GenerateRandomKey` to `UniqueKeyGenerator`.s  
+
+### Changed
+
+- Renamed `GenerateUniqueUrlPath` to `GenerateUniqueSequentialKey` in `UniqueKeyGenerator`.
+
 ## [1.1.0] - 2021-10-18
     
 ### Added
