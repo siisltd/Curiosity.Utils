@@ -20,6 +20,11 @@ namespace Curiosity.DAL.EF
         /// <inheritdoc />
         public event Action? OnTransactionCompleted;
 
+        /// <summary>
+        /// Notifies when transaction successfully completed.
+        /// </summary>
+        public event Func<CancellationToken, Task>? OnTransactionCompletedAsync;
+
         /// <inheritdoc />
         public Guid TransactionId => _efDbContextTransaction.TransactionId;
 
@@ -32,6 +37,12 @@ namespace Curiosity.DAL.EF
             _efDbContextTransaction.Commit();
 
             OnTransactionCompleted?.Invoke();
+
+            // this is bad but we don't have any valid ways
+            if (OnTransactionCompletedAsync != null)
+            {
+                OnTransactionCompletedAsync.Invoke(CancellationToken.None).GetAwaiter().GetResult();
+            }
         }
 
         /// <inheritdoc />
@@ -40,6 +51,12 @@ namespace Curiosity.DAL.EF
             await _efDbContextTransaction.CommitAsync(cancellationToken);
 
             OnTransactionCompleted?.Invoke();
+
+
+            if (OnTransactionCompletedAsync != null)
+            {
+                await OnTransactionCompletedAsync.Invoke(cancellationToken);
+            }
         }
 
         /// <inheritdoc />

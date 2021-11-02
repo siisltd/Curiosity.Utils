@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.0] - 2021-11-02
+
+### Added
+
+- Added async version of `OnTransactionCompleted` event on transaction completed.
+
 ## [1.2.1] - 2021-09-08
 
 ### Fixed

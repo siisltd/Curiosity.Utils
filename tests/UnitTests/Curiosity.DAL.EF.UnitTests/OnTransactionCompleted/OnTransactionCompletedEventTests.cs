@@ -27,12 +27,19 @@ namespace Curiosity.DAL.EF.UnitTests.OnTransactionCompleted
         public void DataContext_WithoutTransaction_OnSaveChanges_Triggered()
         {
             // arrange
-            int triggerCount;
+            int syncTriggerCount;
+            int asyncTriggerCount;
             using (var context = _fixture.CreateContext())
             {
-                triggerCount = 0;
+                syncTriggerCount = 0;
+                asyncTriggerCount = 0;
 
-                context.OnTransactionCompleted += () => triggerCount++;
+                context.OnTransactionCompleted += () => syncTriggerCount++;
+                context.OnTransactionCompletedAsync += ct =>
+                {
+                    asyncTriggerCount++;
+                    return Task.CompletedTask;
+                };
 
                 // act
 
@@ -43,7 +50,8 @@ namespace Curiosity.DAL.EF.UnitTests.OnTransactionCompleted
             }
 
             // assert
-            triggerCount.Should().Be(1, "we saved changes without explicit transaction creation");
+            syncTriggerCount.Should().Be(1, "we saved changes without explicit transaction creation");
+            asyncTriggerCount.Should().Be(1, "we saved changes without explicit transaction creation");
         }
 
         /// <summary>
@@ -53,12 +61,19 @@ namespace Curiosity.DAL.EF.UnitTests.OnTransactionCompleted
         public async Task DataContext_WithoutTransaction_OnSaveChangesAsync_Triggered()
         {
             // arrange
-            int triggerCount;
+            int syncTriggerCount;
+            int asyncTriggerCount;
             await using (var context = _fixture.CreateContext())
             {
-                triggerCount = 0;
+                syncTriggerCount = 0;
+                asyncTriggerCount = 0;
 
-                context.OnTransactionCompleted += () => triggerCount++;
+                context.OnTransactionCompleted += () => syncTriggerCount++;
+                context.OnTransactionCompletedAsync += ct =>
+                {
+                    asyncTriggerCount++;
+                    return Task.CompletedTask;
+                };
 
                 // act
 
@@ -69,7 +84,8 @@ namespace Curiosity.DAL.EF.UnitTests.OnTransactionCompleted
             }
 
             // assert
-            triggerCount.Should().Be(1, "we saved changes without explicit transaction creation");
+            syncTriggerCount.Should().Be(1, "we saved changes without explicit transaction creation");
+            asyncTriggerCount.Should().Be(1, "we saved changes without explicit transaction creation");
         }
 
         /// <summary>
@@ -78,13 +94,19 @@ namespace Curiosity.DAL.EF.UnitTests.OnTransactionCompleted
         [Fact]
         public void DataContext_WithTransaction_WithoutCommit_OnSaveChanges_NotTriggered()
         {
-            var triggerCount = 0;
+            var syncTriggerCount = 0;
+            var asyncTriggerCount = 0;
 
             // arrange
             using (var context = _fixture.CreateContext())
             using (var transaction = context.BeginTransaction())
             {
-                context.OnTransactionCompleted += () => triggerCount++;
+                context.OnTransactionCompleted += () => syncTriggerCount++;
+                context.OnTransactionCompletedAsync += ct =>
+                {
+                    asyncTriggerCount++;
+                    return Task.CompletedTask;
+                };
 
                 // act
 
@@ -92,7 +114,8 @@ namespace Curiosity.DAL.EF.UnitTests.OnTransactionCompleted
             }
 
             // assert
-            triggerCount.Should().Be(0, "we didnt' commit transaction");
+            syncTriggerCount.Should().Be(0, "we didnt' commit transaction");
+            asyncTriggerCount.Should().Be(0, "we didnt' commit transaction");
         }
 
         /// <summary>
@@ -101,13 +124,19 @@ namespace Curiosity.DAL.EF.UnitTests.OnTransactionCompleted
         [Fact]
         public void DataContext_WithTransaction_WithCommit_OnSaveChanges_Triggered()
         {
-            var triggerCount = 0;
+            var syncTriggerCount = 0;
+            var asyncTriggerCount = 0;
 
             // arrange
             using (var context = _fixture.CreateContext())
             using (var transaction = context.BeginTransaction())
             {
-                context.OnTransactionCompleted += () => triggerCount++;
+                context.OnTransactionCompleted += () => syncTriggerCount++;
+                context.OnTransactionCompletedAsync += ct =>
+                {
+                    asyncTriggerCount++;
+                    return Task.CompletedTask;
+                };
 
                 // act
 
@@ -117,7 +146,8 @@ namespace Curiosity.DAL.EF.UnitTests.OnTransactionCompleted
             }
 
             // assert
-            triggerCount.Should().Be(1, "we committed transaction");
+            syncTriggerCount.Should().Be(1, "we committed transaction");
+            asyncTriggerCount.Should().Be(1, "we committed transaction");
         }
 
         /// <summary>
@@ -126,7 +156,8 @@ namespace Curiosity.DAL.EF.UnitTests.OnTransactionCompleted
         [Fact]
         public async Task DataContext_WithTransaction_WithCommitAsync_OnSaveChangesAsync_Triggered()
         {
-            var triggerCount = 0;
+            var syncTriggerCount = 0;
+            var asyncTriggerCount = 0;
 
             CancellationToken cancellationToken = default;
 
@@ -138,13 +169,19 @@ namespace Curiosity.DAL.EF.UnitTests.OnTransactionCompleted
 
                 await context.SaveChangesAsync(cancellationToken);
 
-                context.OnTransactionCompleted += () => triggerCount++;
+                context.OnTransactionCompleted += () => syncTriggerCount++;
+                context.OnTransactionCompletedAsync += ct =>
+                {
+                    asyncTriggerCount++;
+                    return Task.CompletedTask;
+                };
 
                 await transaction.CommitAsync(cancellationToken);
             }
 
             // assert
-            triggerCount.Should().Be(1, "we committed transaction");
+            syncTriggerCount.Should().Be(1, "we committed transaction");
+            asyncTriggerCount.Should().Be(1, "we committed transaction");
         }
     }
 }

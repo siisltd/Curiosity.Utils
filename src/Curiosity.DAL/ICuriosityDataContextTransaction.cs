@@ -15,6 +15,11 @@ namespace Curiosity.DAL
         event Action OnTransactionCompleted;
 
         /// <summary>
+        /// Notifies when transaction successfully completed.
+        /// </summary>
+        event Func<CancellationToken, Task> OnTransactionCompletedAsync;
+
+        /// <summary>
         /// Gets the transaction identifier.
         /// </summary>
         Guid TransactionId { get; }
