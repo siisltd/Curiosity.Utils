@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.4] - unreleased
+
+### Added
+
+- Added `SwaggerDescriptor`.
+
 ## [1.1.3] - 2021-07-29
 
 ### Added
