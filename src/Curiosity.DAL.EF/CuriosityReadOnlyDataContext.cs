@@ -26,7 +26,7 @@ namespace Curiosity.DAL.EF
         /// <inheritdoc />
         public IDbConnection Connection => base.Database.GetDbConnection();
 
-        public CuriosityReadOnlyDataContext(DbContextOptions<T> options) : base(options)
+        protected CuriosityReadOnlyDataContext(DbContextOptions<T> options) : base(options)
         {
         }
 

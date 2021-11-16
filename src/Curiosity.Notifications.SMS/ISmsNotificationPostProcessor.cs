@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Curiosity.SMS;
-using Curiosity.Tools.Models;
+using Curiosity.Tools;
 
 namespace Curiosity.Notifications.SMS
 {

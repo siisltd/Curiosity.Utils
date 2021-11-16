@@ -26,6 +26,7 @@ namespace Curiosity.Tools.Web.ModelBinders
                 .ToString()
                 .Split(_delimiters, StringSplitOptions.RemoveEmptyEntries);
             var elementType = bindingContext.ModelType.GetTypeInfo().GetElementType();
+            if (elementType == null) throw new InvalidOperationException($"{nameof(elementType)} can't be null");
 
             if (values.Length == 0)
             {

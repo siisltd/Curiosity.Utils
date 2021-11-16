@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using NodaTime;
 
-namespace Curiosity.TimeZone
+namespace Curiosity.Tools
 {
     /// <summary>
     /// Helper class for time zones.

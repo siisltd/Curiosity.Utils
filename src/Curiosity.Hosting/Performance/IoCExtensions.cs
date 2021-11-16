@@ -1,4 +1,4 @@
-using Curiosity.AppInitializer;
+using Curiosity.Tools.AppInitializer;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Curiosity.Hosting.Performance

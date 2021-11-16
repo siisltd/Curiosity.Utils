@@ -28,9 +28,9 @@ namespace Curiosity.Tools.Web
         public static T GetObject<T>(this ISession session, string key)
         {
             var value = session.GetString(key);
-            return value == null
+            return (value == null
                 ? default
-                : JsonConvert.DeserializeObject<T>(value);
+                : JsonConvert.DeserializeObject<T>(value))!;
         }
     }
 }

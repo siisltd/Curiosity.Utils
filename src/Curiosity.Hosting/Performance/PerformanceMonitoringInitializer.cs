@@ -1,7 +1,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Curiosity.AppInitializer;
+using Curiosity.Tools;
+using Curiosity.Tools.AppInitializer;
 using Curiosity.Tools.Performance;
 using Microsoft.Extensions.Logging;
 

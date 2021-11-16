@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.0] - 2021-11-16
+
+### Added
+
+- Using `IAppInitializer` from `Tools`.
+
 ## [1.0.15] - 2021-07-09
 
 ### Changed

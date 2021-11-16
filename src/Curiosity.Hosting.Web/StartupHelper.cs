@@ -1,5 +1,5 @@
 using System.Reflection;
-using Curiosity.AppInitializer;
+using Curiosity.Hosting.AppInitializer;
 using Curiosity.Hosting.Web.Resources;
 using Curiosity.Tools.IoC;
 using Curiosity.Tools.Web.ModelBinders;

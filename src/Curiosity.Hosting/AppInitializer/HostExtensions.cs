@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Curiosity.AppInitializer
+namespace Curiosity.Hosting.AppInitializer
 {
     /// <summary>
     /// Provides extension methods to perform async initialization of an application.
@@ -24,7 +24,7 @@ namespace Curiosity.AppInitializer
 
             using (var scope = host.Services.CreateScope())
             {
-                var rootInitializer = scope.ServiceProvider.GetService<AppInitializer?>();
+                var rootInitializer = scope.ServiceProvider.GetService<Hosting.AppInitializer.AppInitializer?>();
                 if (rootInitializer == null)
                 {
                     throw new InvalidOperationException("The async initialization service isn't registered, register it by calling AddAsyncInitialization() on the service collection or by adding an async initializer.");
@@ -45,7 +45,7 @@ namespace Curiosity.AppInitializer
             if (scope == null)
                 throw new ArgumentNullException(nameof(scope));
 
-            var rootInitializer = scope.ServiceProvider.GetService<AppInitializer?>();
+            var rootInitializer = scope.ServiceProvider.GetService<Hosting.AppInitializer.AppInitializer?>();
             if (rootInitializer == null)
             {
                 throw new InvalidOperationException("The async initialization service isn't registered, register it by calling AddAsyncInitialization() on the service collection or by adding an async initializer.");

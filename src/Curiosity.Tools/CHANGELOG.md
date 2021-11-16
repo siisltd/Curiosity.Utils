@@ -1,10 +1,22 @@
 # Changelog
 
+## [1.3.0] - 2021-11-16
+
+### Added
+
+- Moved `IAppInitializer` from `Curiosity.AppInitializer`.
+- Moved `TimeZoneHelper` from `Curiosity.TimeZone`.
+
+### Changed
+
+- Changed namespace for response, errors models
+- Made `SequenceCounter` thread safe.
+
 ## [1.2.0] - 2021-10-18
     
 ### Added
 
-- Added `GenerateRandomKey` to `UniqueKeyGenerator`.s  
+- Added `GenerateRandomKey` to `UniqueKeyGenerator`.  
 
 ### Changed
 

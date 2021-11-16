@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Curiosity.Configuration;
 using Curiosity.Tools;
-using Curiosity.Tools.Models;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RestSharp;

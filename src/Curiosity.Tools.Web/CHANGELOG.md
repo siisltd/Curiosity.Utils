@@ -1,6 +1,12 @@
 # Changelog
 
-## [1.1.4] - unreleased
+## [1.1.5] - 2021-11-16
+
+### Added
+
+- Added null reference annotations.
+
+## [1.1.4] - 2021-11-10
 
 ### Added
 

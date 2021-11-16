@@ -1,8 +1,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Curiosity.AppInitializer;
 using Curiosity.Configuration;
+using Curiosity.Tools.AppInitializer;
 using Microsoft.Extensions.Logging;
 
 namespace Curiosity.SFTP.SSH.Net

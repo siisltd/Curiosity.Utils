@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Curiosity.Tools;
+using Curiosity.Tools.AppInitializer;
 using Microsoft.Extensions.Logging;
 
-namespace Curiosity.AppInitializer
+namespace Curiosity.Hosting.AppInitializer
 {
     internal class AppInitializer
     {

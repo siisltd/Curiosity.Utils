@@ -27,7 +27,7 @@ namespace Curiosity.DAL.EF
         public event Func<CancellationToken, Task>? OnTransactionCompletedAsync;
 
         /// <inheritdoc />
-        public CuriosityDataContext(DbContextOptions<T> options) : base(options)
+        protected CuriosityDataContext(DbContextOptions<T> options) : base(options)
         {
         }
 

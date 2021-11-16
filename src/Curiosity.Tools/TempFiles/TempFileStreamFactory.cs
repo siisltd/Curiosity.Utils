@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Curiosity.Configuration;
 
-namespace Curiosity.TempFiles
+namespace Curiosity.Tools.TempFiles
 {
     /// <inheritdoc />
     public class TempFileStreamFactory : ITempFileStreamFactory

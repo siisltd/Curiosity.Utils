@@ -1,6 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Curiosity.Tools.Models;
+using Curiosity.Tools;
 
 namespace Curiosity.SMS
 {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Curiosity.Configuration;
 
-namespace Curiosity.TempFiles
+namespace Curiosity.Tools.TempFiles
 {
     /// <summary>
     /// Options for working with temporary files.

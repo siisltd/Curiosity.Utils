@@ -1,11 +1,10 @@
+using System.Threading;
+
 namespace Curiosity.Tools
 {
     /// <summary>
-    /// Sequence counter that is used when converting
+    /// Thread safe sequence counter that is used when converting
     /// </summary>
-    /// <remarks>
-    /// Not thread safe.
-    /// </remarks>
     public class SequenceCounter
     {
         private int _sequenceNumber;
@@ -13,11 +12,11 @@ namespace Curiosity.Tools
         /// <summary>
         /// Returns next value for a sequence.
         /// </summary>
-        public int GetNext() => _sequenceNumber++;
+        public int GetNext() => Interlocked.Increment(ref _sequenceNumber);
 
         /// <summary>
         /// Resets counter.
         /// </summary>
-        public void Reset() => _sequenceNumber = 0;
+        public void Reset() => Interlocked.Exchange(ref _sequenceNumber, 0);
     }
 }

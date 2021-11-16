@@ -22,7 +22,7 @@ namespace Curiosity.Tools.Web.Controllers
         /// Редирект по указанному адресу либо на домашнюю страницу
         /// </summary>
         /// <param name="returnUrl">Адрес куда надо переадресовать</param>
-        protected ActionResult RedirectInternal(string returnUrl = null)
+        protected ActionResult RedirectInternal(string? returnUrl = null)
         {
             if (!String.IsNullOrEmpty(returnUrl))
                 return Redirect(returnUrl);
@@ -66,7 +66,7 @@ namespace Curiosity.Tools.Web.Controllers
         [AllowAnonymous]
         public ActionResult ErrorView(
             [FromServices] ILogger logger, 
-            string errorText = null)
+            string? errorText = null)
         {
             var message = String.IsNullOrWhiteSpace(errorText)
                 ? LNG.UnexpectedError
@@ -124,7 +124,7 @@ namespace Curiosity.Tools.Web.Controllers
         }
 
         // ответы на ajax-запросы грида
-        private ActionResult AjaxGridResponse(long? rowId, string content = null, object htmlAttributes = null)
+        private ActionResult AjaxGridResponse(long? rowId, string? content = null, object? htmlAttributes = null)
         {
             var div = new TagBuilder("div");
             if (rowId.HasValue)

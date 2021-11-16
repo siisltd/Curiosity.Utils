@@ -63,7 +63,7 @@ namespace Curiosity.Tools.Web.Middleware
 
             static async Task Awaited(CuriosityExceptionHandleMiddleware middleware, HttpContext context, Task task)
             {
-                ExceptionDispatchInfo edi = null;
+                ExceptionDispatchInfo? edi = null;
                 try
                 {
                     await task;

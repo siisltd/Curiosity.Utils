@@ -1,6 +1,6 @@
 using System;
 using Curiosity.Configuration;
-using Curiosity.TempFiles;
+using Curiosity.Tools.TempFiles;
 using Microsoft.Extensions.Logging;
 
 namespace Curiosity.SFTP.SSH.Net

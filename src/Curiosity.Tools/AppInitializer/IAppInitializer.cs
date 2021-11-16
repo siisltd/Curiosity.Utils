@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Curiosity.AppInitializer
+namespace Curiosity.Tools.AppInitializer
 {
     /// <summary>
     /// Represents a type that performs async application initialization.

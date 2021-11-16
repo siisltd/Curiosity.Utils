@@ -1,4 +1,4 @@
-namespace Curiosity.TempFiles
+namespace Curiosity.Tools.TempFiles
 {
     /// <summary>
     /// Factory for <see cref="TempFileStream"/>.

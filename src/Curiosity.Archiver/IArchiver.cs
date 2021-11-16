@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Curiosity.TempFiles;
+using Curiosity.Tools.TempFiles;
 
 namespace Curiosity.Archiver
 {

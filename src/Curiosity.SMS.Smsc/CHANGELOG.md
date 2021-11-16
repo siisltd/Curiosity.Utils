@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.2] - 2021-11-16
+
+### Changed
+
+- Upgraded `Curiosity.Tools` package.
+
 ## [1.1.1] - 2021-10-18
 
 ### Added

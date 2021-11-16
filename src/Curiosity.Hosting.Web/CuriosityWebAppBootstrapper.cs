@@ -1,10 +1,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Curiosity.AppInitializer;
 using Curiosity.Configuration;
+using Curiosity.Hosting.AppInitializer;
 using Curiosity.Hosting.Performance;
 using Curiosity.Hosting.ThreadPool;
+using Curiosity.Tools.AppInitializer;
 using Curiosity.Tools.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

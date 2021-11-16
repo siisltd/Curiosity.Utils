@@ -2,11 +2,11 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Curiosity.AppInitializer;
 using Curiosity.Configuration;
+using Curiosity.Tools.AppInitializer;
 using Microsoft.Extensions.Logging;
 
-namespace Curiosity.TempFiles
+namespace Curiosity.Tools.TempFiles
 {
     /// <summary>
     /// Service for init temp files service on application start.
@@ -45,7 +45,7 @@ namespace Curiosity.TempFiles
                 _logger.LogInformation($"Temp directory \"{_tempFileOptions.TempPath}\" was created.");
             }
             
-            _logger.LogInformation("Initialization of temp files completed.");
+            _logger.LogInformation("Initialization of temp files completed");
             
             return Task.CompletedTask;
         }

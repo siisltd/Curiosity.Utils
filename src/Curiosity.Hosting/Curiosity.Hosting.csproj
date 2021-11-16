@@ -12,7 +12,7 @@
         
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.1.14</PackageVersion>
+        <PackageVersion>1.2.0</PackageVersion>
 
         <Authors>Max Markelow (@markeli), Ilya Negrub (@ilya-negrub)</Authors>
         <Company>SIIS Ltd</Company>
@@ -59,7 +59,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Curiosity.AppInitializer\Curiosity.AppInitializer.csproj" />
       <ProjectReference Include="..\Curiosity.Configuration.YAML\Curiosity.Configuration.YAML.csproj" />
       <ProjectReference Include="..\Curiosity.Configuration\Curiosity.Configuration.csproj" />
       <ProjectReference Include="..\Curiosity.Tools\Curiosity.Tools.csproj" />

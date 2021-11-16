@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0] - 2021-11-16
+
+### Added
+
+- Moved `AppInitializer` from `Curiosity.AppIntiializer`.
+- Using `IAppInitializer` from `Tools`.
+- Moved TempDirCleaner from `Curiosity.TempFiles`.
+
 ## [1.0.14] - 2021-07-29
 
 ### Changed

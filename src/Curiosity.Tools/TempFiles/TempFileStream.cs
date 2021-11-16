@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace Curiosity.TempFiles
+namespace Curiosity.Tools.TempFiles
 {
     /// <summary>
     /// File stream for temporary file.

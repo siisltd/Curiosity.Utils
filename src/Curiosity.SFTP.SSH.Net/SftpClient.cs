@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-using Curiosity.TempFiles;
+using Curiosity.Tools.TempFiles;
 using Microsoft.Extensions.Logging;
 using Polly;
 using Renci.SshNet;

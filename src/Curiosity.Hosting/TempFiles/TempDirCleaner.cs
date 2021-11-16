@@ -2,10 +2,11 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Curiosity.Tools.TempFiles;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Curiosity.TempFiles
+namespace Curiosity.Hosting.TempFiles
 {
     /// <summary>
     /// Periodically checks all files in the directory.

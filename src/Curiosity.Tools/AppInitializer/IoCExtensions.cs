@@ -1,28 +1,13 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Curiosity.AppInitializer
+namespace Curiosity.Tools.AppInitializer
 {
     /// <summary>
     /// Provides extension methods to register async initializers.
     /// </summary>
     public static class IoCExtensions
     {
-        /// <summary>
-        /// Registers necessary services for async initialization support.
-        /// </summary>
-        /// <param name="services">The <see cref="T:Microsoft.Extensions.DependencyInjection.IServiceCollection" /> to add the service to.</param>
-        /// <returns>A reference to this instance after the operation has completed.</returns>
-        public static IServiceCollection AddAppInitialization(this IServiceCollection services)
-        {
-            if (services == null)
-                throw new ArgumentNullException(nameof(services));
-
-            services.TryAddTransient<AppInitializer>();
-            return services;
-        }
-
         /// <summary>
         /// Adds an async initializer of the specified type.
         /// </summary>
@@ -33,7 +18,6 @@ namespace Curiosity.AppInitializer
             where TInitializer : class, IAppInitializer
         {
             return services
-                .AddAppInitialization()
                 .AddTransient<IAppInitializer, TInitializer>();
         }
 
@@ -51,7 +35,6 @@ namespace Curiosity.AppInitializer
                 throw new ArgumentNullException(nameof(initializer));
 
             return services
-                .AddAppInitialization()
                 .AddSingleton<IAppInitializer>(initializer);
         }
 
@@ -67,7 +50,6 @@ namespace Curiosity.AppInitializer
                 throw new ArgumentNullException(nameof(implementationFactory));
 
             return services
-                .AddAppInitialization()
                 .AddTransient(implementationFactory);
         }
 
@@ -83,7 +65,6 @@ namespace Curiosity.AppInitializer
                 throw new ArgumentNullException(nameof(initializerType));
 
             return services
-                .AddAppInitialization()
                 .AddTransient(typeof(IAppInitializer), initializerType);
         }
     }

@@ -1,9 +1,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Curiosity.AppInitializer;
 using Curiosity.Configuration;
+using Curiosity.Hosting.AppInitializer;
 using Curiosity.Hosting.Performance;
+using Curiosity.Tools.AppInitializer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;

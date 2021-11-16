@@ -1,10 +1,10 @@
 using System;
-using Curiosity.AppInitializer;
 using Curiosity.Configuration;
+using Curiosity.Tools.AppInitializer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Curiosity.TempFiles
+namespace Curiosity.Tools.TempFiles
 {
     /// <summary>
     /// Extension methods for <see cref="IServiceCollection"/>.
@@ -20,29 +20,13 @@ namespace Curiosity.TempFiles
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
             if (tempFileOptions == null) throw new ArgumentNullException(nameof(tempFileOptions));
-            
+
             tempFileOptions.AssertValid();
 
             services.TryAddSingleton(tempFileOptions);
             services.TryAddSingleton<ITempFileStreamFactory, TempFileStreamFactory>();
             services.AddAppInitializer<TempFilesInitService>();
-            
-            return services;
-        }
-        
-        /// <summary>
-        /// Adds temp directory cleaner as hosted service.
-        /// </summary>
-        public static IServiceCollection AddTempDirCleaner(this IServiceCollection services, TempFileOptions tempFileOptions)
-        {
-            if (services == null) throw new ArgumentNullException(nameof(services));
-            if (tempFileOptions == null) throw new ArgumentNullException(nameof(tempFileOptions));
-            
-            tempFileOptions.AssertValid();
 
-            services.TryAddSingleton(tempFileOptions);
-            services.AddHostedService<TempDirCleaner>();
-            
             return services;
         }
     }

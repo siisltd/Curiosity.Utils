@@ -6,8 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.Zip.Compression;
-using Curiosity.TempFiles;
 using Curiosity.Tools;
+using Curiosity.Tools.TempFiles;
 
 namespace Curiosity.Archiver.SharpZip
 {

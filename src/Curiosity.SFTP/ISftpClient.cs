@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Curiosity.TempFiles;
+using Curiosity.Tools.TempFiles;
 
 namespace Curiosity.SFTP
 {

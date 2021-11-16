@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Curiosity.Tools.Models
+namespace Curiosity.Tools
 {
     /// <summary>
     /// Response without body.
