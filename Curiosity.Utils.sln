@@ -97,6 +97,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.RequestProcessing
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.RequestProcessing.Postgres", "src\Curiosity.RequestProcessing.Postgres\Curiosity.RequestProcessing.Postgres.csproj", "{7B374250-02AE-430D-BD90-3AEAD8F72667}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.MassEventBus", "src\Curiosity.MassEventBus\Curiosity.MassEventBus.csproj", "{383F9A9F-8782-4226-8A9E-DEBC1513D5BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -267,6 +269,10 @@ Global
 		{7B374250-02AE-430D-BD90-3AEAD8F72667}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B374250-02AE-430D-BD90-3AEAD8F72667}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B374250-02AE-430D-BD90-3AEAD8F72667}.Release|Any CPU.Build.0 = Release|Any CPU
+		{383F9A9F-8782-4226-8A9E-DEBC1513D5BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{383F9A9F-8782-4226-8A9E-DEBC1513D5BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{383F9A9F-8782-4226-8A9E-DEBC1513D5BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{383F9A9F-8782-4226-8A9E-DEBC1513D5BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -316,6 +322,7 @@ Global
 		{4C1426F3-8C94-407B-B8CB-F41BDEDF28A8} = {7C485CBA-A08F-4A0E-835A-4505CBBB7EA8}
 		{94292BC0-8A85-4BBA-B118-A33216247BC2} = {7C485CBA-A08F-4A0E-835A-4505CBBB7EA8}
 		{7B374250-02AE-430D-BD90-3AEAD8F72667} = {7C485CBA-A08F-4A0E-835A-4505CBBB7EA8}
+		{383F9A9F-8782-4226-8A9E-DEBC1513D5BB} = {7C485CBA-A08F-4A0E-835A-4505CBBB7EA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA1A20A2-0D4E-492D-877C-0A36F18FBFF1}
