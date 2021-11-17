@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Curiosity.EMail.TestLog
+namespace Curiosity.EMail
 {
     public static class IoCExtensions
     {

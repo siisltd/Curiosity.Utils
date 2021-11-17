@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace Curiosity.EMail.TestLog
+namespace Curiosity.EMail
 {
     /// <summary>
     /// Use that sender for debugging email sending without real send

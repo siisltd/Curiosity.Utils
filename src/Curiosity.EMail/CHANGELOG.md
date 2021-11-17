@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.0] - 2021-11-17
+
+### Added
+
+- Moved `TestLogEmailSender` from another package 
+
 ## [1.0.1] - 2021-07-30
 
 ### Added
