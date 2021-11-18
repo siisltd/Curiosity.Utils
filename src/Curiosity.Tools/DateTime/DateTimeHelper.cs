@@ -89,5 +89,10 @@ namespace Curiosity.Tools
         {
             return $"{dateTime.ToShortLocalizedDateString()} {dateTime.TimeOfDay.ToShortInvariantTimeString()}";
         }
+
+        public static DateTime TrimMilliseconds(this DateTime date)
+        {
+            return new DateTime((date.Ticks / TimeSpan.TicksPerSecond) * TimeSpan.TicksPerSecond);
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace Curiosity.Tools.Web.Swagger
             
             foreach (var value in Enum.GetValues(typeof(T)).Cast<T>())
             {
-                sb.AppendLine($"- <b>[{Convert.ToInt32(value)}]</b> - {describer.Invoke(value)}");
+                sb.AppendLine($"- <b>[{Convert.ToInt32(value)}]</b> ({value}) - <b><i>{describer.Invoke(value)}</i></b>");
             }
             
             return sb;
