@@ -1,10 +1,13 @@
 # Changelog
 
-## [1.1.6] unreleased
+## [1.1.6] 2021-11-18
 
 ### Changed
 
 - Improved enum writer to swagger descriptor
+
+### Added
+
 - Added query string to request logger
 
 ## [1.1.5] - 2021-11-16
