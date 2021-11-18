@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.3.1] unreleased
+
+- Added milliseconds trim to date time helpers
+
 ## [1.3.0] - 2021-11-16
 
 ### Added

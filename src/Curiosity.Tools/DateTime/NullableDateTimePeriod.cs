@@ -25,13 +25,15 @@ namespace Curiosity.Tools
         /// <param name="startTime">Time of the day for <see cref="startDate"/></param>
         /// <param name="endTime">Time of the day for <see cref="endDate"/></param>
         /// <param name="dayRange">If period for full day. If <langword name="true"/>, <see cref="endTime"/> will not be taken into account and time will be 23:59:59</param>
+        /// <param name="trimMilliseconds">Trims millisecond for result dates when true</param>
         /// <exception cref="ArgumentException">If start date greater than end or time specified without date</exception>
         public NullableDateTimePeriod(
             DateTime? startDate, 
             DateTime? endDate, 
             TimeSpan? startTime = null, 
             TimeSpan? endTime = null,
-            bool dayRange = false)
+            bool dayRange = false,
+            bool trimMilliseconds = false)
         {
             
             if (startDate.HasValue)
@@ -63,6 +65,11 @@ namespace Curiosity.Tools
                 End = default;
             }
             
+            if (trimMilliseconds)
+            {
+                Start = Start?.TrimMilliseconds();
+                End = End?.TrimMilliseconds();
+            }
             
             if (Start.HasValue && End.HasValue && Start > End)
                 throw new ArgumentException($"{nameof(Start)} can not be greater than {nameof(End)}");
