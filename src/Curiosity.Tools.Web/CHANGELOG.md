@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.6] unreleased
+
+### Changed
+
+- Improved enum writer to swagger descriptor
+
 ## [1.1.5] - 2021-11-16
 
 ### Added
