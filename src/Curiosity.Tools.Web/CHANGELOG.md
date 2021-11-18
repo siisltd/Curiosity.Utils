@@ -5,6 +5,7 @@
 ### Changed
 
 - Improved enum writer to swagger descriptor
+- Added query string to request logger
 
 ## [1.1.5] - 2021-11-16
 
