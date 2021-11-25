@@ -36,7 +36,7 @@ namespace Curiosity.Tools.Web.Middleware
                 var ip = context.Connection.RemoteIpAddress;
                 if (request.IsMultipartContentType())
                 {
-                    _logger.LogDebug($"[REQUEST FROM {ip}] {request.Path}/{request.QueryString}: is mime multipart content, dump skipped");
+                    _logger.LogDebug($"[REQUEST FROM {ip}] {request.Path}{request.QueryString}: is mime multipart content, dump skipped");
                 }
                 else
                 {
@@ -51,11 +51,11 @@ namespace Curiosity.Tools.Web.Middleware
 
                     if (String.IsNullOrEmpty(requestBody))
                     {
-                        _logger.LogDebug($"[REQUEST WITHOUT CONTENT FROM {ip}] {request.Path}/{request.QueryString}");
+                        _logger.LogDebug($"[REQUEST WITHOUT CONTENT FROM {ip}] {request.Path}{request.QueryString}");
                     }
                     else
                     {
-                        _logger.LogDebug($"[REQUEST CONTENT FROM {ip}] {request.Path}/{request.QueryString}");
+                        _logger.LogDebug($"[REQUEST CONTENT FROM {ip}] {request.Path}{request.QueryString}");
                         _logger.LogDebug(_dataProtector.HideInJson(requestBody));
                         _logger.LogDebug($"[END] {request.Path}");
                     }

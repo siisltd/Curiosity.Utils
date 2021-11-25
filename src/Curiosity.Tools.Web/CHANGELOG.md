@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.7] 
+
+### Changed
+
+- Removed extra slash in request logger
+
 ## [1.1.6] 2021-11-18
 
 ### Changed
