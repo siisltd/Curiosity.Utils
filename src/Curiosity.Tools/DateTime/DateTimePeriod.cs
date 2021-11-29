@@ -90,9 +90,11 @@ namespace Curiosity.Tools
         /// <summary>
         /// Checks if current period overlaps with specified period.
         /// </summary>
-        public bool Overlaps(DateTimePeriod period)
+        public bool Overlaps(DateTimePeriod period, bool isStrict = true)
         {
-            return Start <= period.Start && period.Start <= End || Start <= period.End && period.End <= End;
+            return isStrict
+                ? Start <= period.Start && period.Start <= End || Start <= period.End && period.End <= End
+                : Start < period.Start && period.Start < End || Start < period.End && period.End < End;
         }
 
         #region Equals methods

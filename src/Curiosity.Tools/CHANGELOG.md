@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.2] 
+
+### Added
+
+- Added isStrict flag to overlapping method of DateTimePeriod
+
 ## [1.3.1] 2021-11-18
 
 ### Added
