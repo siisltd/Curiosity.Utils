@@ -46,6 +46,7 @@ namespace Curiosity.EMail.Mailgun
                 toAddress,
                 subject,
                 body,
+                isBodyHtml,
                 _mailgunEMailOptions.MailgunUser,
                 _mailgunEMailOptions.MailGunApiKey,
                 _mailgunEMailOptions.MailGunDomain,
@@ -57,6 +58,7 @@ namespace Curiosity.EMail.Mailgun
             string toAddress,
             string subject,
             string body,
+            bool isBodyHtml,
             string mailgunUser,
             string mailGunApiKey,
             string mailgunDomain,
@@ -75,9 +77,10 @@ namespace Curiosity.EMail.Mailgun
             restRequest.AddParameter("from", emailFrom);
             restRequest.AddParameter("to", toAddress);
             restRequest.AddParameter("subject", subject);
-            restRequest.AddParameter("text", body);
+            restRequest.AddParameter(isBodyHtml ? "html" : "text", body);
             restRequest.Method = Method.POST;
 
+            _logger.LogTrace("Sending email to {Email}...", toAddress);
             var response = await restClient.ExecuteAsync(restRequest, cancellationToken);
             if (!response.IsSuccessful)
             {
@@ -86,7 +89,7 @@ namespace Curiosity.EMail.Mailgun
                 return Response.Failed(new Error((int)EmailError.Auth, response.Content));
             }
 
-            _logger.LogDebug($"Message is successfully sent to {toAddress}");
+            _logger.LogDebug("Message is successfully sent to {Email}. Response: {Response}", toAddress, response.Content);
             if (response.ContentType != "application/json") return Response.Successful();
 
             try
@@ -125,7 +128,7 @@ namespace Curiosity.EMail.Mailgun
             var domain = mailGunEMailExtraParams.MailGunDomain ?? _mailgunEMailOptions.MailGunDomain;
             var emailFrom = mailGunEMailExtraParams.EMailFrom ?? _mailgunEMailOptions.EMailFrom;
 
-            return SendAsync(toAddress, subject, body, user, apiKey, domain, emailFrom, cancellationToken);
+            return SendAsync(toAddress, subject, body, isBodyHtml, user, apiKey, domain, emailFrom, cancellationToken);
         }
     }
 }

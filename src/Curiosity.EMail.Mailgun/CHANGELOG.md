@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1] - 2021-12-02
+
+### Added
+
+- Sending email as html
+- Improved logging
+
 ## [1.2.0] - 2021-12-02
 
 ### Added
