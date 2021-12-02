@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Curiosity.EMail;
+using Curiosity.Tools;
 using Microsoft.Extensions.Logging;
 
 namespace Curiosity.Notifications.EMail
@@ -66,8 +67,11 @@ namespace Curiosity.Notifications.EMail
             }
 
             // throw exception on failed result
-            if (!result)
-                throw new InvalidOperationException($"Sending email to \"{notification.Email}\" failed");
+            if (!result.IsSuccess)
+            {
+                var error = result.Errors.FirstOrDefault() ?? new Error((int)EmailError.Unknown, "Unknown email error");
+                throw new InvalidOperationException($"Sending email to \"{notification.Email}\" failed. EmailResult={error.Code}", new Exception(error.Description));
+            }
         }
     }
 }

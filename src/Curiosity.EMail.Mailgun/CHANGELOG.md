@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.2.0] - 2021-12-02
+
+### Added
+
+- Email sending result;
+- Mailgun user to options and extra params;
+
+### Changed
+
+- `IEmailLogger` returns `Response` class object.
+
 ## [1.1.0] - 2021-09-30
 
 ### Added

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Curiosity.Tools;
 using Microsoft.Extensions.Logging;
 
 namespace Curiosity.EMail
@@ -19,7 +20,7 @@ namespace Curiosity.EMail
         }
 
         /// <inheritdoc />
-        public Task<bool> SendAsync(
+        public Task<Response> SendAsync(
             string toAddress,
             string subject,
             string body,
@@ -30,7 +31,7 @@ namespace Curiosity.EMail
             return SendAsync(toAddress, subject, body, isBodyHtml, cancellationToken);
         }
         
-        public Task<bool> SendAsync(
+        public Task<Response> SendAsync(
             string toAddress,
             string subject,
             string body,
@@ -43,7 +44,7 @@ namespace Curiosity.EMail
                                $"\tIsBodyHtml: {isBodyHtml}, \n" +
                                $"\tBody: \"{body}\"");
 
-            return Task.FromResult(true);
+            return Task.FromResult(Response.Successful());
         }
     }
 }

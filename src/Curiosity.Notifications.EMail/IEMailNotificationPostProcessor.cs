@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Curiosity.Tools;
 
 namespace Curiosity.Notifications.EMail
 {
@@ -15,6 +16,6 @@ namespace Curiosity.Notifications.EMail
         /// <param name="sendingResult">Result of sending <paramref name="notification"/>.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns></returns>
-        public Task ProcessAsync(EmailNotification notification, bool sendingResult, CancellationToken cancellationToken = default);
+        public Task ProcessAsync(EmailNotification notification, Response sendingResult, CancellationToken cancellationToken = default);
     }
 }

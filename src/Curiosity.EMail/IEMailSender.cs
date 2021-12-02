@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Curiosity.Tools;
 
 namespace Curiosity.EMail
 {
@@ -17,7 +18,7 @@ namespace Curiosity.EMail
         /// <param name="isBodyHtml">Is body html.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns></returns>
-        Task<bool> SendAsync(string toAddress, string subject, string body, bool isBodyHtml = false, CancellationToken cancellationToken = default);
+        Task<Response> SendAsync(string toAddress, string subject, string body, bool isBodyHtml = false, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Sends EMail using specified extra params.
@@ -29,6 +30,6 @@ namespace Curiosity.EMail
         /// <param name="emailExtraParams">Additional sending params.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns></returns>
-        Task<bool> SendAsync(string toAddress, string subject, string body, bool isBodyHtml, IEMailExtraParams emailExtraParams, CancellationToken cancellationToken = default);
+        Task<Response> SendAsync(string toAddress, string subject, string body, bool isBodyHtml, IEMailExtraParams emailExtraParams, CancellationToken cancellationToken = default);
     }
 }

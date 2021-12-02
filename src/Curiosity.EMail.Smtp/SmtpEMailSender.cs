@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Curiosity.Configuration;
+using Curiosity.Tools;
 using Microsoft.Extensions.Logging;
 using MimeKit;
 using MimeKit.Text;
@@ -27,7 +28,7 @@ namespace Curiosity.EMail.Smtp
         }
 
         /// <inheritdoc />
-        public Task<bool> SendAsync(string toAddress, string subject, string body, bool isBodyHtml = false, CancellationToken cancellationToken = default)
+        public Task<Response> SendAsync(string toAddress, string subject, string body, bool isBodyHtml = false, CancellationToken cancellationToken = default)
         {
             if (String.IsNullOrWhiteSpace(toAddress))
                 throw new ArgumentNullException(nameof(toAddress));
@@ -43,7 +44,7 @@ namespace Curiosity.EMail.Smtp
             return SendAsync(toAddress, subject, body, isBodyHtml, senderName, emailFrom, replyTo, cancellationToken);
         }
 
-        private async Task<bool> SendAsync(
+        private async Task<Response> SendAsync(
             string toAddress,
             string subject,
             string body,
@@ -58,7 +59,6 @@ namespace Curiosity.EMail.Smtp
                 subject,
                 body.Length);
 
-            var hasError = false;
             try
             {
                 var message = new MimeMessage();
@@ -85,29 +85,37 @@ namespace Curiosity.EMail.Smtp
                     smtpClient.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => true;
                     smtpClient.CheckCertificateRevocation = false;
 
+                    _logger.LogTrace("Connecting to SMTP server (Host={Host}, Port={Port})...", _emailOptions.SmtpServer, _emailOptions.SmtpPort);
                     await smtpClient.ConnectAsync(
                         _emailOptions.SmtpServer,
                         _emailOptions.SmtpPort,
                         SecureSocketOptions.Auto,
                         cancellationToken);
 
+                    _logger.LogTrace("Authenticating to SMTP server (Host={Host}, Port={Port})...", _emailOptions.SmtpServer, _emailOptions.SmtpPort);
                     await smtpClient.AuthenticateAsync(_emailOptions.SmtpLogin, _emailOptions.SmtpPassword, cancellationToken);
+
+                    _logger.LogTrace("Sending email to SMTP server (Host={Host}, Port={Port})...", _emailOptions.SmtpServer, _emailOptions.SmtpPort);
                     await smtpClient.SendAsync(message, cancellationToken);
+
+                    _logger.LogTrace("Disconnecting from SMTP server (Host={Host}, Port={Port})...", _emailOptions.SmtpServer, _emailOptions.SmtpPort);
                     await smtpClient.DisconnectAsync(true, cancellationToken);
                 }
 
                 _logger.LogInformation("EMail message was successfully sent to {0}", toAddress);
+
+                return Response.Successful();
             }
             catch (Exception e)
             {
                 _logger.LogError(e, $"Error sending EMail message to {0}. Reason: {e.Message}", toAddress);
-                hasError = true;
-            }
 
-            return !hasError;
+                //todo analyze exceptions and return more specified EmailError
+                return Response.Failed(new Error((int) EmailError.Unknown, e.Message));
+            }
         }
 
-        public Task<bool> SendAsync(string toAddress, string subject, string body, bool isBodyHtml, IEMailExtraParams emailExtraParams, CancellationToken cancellationToken = default)
+        public Task<Response> SendAsync(string toAddress, string subject, string body, bool isBodyHtml, IEMailExtraParams emailExtraParams, CancellationToken cancellationToken = default)
         {
             if (String.IsNullOrWhiteSpace(toAddress))
                 throw new ArgumentNullException(nameof(toAddress));

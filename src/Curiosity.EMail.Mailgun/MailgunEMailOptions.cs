@@ -12,6 +12,11 @@ namespace Curiosity.EMail.Mailgun
         ILoggableOptions
     {
         /// <summary>
+        /// Mailgun user.
+        /// </summary>
+        public string MailgunUser { get; set; } = null!;
+
+        /// <summary>
         /// API key for a MailGun work.
         /// </summary>
         public string MailGunApiKey { get; set; } = null!;
@@ -20,11 +25,6 @@ namespace Curiosity.EMail.Mailgun
         /// Domain of MailGun
         /// </summary>
         public string MailGunDomain { get; set; } = null!;
-
-        /// <summary>
-        /// URL of API MailGun
-        /// </summary>
-        public string MailGunApiUrl { get; set; } = null!;
 
         /// <summary>
         /// Sender's EMail
@@ -38,7 +38,8 @@ namespace Curiosity.EMail.Mailgun
 
             errors.AddErrorIf(String.IsNullOrWhiteSpace(MailGunApiKey), nameof(MailGunApiKey), "can not be empty");
             errors.AddErrorIf(String.IsNullOrWhiteSpace(MailGunDomain), nameof(MailGunDomain), "can not be empty");
-            errors.AddErrorIf(String.IsNullOrWhiteSpace(MailGunApiUrl), nameof(MailGunApiUrl), "can not be empty");
+            errors.AddErrorIf(String.IsNullOrWhiteSpace(MailgunUser), nameof(MailgunUser), "can not be empty");
+            errors.AddErrorIf(String.IsNullOrWhiteSpace(EMailFrom), nameof(EMailFrom), "can not be empty");
 
             return errors;
         }

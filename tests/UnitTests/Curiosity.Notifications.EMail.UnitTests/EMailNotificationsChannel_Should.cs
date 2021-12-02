@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Curiosity.EMail;
+using Curiosity.Tools;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -47,7 +48,7 @@ namespace Curiosity.Notifications.EMail.UnitTests
             var senderMock = new Mock<IEMailSender>();
             senderMock
                 .Setup(x => x.SendAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(true)
+                .ReturnsAsync(Response.Successful)
                 .Callback(() =>
                 {
                     isSenderCalled = true;

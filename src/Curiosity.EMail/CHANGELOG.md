@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.3.0] - 2021-12-02
+
+### Added 
+
+- Email sending result;
+
+### Changed
+
+- `IEmailLogger` returns `Response` class object.
+
 ## [1.2.0] - 2021-11-17
 
 ### Added

@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.0] - 2021-12-02
+
+### Changed
+
+- Supports email result from email sender;
+
 ## [1.2.0] - 2021-08-31
 
 ### Changed
