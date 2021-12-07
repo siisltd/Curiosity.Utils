@@ -1,11 +1,17 @@
 # Changelog
 
+## [1.3.1] - 2021-12-07
+
+### Changed
+
+- Throwing error info from `ISmsSender` via exception when sending if failed.
+
 ## [1.3.0] - 2021-11-16
 
 ### Changed
 
 - Upgraded `Curiosity.Tools` package.
-- 
+
 ## [1.2.1] - 2021-11-16
 
 ### Changed

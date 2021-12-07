@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
 
-namespace SIISLtd.RequestProcessing.Filters
+namespace Curiosity.Tools
 {
     /// <summary>
     /// Расширения для комбинирования двух <see cref="Expression{TDelegate}"/> различными

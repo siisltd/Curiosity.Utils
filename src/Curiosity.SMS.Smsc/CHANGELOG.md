@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1] - 2021-12-07
+
+### Changed
+
+- Improved sending resposne from Smsc from `ISmsSender`.
+
 ## [1.2.0] - 2021-11-16
 
 ### Changed

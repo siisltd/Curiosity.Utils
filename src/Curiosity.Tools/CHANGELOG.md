@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.3] - 2021-12-07
+
+### Changed
+
+- Fixed namespace for `ExpressionExtensions`.
+
 ## [1.3.2] - 2021-11-29
 
 ### Added

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Curiosity.SMS;
+using Curiosity.Tools;
 using Microsoft.Extensions.Logging;
 
 namespace Curiosity.Notifications.SMS
@@ -51,7 +52,11 @@ namespace Curiosity.Notifications.SMS
 
             // throw exception if something failed
             if (!result.IsSuccess)
-                throw new InvalidOperationException($"Sending SMS to \"{notification.PhoneNumber}\" failed.");
+            {
+                var error = result.Errors.FirstOrDefault() ?? new Error((int)SmsError.Unknown, "Unknown email error");
+                throw new InvalidOperationException($"Sending email to \"{notification.PhoneNumber}\" failed. SmsResult={error.Code}", new Exception(error.Description));
+            }
+
         }
     }
 }

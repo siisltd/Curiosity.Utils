@@ -23,6 +23,7 @@ namespace Curiosity.SMS.Smsc
             options.AssertValid();
         }
 
+        /// <inheritdoc />
         public Task<Response<SmsSentResult>> SendSmsAsync(string phoneNumber, string message, CancellationToken cancellationToken = default)
         {
             if (String.IsNullOrWhiteSpace(phoneNumber)) throw new ArgumentNullException(nameof(phoneNumber));
@@ -58,7 +59,6 @@ namespace Curiosity.SMS.Smsc
             _logger.LogInformation($"Отправляем sms на номер {phoneNumber}...");
 
             var response = await client.ExecuteAsync<SmscResponseData>(request, cancellationToken);
-            bool isSuccessful;
             string resultJson;
             decimal? messageCost = null;
             if (response.IsSuccessful)
@@ -71,18 +71,16 @@ namespace Curiosity.SMS.Smsc
                         messageCost = response.Data.cost;
 
                     _logger.LogInformation($"Успешно отправили sms на номер {phoneNumber}");
-                    isSuccessful = true;
                 }
                 else
                 {
-                    isSuccessful = false;
+                    var errorMessage = $"Ошибка при отправке sms на номер {phoneNumber} (error_code = {response.Data.error_code}, error = \"{response.Data.error}\")";
                     _logger.LogWarning($"Ошибка при отправке sms на номер {phoneNumber} (error_code = {response.Data.error_code}, error = \"{response.Data.error}\")");
+                    return Response<SmsSentResult>.Failed(new Error((int) SmsError.Unknown, errorMessage), new SmsSentResult(null, null, resultJson));
                 }
             }
             else
             {
-                isSuccessful = false;
-
                 var data = new SmscResponseData
                 {
                     error_code = -1
@@ -94,20 +92,17 @@ namespace Curiosity.SMS.Smsc
                 }
                 else
                 {
-                    if (!String.IsNullOrEmpty(response.ErrorMessage))
-                    {
-                        data.error = $"{response.ErrorMessage}";
-                    }
-                    else
-                    {
-                        data.error = $"{(int) response.StatusCode}, {response.StatusDescription}";
-                    }
+                    data.error = !String.IsNullOrEmpty(response.ErrorMessage)
+                        ? $"{response.ErrorMessage}"
+                        : $"{(int) response.StatusCode}, {response.StatusDescription}";
                 }
 
                 resultJson = JsonConvert.SerializeObject(data, SmsConstants.JsonSerializerSettings);
 
-                _logger.LogInformation(
+                _logger.LogWarning(
                     $"Ошибка при отправке sms на номер {phoneNumber} (error = \"{data.error}\")");
+
+                return Response<SmsSentResult>.Failed(new Error((int)SmsError.Unknown, data.error), new SmsSentResult(null, null, resultJson));
             }
 
             int? sentSmsCount = null;
@@ -116,11 +111,10 @@ namespace Curiosity.SMS.Smsc
 
             var result = new SmsSentResult(sentSmsCount, messageCost, resultJson);
 
-            return isSuccessful
-                ? Response<SmsSentResult>.Successful(result)
-                : Response<SmsSentResult>.Failed(new Error(-1, "Error while sending SMS"), result);
+            return Response<SmsSentResult>.Successful(result);
         }
 
+        /// <inheritdoc />
         public Task<Response<SmsSentResult>> SendSmsAsync(string phoneNumber, string message, ISmsExtraParams extraParams, CancellationToken cancellationToken = default)
         {
             if (String.IsNullOrWhiteSpace(phoneNumber)) throw new ArgumentNullException(nameof(phoneNumber));

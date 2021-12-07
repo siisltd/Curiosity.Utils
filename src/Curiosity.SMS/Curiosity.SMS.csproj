@@ -50,6 +50,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="..\..\siisltd.png" Pack="true" PackagePath="\"/>
+        <None Include="..\..\siisltd.png" Pack="true" PackagePath="\" />
     </ItemGroup>
 </Project>
