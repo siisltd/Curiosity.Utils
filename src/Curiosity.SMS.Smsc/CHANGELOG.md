@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.2] - 2021-12-07
+
+### Added
+
+- Added icon to package.
+
 ## [1.2.1] - 2021-12-07
 
 ### Changed

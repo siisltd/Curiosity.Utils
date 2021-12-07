@@ -12,7 +12,7 @@
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.2.1</PackageVersion>
+        <PackageVersion>1.2.2</PackageVersion>
 
         <Authors>Max Markelow (@markeli)</Authors>
         <Company>SIIS Ltd</Company>
@@ -36,10 +36,12 @@
       <DocumentationFile>bin\Release\netstandard2.1\Curiosity.SMS.Smsc.xml</DocumentationFile>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <PackageIcon>siisltd.png</PackageIcon>
+    </PropertyGroup>
+
     <ItemGroup>
-      <None Include="..\..\siisltd.png">
-        <Link>siisltd.png</Link>
-      </None>
+        <None Include="..\..\siisltd.png" Pack="true" PackagePath="\" />
     </ItemGroup>
 
     <ItemGroup>
