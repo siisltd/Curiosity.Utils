@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.0] - 2021-12-13
+
+### Added
+
+- Mailgun region selection in options and extra params.
+
 ## [1.2.1] - 2021-12-02
 
 ### Added

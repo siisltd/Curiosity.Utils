@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Curiosity.Configuration;
@@ -27,12 +26,13 @@ namespace Curiosity.EMail.Mailgun
             _mailgunEMailOptions.AssertValid();
         }
 
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
         private class MailGunResponse
         {
-            public string message { get; set; } = null!;
+            [JsonProperty("message")]
+            public string Message { get; set; } = null!;
 
-            public string id { get; set; } = null!;
+            [JsonProperty("id")]
+            public string Id { get; set; } = null!;
         }
 
         /// <inheritdoc />
@@ -51,6 +51,7 @@ namespace Curiosity.EMail.Mailgun
                 _mailgunEMailOptions.MailGunApiKey,
                 _mailgunEMailOptions.MailGunDomain,
                 _mailgunEMailOptions.EMailFrom,
+                _mailgunEMailOptions.MailgunRegion,
                 cancellationToken);
         }
 
@@ -63,11 +64,26 @@ namespace Curiosity.EMail.Mailgun
             string mailGunApiKey,
             string mailgunDomain,
             string emailFrom,
+            MailgunRegion region,
             CancellationToken cancellationToken = default)
         {
+            string mailgunHost;
+
+            switch (region)
+            {
+                case MailgunRegion.US:
+                    mailgunHost = "https://api.mailgun.net/v3";
+                    break;
+                case MailgunRegion.EU:
+                    mailgunHost = "https://api.eu.mailgun.net/v3";
+                    break;
+                default:
+                    throw new ArgumentException($"Region {region} is not supported.", nameof(region));
+            }
+
             var restClient = new RestClient
             {
-                BaseUrl = new Uri("https://api.mailgun.net/v3"),
+                BaseUrl = new Uri(mailgunHost),
                 Authenticator = new HttpBasicAuthenticator(mailgunUser, mailGunApiKey)
             };
 
@@ -95,7 +111,7 @@ namespace Curiosity.EMail.Mailgun
             try
             {
                 var mgResponse = JsonConvert.DeserializeObject<MailGunResponse>(response.Content);
-                _logger.LogDebug($"MailGun response: message = \"{mgResponse.message}\", id = \"{mgResponse.id}\"");
+                _logger.LogDebug($"MailGun response: message = \"{mgResponse.Message}\", id = \"{mgResponse.Id}\"");
             }
             catch (Exception e)
             {
@@ -127,8 +143,9 @@ namespace Curiosity.EMail.Mailgun
             var apiKey = mailGunEMailExtraParams.MailGunApiKey ?? _mailgunEMailOptions.MailGunApiKey;
             var domain = mailGunEMailExtraParams.MailGunDomain ?? _mailgunEMailOptions.MailGunDomain;
             var emailFrom = mailGunEMailExtraParams.EMailFrom ?? _mailgunEMailOptions.EMailFrom;
+            var region = mailGunEMailExtraParams.MailgunRegion ?? _mailgunEMailOptions.MailgunRegion;
 
-            return SendAsync(toAddress, subject, body, isBodyHtml, user, apiKey, domain, emailFrom, cancellationToken);
+            return SendAsync(toAddress, subject, body, isBodyHtml, user, apiKey, domain, emailFrom, region, cancellationToken);
         }
     }
 }

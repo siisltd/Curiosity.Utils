@@ -5,6 +5,7 @@ namespace Curiosity.EMail.Mailgun
     /// </summary>
     public class MailGunEMailExtraParams : IEMailExtraParams
     {
+
         /// <summary>
         /// Mailgun user.
         /// </summary>
@@ -25,10 +26,21 @@ namespace Curiosity.EMail.Mailgun
         /// </summary>
         public string? EMailFrom { get; }
 
-        public MailGunEMailExtraParams(string? mailgunUser, string? mailGunApiKey, string? mailGunDomain, string? eMailFrom)
+        /// <summary>
+        /// Region where Mailgun API is located.
+        /// </summary>
+        public MailgunRegion? MailgunRegion { get; }
+
+        public MailGunEMailExtraParams(
+            string? mailgunUser,
+            string? mailGunApiKey,
+            string? mailGunDomain,
+            string? eMailFrom,
+            MailgunRegion? mailgunRegion = null)
         {
             MailGunApiKey = mailGunApiKey;
             EMailFrom = eMailFrom;
+            MailgunRegion = mailgunRegion;
             MailGunDomain = mailGunDomain;
             MailgunUser = mailgunUser;
         }
