@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.2] - 2021-12-13
+
+### Fixed
+
+- Fixed grammar mistake in exception message.
+
 ## [1.3.1] - 2021-12-07
 
 ### Changed
