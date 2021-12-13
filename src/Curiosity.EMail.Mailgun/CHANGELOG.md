@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.1] - 2021-12-13
+
+### Changed
+
+- Replaced MailGun by Mailgun in MailgunEmailOptions
+
 ## [1.3.0] - 2021-12-13
 
 ### Added

@@ -1,11 +1,10 @@
 namespace Curiosity.EMail.Mailgun
 {
     /// <summary>
-    /// Extra params for sending EMail message via MailGun.
+    /// Extra params for sending Email message via Mailgun.
     /// </summary>
-    public class MailGunEMailExtraParams : IEMailExtraParams
+    public class MailgunEmailExtraParams : IEMailExtraParams
     {
-
         /// <summary>
         /// Mailgun user.
         /// </summary>
@@ -14,34 +13,34 @@ namespace Curiosity.EMail.Mailgun
         /// <summary>
         /// API key for MailGun that will be used instead of default.
         /// </summary>
-        public string? MailGunApiKey { get; }
+        public string? MailgunApiKey { get; }
 
         /// <summary>
         /// Domain of MailGun
         /// </summary>
-        public string? MailGunDomain { get; }
+        public string? MailgunDomain { get; }
 
         /// <summary>
         /// Sender's EMail that will be used instead of default.
         /// </summary>
-        public string? EMailFrom { get; }
+        public string? EmailFrom { get; }
 
         /// <summary>
         /// Region where Mailgun API is located.
         /// </summary>
         public MailgunRegion? MailgunRegion { get; }
 
-        public MailGunEMailExtraParams(
+        public MailgunEmailExtraParams(
             string? mailgunUser,
-            string? mailGunApiKey,
-            string? mailGunDomain,
-            string? eMailFrom,
+            string? mailgunApiKey,
+            string? mailgunDomain,
+            string? emailFrom,
             MailgunRegion? mailgunRegion = null)
         {
-            MailGunApiKey = mailGunApiKey;
-            EMailFrom = eMailFrom;
+            MailgunApiKey = mailgunApiKey;
+            EmailFrom = emailFrom;
             MailgunRegion = mailgunRegion;
-            MailGunDomain = mailGunDomain;
+            MailgunDomain = mailgunDomain;
             MailgunUser = mailgunUser;
         }
     }

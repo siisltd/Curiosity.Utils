@@ -28,7 +28,7 @@ namespace Curiosity.EMail.Mailgun
     /// <summary>
     /// Options which necessary for a MailGun work.
     /// </summary>
-    public class MailgunEMailOptions :
+    public class MailgunEmailOptions :
         IValidatableOptions,
         ILoggableOptions
     {
@@ -45,17 +45,17 @@ namespace Curiosity.EMail.Mailgun
         /// <summary>
         /// API key for a MailGun work.
         /// </summary>
-        public string MailGunApiKey { get; set; } = null!;
+        public string MailgunApiKey { get; set; } = null!;
 
         /// <summary>
         /// Domain of MailGun
         /// </summary>
-        public string MailGunDomain { get; set; } = null!;
+        public string MailgunDomain { get; set; } = null!;
 
         /// <summary>
         /// Sender's EMail
         /// </summary>
-        public string EMailFrom { get; set; } = null!;
+        public string EmailFrom { get; set; } = null!;
 
         /// <inheritdoc />
         public virtual IReadOnlyCollection<ConfigurationValidationError> Validate(string? prefix = null)
@@ -63,10 +63,10 @@ namespace Curiosity.EMail.Mailgun
             var errors = new ConfigurationValidationErrorCollection(prefix);
 
             errors.AddErrorIf(MailgunRegion == MailgunRegion.Unknown, nameof(MailgunRegion), "Region not specified");
-            errors.AddErrorIf(String.IsNullOrWhiteSpace(MailGunApiKey), nameof(MailGunApiKey), "can not be empty");
-            errors.AddErrorIf(String.IsNullOrWhiteSpace(MailGunDomain), nameof(MailGunDomain), "can not be empty");
+            errors.AddErrorIf(String.IsNullOrWhiteSpace(MailgunApiKey), nameof(MailgunApiKey), "can not be empty");
+            errors.AddErrorIf(String.IsNullOrWhiteSpace(MailgunDomain), nameof(MailgunDomain), "can not be empty");
             errors.AddErrorIf(String.IsNullOrWhiteSpace(MailgunUser), nameof(MailgunUser), "can not be empty");
-            errors.AddErrorIf(String.IsNullOrWhiteSpace(EMailFrom), nameof(EMailFrom), "can not be empty");
+            errors.AddErrorIf(String.IsNullOrWhiteSpace(EmailFrom), nameof(EmailFrom), "can not be empty");
 
             return errors;
         }

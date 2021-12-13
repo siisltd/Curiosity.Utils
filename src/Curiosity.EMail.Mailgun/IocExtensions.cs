@@ -8,11 +8,11 @@ namespace Curiosity.EMail.Mailgun
     public static class IocExtensions
     {
         /// <summary>
-        /// Adds Mailgun EMail sender to services.
+        /// Adds Mailgun Email sender to services.
         /// </summary>
-        public static IServiceCollection AddMailgunEMailSender(
+        public static IServiceCollection AddMailgunEmailSender(
             this IServiceCollection service,
-            MailgunEMailOptions options,
+            MailgunEmailOptions options,
             bool useAsDefaultSender = true)
         {
             if (service == null) throw new ArgumentNullException(nameof(service));
@@ -22,10 +22,10 @@ namespace Curiosity.EMail.Mailgun
             options.AssertValid();
 
             service.TryAddSingleton(options);
-            service.TryAddSingleton<IMailgunEMailSender, MailgunEmailSender>();
+            service.TryAddSingleton<IMailgunEmailSender, MailgunEmailSender>();
             if (useAsDefaultSender)
             {
-                service.TryAddSingleton<IEMailSender>(c => c.GetRequiredService<IMailgunEMailSender>());
+                service.TryAddSingleton<IEMailSender>(c => c.GetRequiredService<IMailgunEmailSender>());
             }
 
             return service;

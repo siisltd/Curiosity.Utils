@@ -11,19 +11,19 @@ using RestSharp.Authenticators;
 namespace Curiosity.EMail.Mailgun
 {
     /// <inheritdoc />
-    public class MailgunEmailSender : IMailgunEMailSender
+    public class MailgunEmailSender : IMailgunEmailSender
     {
         private readonly ILogger<MailgunEmailSender> _logger;
-        private readonly MailgunEMailOptions _mailgunEMailOptions;
+        private readonly MailgunEmailOptions _mailgunEmailOptions;
 
         public MailgunEmailSender(
             ILogger<MailgunEmailSender> logger,
-            MailgunEMailOptions mailgunEMailOptions)
+            MailgunEmailOptions mailgunEmailOptions)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-            _mailgunEMailOptions = mailgunEMailOptions ?? throw new ArgumentNullException(nameof(mailgunEMailOptions));
-            _mailgunEMailOptions.AssertValid();
+            _mailgunEmailOptions = mailgunEmailOptions ?? throw new ArgumentNullException(nameof(mailgunEmailOptions));
+            _mailgunEmailOptions.AssertValid();
         }
 
         private class MailGunResponse
@@ -47,11 +47,11 @@ namespace Curiosity.EMail.Mailgun
                 subject,
                 body,
                 isBodyHtml,
-                _mailgunEMailOptions.MailgunUser,
-                _mailgunEMailOptions.MailGunApiKey,
-                _mailgunEMailOptions.MailGunDomain,
-                _mailgunEMailOptions.EMailFrom,
-                _mailgunEMailOptions.MailgunRegion,
+                _mailgunEmailOptions.MailgunUser,
+                _mailgunEmailOptions.MailgunApiKey,
+                _mailgunEmailOptions.MailgunDomain,
+                _mailgunEmailOptions.EmailFrom,
+                _mailgunEmailOptions.MailgunRegion,
                 cancellationToken);
         }
 
@@ -136,14 +136,14 @@ namespace Curiosity.EMail.Mailgun
             if (String.IsNullOrWhiteSpace(body)) throw new ArgumentNullException(nameof(body));
             if (emailExtraParams == null) throw new ArgumentNullException(nameof(emailExtraParams));
 
-            if (!(emailExtraParams is MailGunEMailExtraParams mailGunEMailExtraParams))
-                throw new ArgumentException($"Only {typeof(MailGunEMailExtraParams)} is supported for this sender.", nameof(emailExtraParams));
+            if (!(emailExtraParams is MailgunEmailExtraParams mailGunEMailExtraParams))
+                throw new ArgumentException($"Only {typeof(MailgunEmailExtraParams)} is supported for this sender.", nameof(emailExtraParams));
 
-            var user = mailGunEMailExtraParams.MailgunUser ?? _mailgunEMailOptions.MailgunUser;
-            var apiKey = mailGunEMailExtraParams.MailGunApiKey ?? _mailgunEMailOptions.MailGunApiKey;
-            var domain = mailGunEMailExtraParams.MailGunDomain ?? _mailgunEMailOptions.MailGunDomain;
-            var emailFrom = mailGunEMailExtraParams.EMailFrom ?? _mailgunEMailOptions.EMailFrom;
-            var region = mailGunEMailExtraParams.MailgunRegion ?? _mailgunEMailOptions.MailgunRegion;
+            var user = mailGunEMailExtraParams.MailgunUser ?? _mailgunEmailOptions.MailgunUser;
+            var apiKey = mailGunEMailExtraParams.MailgunApiKey ?? _mailgunEmailOptions.MailgunApiKey;
+            var domain = mailGunEMailExtraParams.MailgunDomain ?? _mailgunEmailOptions.MailgunDomain;
+            var emailFrom = mailGunEMailExtraParams.EmailFrom ?? _mailgunEmailOptions.EmailFrom;
+            var region = mailGunEMailExtraParams.MailgunRegion ?? _mailgunEmailOptions.MailgunRegion;
 
             return SendAsync(toAddress, subject, body, isBodyHtml, user, apiKey, domain, emailFrom, region, cancellationToken);
         }
