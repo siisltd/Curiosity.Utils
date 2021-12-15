@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.2] - 2021-12-15
+
+### Added
+
+- New email result for rate limit errors.
+- 
 ## [1.3.1] - 2021-12-13
 
 ### Changed

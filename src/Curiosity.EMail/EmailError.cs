@@ -23,6 +23,11 @@ namespace Curiosity.EMail
         /// <summary>
         /// Unknown.
         /// </summary>
-        Unknown = 3
+        Unknown = 3,
+
+        /// <summary>
+        /// Sending was interrupted by sender because we have rich the limits.
+        /// </summary>
+        RateLimit = 4
     }
 }

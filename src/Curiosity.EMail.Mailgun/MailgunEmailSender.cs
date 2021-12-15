@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Curiosity.Configuration;
@@ -102,7 +103,9 @@ namespace Curiosity.EMail.Mailgun
             {
                 _logger.LogError($"Error sending message to {toAddress}. StatusCode = {response.StatusCode.ToString()}. Response: {response.Content}");
 
-                return Response.Failed(new Error((int)EmailError.Auth, response.Content));
+                return ((int)response.StatusCode) == 420
+                ? Response.Failed(new Error((int)EmailError.RateLimit, response.Content))
+                : Response.Failed(new Error((int)EmailError.Auth, response.Content));
             }
 
             _logger.LogDebug("Message is successfully sent to {Email}. Response: {Response}", toAddress, response.Content);
