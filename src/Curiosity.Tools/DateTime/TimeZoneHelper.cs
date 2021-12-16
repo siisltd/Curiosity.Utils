@@ -74,12 +74,23 @@ namespace Curiosity.Tools
         /// <summary>
         /// Converts from client time to UTC.
         /// </summary>
-        /// <param name="zone">Client time zone.</param>
+        /// <param name="timeZoneId">Client time zone.</param>
         /// <param name="clientTime">Client time.</param>
         /// <returns></returns>
-        public DateTime FromClientTime(DateTimeZone zone, DateTime clientTime)
+        public DateTime FromClientTime(string timeZoneId, DateTime clientTime)
         {
-            return zone.AtLeniently(LocalDateTime.FromDateTime(clientTime)).ToDateTimeUtc();
+            return FromClientTime(GetTimeZone(timeZoneId), clientTime);
+        }
+
+        /// <summary>
+        /// Converts from client time to UTC.
+        /// </summary>
+        /// <param name="timeZone">Client time zone.</param>
+        /// <param name="clientTime">Client time.</param>
+        /// <returns></returns>
+        public DateTime FromClientTime(DateTimeZone timeZone, DateTime clientTime)
+        {
+            return timeZone.AtLeniently(LocalDateTime.FromDateTime(clientTime)).ToDateTimeUtc();
         }
         
         /// <summary>

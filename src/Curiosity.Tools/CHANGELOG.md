@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.4] - 2021-12-16
+
+### Added
+
+- Added new method to `TimeZoneHelper` to converting from user local time to UTC.
+
 ## [1.3.3] - 2021-12-07
 
 ### Changed
