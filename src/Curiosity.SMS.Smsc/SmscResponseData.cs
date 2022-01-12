@@ -1,15 +1,25 @@
+using Newtonsoft.Json;
+
 namespace Curiosity.SMS.Smsc
 {
     internal class SmscResponseData
     {
-        public string error { get; set; }
-        public int? error_code { get; set; }
-        
-        public string id { get; set; }
-        
-        public int? cnt { get; set; }
-        
-        public decimal? cost { get; set; }
-        public decimal? balance { get; set; }
+        [JsonProperty("Error")]
+        public string? Error { get; set; }
+
+        [JsonProperty("ErrorCode")]
+        public int? ErrorCode { get; set; }
+
+        [JsonProperty("Id")]
+        public string? Id { get; set; }
+
+        [JsonProperty("cnt")]
+        public int? Count { get; set; }
+
+        [JsonProperty("Cost")]
+        public decimal? Cost { get; set; }
+
+        [JsonProperty("Balance")]
+        public decimal? Balance { get; set; }
     }
 }

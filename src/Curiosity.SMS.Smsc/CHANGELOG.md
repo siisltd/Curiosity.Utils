@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.3] - 2022-01-12
+
+### Added
+
+- Made sending SMS to Megafon and Tele2 more robust: reties sending sms without sender name if we got message denied error.
+
 ## [1.2.2] - 2021-12-07
 
 ### Added

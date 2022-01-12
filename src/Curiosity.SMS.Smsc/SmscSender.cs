@@ -29,7 +29,7 @@ namespace Curiosity.SMS.Smsc
             if (String.IsNullOrWhiteSpace(phoneNumber)) throw new ArgumentNullException(nameof(phoneNumber));
             if (String.IsNullOrWhiteSpace(message)) throw new ArgumentNullException(nameof(message));
 
-            return SendSmsAsync(phoneNumber, message, _options.SmscLogin, _options.SmscPassword, _options.SmscSender, cancellationToken);
+            return SendSmsAsync(phoneNumber, message, _options.SmscLogin, _options.SmscPassword, _options.SmscSender, 0, cancellationToken);
         }
 
         private async Task<Response<SmsSentResult>> SendSmsAsync(
@@ -37,7 +37,8 @@ namespace Curiosity.SMS.Smsc
             string message,
             string smscLogin,
             string smscPassword,
-            string senderName,
+            string? senderName,
+            int retriesCount = 0,
             CancellationToken cancellationToken = default)
         {
             var client = new RestClient("https://smsc.ru/sys/send.php");
@@ -48,7 +49,11 @@ namespace Curiosity.SMS.Smsc
 
             request.AddQueryParameter("login", smscLogin);
             request.AddQueryParameter("psw", smscPassword);
-            request.AddQueryParameter("sender", senderName);
+
+            if (!String.IsNullOrWhiteSpace(senderName))
+            {
+                request.AddQueryParameter("sender", senderName);
+            }
 
             request.AddQueryParameter("phones", phoneNumber);
             request.AddQueryParameter("mes", message);
@@ -65,17 +70,25 @@ namespace Curiosity.SMS.Smsc
             {
                 resultJson = JsonConvert.SerializeObject(response.Data, SmsConstants.JsonSerializerSettings);
                 _logger.LogDebug(resultJson);
-                if ((response.Data.error_code ?? 0) == 0)
+                if ((response.Data.ErrorCode ?? 0) == 0)
                 {
-                    if (response.Data.cost.HasValue)
-                        messageCost = response.Data.cost;
+                    if (response.Data.Cost.HasValue)
+                        messageCost = response.Data.Cost;
 
                     _logger.LogInformation($"Успешно отправили sms на номер {phoneNumber}");
                 }
                 else
                 {
-                    var errorMessage = $"Ошибка при отправке sms на номер {phoneNumber} (error_code = {response.Data.error_code}, error = \"{response.Data.error}\")";
-                    _logger.LogWarning($"Ошибка при отправке sms на номер {phoneNumber} (error_code = {response.Data.error_code}, error = \"{response.Data.error}\")");
+                    // if we got message denied error (6) and it is our first attempt, let's remove sender name and try again
+                    // because SMSC can block SMS to Megafon and Tele2 with specified sender name when there is sender name is not agreed
+                    if (response.Data.ErrorCode == 6 && retriesCount == 0)
+                    {
+                        _logger.LogWarning("Отправка SMS на номер {PhoneNumber} заблокирована. Попробуем повторно отправить без указания имени отправтиеля (текущее имя отправителя = \"{SenderName}\")", phoneNumber, senderName);
+                        return await SendSmsAsync(phoneNumber, message, smscLogin, smscPassword, null, 1, cancellationToken);
+                    }
+
+                    var errorMessage = $"Ошибка при отправке sms на номер {phoneNumber} (error_code = {response.Data.ErrorCode}, error = \"{response.Data.Error}\")";
+                    _logger.LogWarning($"Ошибка при отправке sms на номер {phoneNumber} (error_code = {response.Data.ErrorCode}, error = \"{response.Data.Error}\")");
                     return Response<SmsSentResult>.Failed(new Error((int) SmsError.Unknown, errorMessage), new SmsSentResult(null, null, resultJson));
                 }
             }
@@ -83,16 +96,16 @@ namespace Curiosity.SMS.Smsc
             {
                 var data = new SmscResponseData
                 {
-                    error_code = -1
+                    ErrorCode = -1
                 };
                 if (response.ErrorException != null)
                 {
-                    data.error =
+                    data.Error =
                         $"{response.ErrorException.GetType().Name}: {response.ErrorException.Message}";
                 }
                 else
                 {
-                    data.error = !String.IsNullOrEmpty(response.ErrorMessage)
+                    data.Error = !String.IsNullOrEmpty(response.ErrorMessage)
                         ? $"{response.ErrorMessage}"
                         : $"{(int) response.StatusCode}, {response.StatusDescription}";
                 }
@@ -100,14 +113,14 @@ namespace Curiosity.SMS.Smsc
                 resultJson = JsonConvert.SerializeObject(data, SmsConstants.JsonSerializerSettings);
 
                 _logger.LogWarning(
-                    $"Ошибка при отправке sms на номер {phoneNumber} (error = \"{data.error}\")");
+                    $"Ошибка при отправке sms на номер {phoneNumber} (error = \"{data.Error}\")");
 
-                return Response<SmsSentResult>.Failed(new Error((int)SmsError.Unknown, data.error), new SmsSentResult(null, null, resultJson));
+                return Response<SmsSentResult>.Failed(new Error((int)SmsError.Unknown, data.Error), new SmsSentResult(null, null, resultJson));
             }
 
             int? sentSmsCount = null;
-            if (response.IsSuccessful && response.Data != null! && response.Data.cnt > 0)
-                sentSmsCount = response.Data.cnt.Value;
+            if (response.IsSuccessful && response.Data != null! && response.Data.Count > 0)
+                sentSmsCount = response.Data.Count.Value;
 
             var result = new SmsSentResult(sentSmsCount, messageCost, resultJson);
 
@@ -126,7 +139,7 @@ namespace Curiosity.SMS.Smsc
             var password = smscExtraParams.SmscPassword ?? _options.SmscPassword;
             var senderName = smscExtraParams.SenderName ?? _options.SmscSender;
 
-            return SendSmsAsync(phoneNumber, message, login, password, senderName, cancellationToken);
+            return SendSmsAsync(phoneNumber, message, login, password, senderName, 0, cancellationToken);
         }
     }
 }
