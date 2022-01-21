@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.5] - 2022-01-21
+
+### Added
+
+- Added `DynamicSemaphoreSlim` - an improvement over System.Threading.SemaphoreSlim that allows you to dynamically increase and decrease the number of threads that can access a resource or pool of resources concurrently. 
+
 ## [1.3.4] - 2021-12-16
 
 ### Added
