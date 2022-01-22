@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.2] - 2022-01-22
+
+### Changed
+
+- Added checking for log level to `PerformanceManager`. 
+
 ## [1.4.1] - 2022-01-22
 
 ### Changed
