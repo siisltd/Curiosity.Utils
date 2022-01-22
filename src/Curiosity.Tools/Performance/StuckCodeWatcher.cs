@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Globalization;
+using MemoryPools;
 using Microsoft.Extensions.Logging;
 
 namespace Curiosity.Tools.Performance
@@ -24,10 +25,10 @@ namespace Curiosity.Tools.Performance
 
         private class StuckCodeItemFinalizer : IDisposable
         {
-            private readonly int _key;
-            private readonly StuckCodeWatcher _watcher;
+            private int _key;
+            private StuckCodeWatcher _watcher = null!;
 
-            public StuckCodeItemFinalizer(StuckCodeWatcher watcher, int key)
+            public void Init(StuckCodeWatcher watcher, int key)
             {
                 _key = key;
                 _watcher = watcher;
@@ -35,23 +36,8 @@ namespace Curiosity.Tools.Performance
 
             public void Dispose()
             {
-                Dispose(true);
-                GC.SuppressFinalize(this);
-            }
-
-            private bool _disposed = false;
-            private void Dispose(bool disposing)
-            {
-                if (!_disposed)
-                {
-                    _watcher.Leave(_key);
-                    _disposed = true;
-                }
-            }
-
-            ~StuckCodeItemFinalizer()
-            {
-                Dispose(false);
+                Pool<StuckCodeItemFinalizer>.Return(this);
+                _watcher.Leave(_key);
             }
         }
 
@@ -74,7 +60,10 @@ namespace Curiosity.Tools.Performance
 
             _items.TryAdd(item.Key, item);
 
-            return new StuckCodeItemFinalizer(this, item.Key);
+            var finalizer = Pool<StuckCodeItemFinalizer>.Get();
+            finalizer.Init(this, item.Key);
+
+            return finalizer;
         }
 
         private void Leave(int key)
@@ -95,7 +84,7 @@ namespace Curiosity.Tools.Performance
                 int duration = Convert.ToInt32(now.Subtract(item.Entered).TotalSeconds);
                 if (duration >= item.Timeout)
                 {
-                    logger?.LogError("STUCK CODE: \"{0}\", duration {1} (entered at {2} from thread #{3})",
+                    logger?.LogError("STUCK CODE: \"{StuckCodeLabel}\", duration {StuckCodeDuration} (entered at {StuckCodeEnterTime} from thread #{StuckCodeThreadId})",
                         item.Label,
                         duration.ToMinSec(),
                         item.Entered.ToString(LoggerCi),

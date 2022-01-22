@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0] - 2022-01-22
+
+### Changed
+
+- Added object polling to the `PerformanceManager` and `StuckCodeManager`.
+- Made logger required for the `PerformanceManager` and `StuckCodeManager`. 
+
 ## [1.3.5] - 2022-01-21
 
 ### Added

@@ -9,19 +9,21 @@ namespace Curiosity.Tools.Performance
     /// </summary>
     public static class StuckCodeManager
     {
-        private static ILogger? _logger;
+        private static ILogger _logger = null!;
 
         private static readonly StuckCodeWatcher Watcher = new StuckCodeWatcher();
         private static readonly Timer Timer = new Timer(ValidateCallback);
 
-        private static bool _shutdownCalled = false;
+        private static bool _shutdownCalled;
 
-        public static void Initialize(ILogger? log = null)
+        /// <summary>
+        /// Initialized manager.
+        /// </summary>
+        /// <param name="logger">Logger in which the manager will be write logs.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static void Initialize(ILogger logger)
         {
-            if (log != null)
-            {
-                _logger = log;
-            }
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             StartTimer();
         }
@@ -45,7 +47,7 @@ namespace Curiosity.Tools.Performance
             }
             catch (Exception e)
             {
-                _logger?.LogError(e, "StuckCodeManager.ValidateCallback() failed");
+                _logger.LogError(e, "StuckCodeManager.ValidateCallback() failed");
             }
 
             if (!_shutdownCalled)
@@ -54,8 +56,21 @@ namespace Curiosity.Tools.Performance
             }
         }
 
+        /// <summary>
+        /// Start monitoring for stuck code. If code isn't executed in specified in <see cref="timeoutSeconds"/> time, manager will write an entry to the log.
+        /// </summary>
+        /// <param name="label">Label for code fragment.</param>
+        /// <param name="timeoutSeconds">Timeout for code execution.</param>
+        /// <returns>Stuck code monitor instance.</returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        /// <remarks>
+        /// Returned object must be disposed in order to avoid memory leaks.
+        /// </remarks>
         public static IDisposable Enter(string label, int timeoutSeconds)
         {
+            if (_logger == null)
+                throw new InvalidOperationException($"{nameof(StuckCodeManager)} is not initialized. Please, call method {nameof(Initialize)} before any usage");
+
             return Watcher.Enter(label, timeoutSeconds);
         }
     }

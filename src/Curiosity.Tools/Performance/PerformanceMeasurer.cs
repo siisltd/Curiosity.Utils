@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using MemoryPools;
 using Microsoft.Extensions.Logging;
 
 namespace Curiosity.Tools.Performance
@@ -9,15 +10,23 @@ namespace Curiosity.Tools.Performance
     /// </summary>
     public class PerformanceMeasurer : IDisposable
     {
-        private readonly ILogger? _logger;
+        private ILogger? _logger;
         private readonly Stopwatch _stopwatch;
-        private string _name;
+        private string _name = null!;
 
-        internal PerformanceMeasurer(ILogger? logger, string name)
+        public PerformanceMeasurer()
         {
-            _logger = logger;
+            _stopwatch = new Stopwatch();
+        }
+
+        public void Init(ILogger logger, string name)
+        {
+            if (String.IsNullOrWhiteSpace(name)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(name));
+
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _name = name;
-            _stopwatch = Stopwatch.StartNew();
+
+            _stopwatch.Start();
         }
 
         /// <inheritdoc />
@@ -26,7 +35,9 @@ namespace Curiosity.Tools.Performance
             if (_stopwatch.IsRunning)
             {
                 _stopwatch.Stop();
-                _logger?.LogInformation("{0} -> {1} ms.", _name, _stopwatch.ElapsedMilliseconds);
+                _logger?.LogInformation("{MeasurerName} -> {MeasurerSpentTime} ms", _name, _stopwatch.ElapsedMilliseconds);
+
+                Pool.Return(this);
             }
         }
 
