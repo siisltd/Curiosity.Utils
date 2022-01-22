@@ -18,8 +18,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Curiosity.DAL\Curiosity.DAL.csproj" />
-      <ProjectReference Include="..\..\src\Curiosity.DateTime.DbSync\Curiosity.DateTime.DbSync.csproj" />
+      <ProjectReference Include="..\..\..\src\Curiosity.DAL\Curiosity.DAL.csproj" />
+      <ProjectReference Include="..\..\..\src\Curiosity.DateTime.DbSync\Curiosity.DateTime.DbSync.csproj" />
     </ItemGroup>
 
 </Project>
