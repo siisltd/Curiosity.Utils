@@ -36,8 +36,8 @@ namespace Curiosity.Tools.Performance
 
             public void Dispose()
             {
-                Pool<StuckCodeItemFinalizer>.Return(this);
                 _watcher.Leave(_key);
+                Pool<StuckCodeItemFinalizer>.Return(this);
             }
         }
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.1] - 2022-01-22
+
+### Changed
+
+- Improved disposing in `StuckCodeManager`. 
+
 ## [1.4.0] - 2022-01-22
 
 ### Changed
