@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1] - 2021-11-16
+
+### Added
+
+- Added new method for configuration services for `CuriosityServiceAppBootstrapper`.
+
 ## [1.2.0] - 2021-11-16
 
 ### Added

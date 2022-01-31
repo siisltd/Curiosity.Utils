@@ -22,25 +22,55 @@ namespace Curiosity.Hosting
     {
         private Action<HostBuilderContext, IServiceCollection>? _configureServiceAction;
         private Action<HostBuilderContext, IServiceCollection, TConfiguration>? _configureServiceActionWithConfiguration;
+        private Action<HostBuilderContext, IServiceCollection, TConfiguration, TArgs>? _configureServiceActionWithConfigurationAndArgs;
         private Action<IHostBuilder>? _configureHostAction;
-        
+
+        /// <summary>
+        /// Configures services using specified delegate.
+        /// </summary>
+        /// <param name="configureServiceAction">Delegate for configuration services.</param>
+        /// <returns>Returns current bootstrapper instance.</returns>
         public CuriosityServiceAppBootstrapper<TArgs, TConfiguration> ConfigureServices(Action<HostBuilderContext, IServiceCollection> configureServiceAction)
         {
             _configureServiceAction = configureServiceAction;
             return this;
         }
+
+        /// <summary>
+        /// Configures services using specified delegate.
+        /// </summary>
+        /// <param name="configureServiceAction">Delegate for configuration services using configuration object.</param>
+        /// <returns>Returns current bootstrapper instance.</returns>
         public CuriosityServiceAppBootstrapper<TArgs, TConfiguration> ConfigureServices(Action<HostBuilderContext, IServiceCollection, TConfiguration> configureServiceAction)
         {
             _configureServiceActionWithConfiguration = configureServiceAction;
             return this;
         }
 
+        /// <summary>
+        /// Configures services using specified delegate.
+        /// </summary>
+        /// <param name="configureServiceAction">Delegate for configuration services using configuration and args objects.</param>
+        /// <returns>Returns current bootstrapper instance.</returns>
+        public CuriosityServiceAppBootstrapper<TArgs, TConfiguration> ConfigureServices(
+            Action<HostBuilderContext, IServiceCollection, TConfiguration, TArgs> configureServiceAction)
+        {
+            _configureServiceActionWithConfigurationAndArgs = configureServiceAction;
+            return this;
+        }
+
+        /// <summary>
+        /// Configures app's host using specified delegate.
+        /// </summary>
+        /// <param name="configureHostAction">Delegate for configuration host via <see cref="IHostBuilder"/>.</param>
+        /// <returns>Returns current bootstrapper instance.</returns>
         public CuriosityServiceAppBootstrapper<TArgs, TConfiguration> ConfigureHost(Action<IHostBuilder> configureHostAction)
         {
             _configureHostAction = configureHostAction;
             return this;
         }
-        
+
+        /// <inheritdoc />
         protected override async Task<int> RunInternalAsync(
             string[] rawArguments,
             TArgs arguments,
@@ -52,11 +82,11 @@ namespace Curiosity.Hosting
             var hostBuilder = Host.CreateDefaultBuilder(rawArguments);
             
             // configure configuration
-            hostBuilder.ConfigureAppConfiguration((context, _configuration) =>
+            hostBuilder.ConfigureAppConfiguration((context, configurationBuilder) =>
             {
                 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
                 context.HostingEnvironment.EnvironmentName = environment;
-                configurationProvider.ConfigureAppConfiguration(_configuration);
+                configurationProvider.ConfigureAppConfiguration(configurationBuilder);
             });
             
             // configure services
@@ -73,6 +103,7 @@ namespace Curiosity.Hosting
                 });
                 _configureServiceAction?.Invoke(context, services);
                 _configureServiceActionWithConfiguration?.Invoke(context, services, configuration);
+                _configureServiceActionWithConfigurationAndArgs?.Invoke(context, services, configuration, arguments);
                 services.AddAppInitialization();
                 
                 services.TryAddSingleton(configuration);
