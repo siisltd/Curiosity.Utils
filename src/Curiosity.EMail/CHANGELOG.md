@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.2] - 2022-02-09
+
+### Changed
+
+- Improved email validation (added regex).
+
 ## [1.3.1] - 2021-12-15
 
 ### Added
