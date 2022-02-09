@@ -87,6 +87,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.Tools.UnitTests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.DateTime.DbSync.UnitTests", "tests\UnitTests\Curiosity.DateTime.DbSync.UnitTests\Curiosity.DateTime.DbSync.UnitTests.csproj", "{19E6FE94-659A-46BA-808A-52611C2754B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.Emails.UnitTests", "tests\UnitTests\Curiosity.Emails.UnitTests\Curiosity.Emails.UnitTests.csproj", "{7BE1EC2C-5BCB-4F1D-BACD-616941BE1DFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -237,6 +239,10 @@ Global
 		{19E6FE94-659A-46BA-808A-52611C2754B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19E6FE94-659A-46BA-808A-52611C2754B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19E6FE94-659A-46BA-808A-52611C2754B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BE1EC2C-5BCB-4F1D-BACD-616941BE1DFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BE1EC2C-5BCB-4F1D-BACD-616941BE1DFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BE1EC2C-5BCB-4F1D-BACD-616941BE1DFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BE1EC2C-5BCB-4F1D-BACD-616941BE1DFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -281,6 +287,7 @@ Global
 		{7B374250-02AE-430D-BD90-3AEAD8F72667} = {7C485CBA-A08F-4A0E-835A-4505CBBB7EA8}
 		{35198092-F8F1-4B5D-859B-6900C65AC4BE} = {55CC9AE1-6978-4ECB-9A0A-0DCE1B66D492}
 		{19E6FE94-659A-46BA-808A-52611C2754B2} = {55CC9AE1-6978-4ECB-9A0A-0DCE1B66D492}
+		{7BE1EC2C-5BCB-4F1D-BACD-616941BE1DFE} = {55CC9AE1-6978-4ECB-9A0A-0DCE1B66D492}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA1A20A2-0D4E-492D-877C-0A36F18FBFF1}

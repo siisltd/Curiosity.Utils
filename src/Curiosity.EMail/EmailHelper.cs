@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using MimeKit;
 
 namespace Curiosity.EMail
@@ -57,13 +58,24 @@ namespace Curiosity.EMail
 
             return String.Join(", ", emailsList);
         }
+        
+        /// <summary>
+        /// Regex pattern for email validation.
+        /// </summary>
+        /// <remarks>
+        /// Source link: https://stackoverflow.com/a/8829363/7087479
+        /// </remarks>
+        private const string EmailPattern = @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
 
         /// <summary>
         /// Checks that email address is valid.
         /// </summary>
         public static bool IsEmailValid(string? email)
         {
-            return MailboxAddress.TryParse(ParserOptions.Default, email ?? "", out _);
+            var mailboxResult = MailboxAddress.TryParse(ParserOptions.Default, email ?? "", out _);
+            var isRegexMatch = Regex.Match(email ?? "", EmailPattern).Success;
+
+            return mailboxResult && isRegexMatch;
         }
     }
 }
