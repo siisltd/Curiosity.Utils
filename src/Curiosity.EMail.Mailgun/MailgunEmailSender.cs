@@ -53,6 +53,7 @@ namespace Curiosity.EMail.Mailgun
                 _mailgunEmailOptions.MailgunDomain,
                 _mailgunEmailOptions.EmailFrom,
                 _mailgunEmailOptions.MailgunRegion,
+                _mailgunEmailOptions.ReplyTo,
                 cancellationToken);
         }
 
@@ -66,6 +67,7 @@ namespace Curiosity.EMail.Mailgun
             string mailgunDomain,
             string emailFrom,
             MailgunRegion region,
+            string? replyTo,
             CancellationToken cancellationToken = default)
         {
             string mailgunHost;
@@ -93,6 +95,11 @@ namespace Curiosity.EMail.Mailgun
             restRequest.Resource = "{domain}/messages";
             restRequest.AddParameter("from", emailFrom);
             restRequest.AddParameter("to", toAddress);
+
+            // add reply to address if it specified
+            if (!String.IsNullOrWhiteSpace(replyTo))
+                restRequest.AddParameter("h:Reply-T", replyTo);
+
             restRequest.AddParameter("subject", subject);
             restRequest.AddParameter(isBodyHtml ? "html" : "text", body);
             restRequest.Method = Method.POST;
@@ -148,7 +155,18 @@ namespace Curiosity.EMail.Mailgun
             var emailFrom = mailGunEMailExtraParams.EmailFrom ?? _mailgunEmailOptions.EmailFrom;
             var region = mailGunEMailExtraParams.MailgunRegion ?? _mailgunEmailOptions.MailgunRegion;
 
-            return SendAsync(toAddress, subject, body, isBodyHtml, user, apiKey, domain, emailFrom, region, cancellationToken);
+            return SendAsync(
+                toAddress,
+                subject,
+                body,
+                isBodyHtml,
+                user,
+                apiKey,
+                domain,
+                emailFrom,
+                region,
+                _mailgunEmailOptions.ReplyTo,
+                cancellationToken);
         }
     }
 }

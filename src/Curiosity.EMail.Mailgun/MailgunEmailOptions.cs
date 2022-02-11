@@ -57,6 +57,11 @@ namespace Curiosity.EMail.Mailgun
         /// </summary>
         public string EmailFrom { get; set; } = null!;
 
+        /// <summary>
+        /// Reply address for EMail.
+        /// </summary>
+        public string? ReplyTo { get; set; }
+
         /// <inheritdoc />
         public virtual IReadOnlyCollection<ConfigurationValidationError> Validate(string? prefix = null)
         {
