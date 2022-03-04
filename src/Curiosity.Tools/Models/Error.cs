@@ -27,23 +27,8 @@ namespace Curiosity.Tools
         /// </summary>
         /// <param name="code"></param>
         /// <param name="description"></param>
-        public Error(int code, string description)
-        {
-            if (String.IsNullOrWhiteSpace(description))
-                throw new ArgumentNullException(nameof(description));
-
-            Code = code;
-            Description = description;
-            Key = null;
-        }
-
-        /// <summary>
-        /// Creates a new Error
-        /// </summary>
-        /// <param name="code"></param>
-        /// <param name="description"></param>
         /// <param name="key"></param>
-        public Error(int code, string description, string? key)
+        public Error(int code, string description, string? key = null)
         {
             if (String.IsNullOrWhiteSpace(description))
                 throw new ArgumentNullException(nameof(description));

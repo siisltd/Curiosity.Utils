@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.4] - 2022-03-04
+
+### Changed
+
+- Left only single constructor for `Error` class.
+
 ## [1.4.3] - 2022-03-04
 
 ### Changed
