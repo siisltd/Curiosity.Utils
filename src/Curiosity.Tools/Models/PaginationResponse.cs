@@ -23,7 +23,7 @@ namespace Curiosity.Tools
         /// </summary>
         public int TotalCount { get; }
 
-        protected PaginationResponse(IReadOnlyList<T> body, int pageIndex, int pageSize, int totalCount, bool isSuccess, IReadOnlyList<Error> errors) : base(body, isSuccess, errors)
+        public PaginationResponse(IReadOnlyList<T> body, int pageIndex, int pageSize, int totalCount, bool isSuccess, IReadOnlyList<Error>? errors) : base(body, isSuccess, errors)
         {
             PageIndex = pageIndex;
             PageSize = pageSize;

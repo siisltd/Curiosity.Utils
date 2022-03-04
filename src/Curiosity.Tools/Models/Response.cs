@@ -21,10 +21,10 @@ namespace Curiosity.Tools
         /// <summary>
         /// Use when success
         /// </summary>
-        protected Response(bool isSuccess, IReadOnlyList<Error> errors)
+        public Response(bool isSuccess, IReadOnlyList<Error>? errors = null)
         {
             IsSuccess = isSuccess;
-            Errors = errors;
+            Errors = errors ?? Array.Empty<Error>();
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Curiosity.Tools
         /// </summary>
         public T Body { get; }
 
-        protected internal Response(T body, bool isSuccess, IReadOnlyList<Error> errors) : base(isSuccess, errors)
+        public Response(T body, bool isSuccess, IReadOnlyList<Error>? errors) : base(isSuccess, errors)
         {
             Body = body;
         }

@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.3] - 2022-03-04
+
+### Changed
+
+- Made constructor for `Response` classed opened.
+
 ## [1.4.2] - 2022-01-22
 
 ### Changed
