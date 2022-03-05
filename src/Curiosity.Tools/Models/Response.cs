@@ -19,11 +19,14 @@ namespace Curiosity.Tools
         public IReadOnlyList<Error> Errors { get; }
 
         /// <summary>
-        /// Use when success
+        /// Constructor for serialization. It's better to use static factory methods.
         /// </summary>
         public Response(bool isSuccess, IReadOnlyList<Error>? errors = null)
         {
             IsSuccess = isSuccess;
+            if (!isSuccess && (errors == null || errors.Count == 0))
+                throw new ArgumentException("Errors should be specified for failed response", nameof(errors));
+
             Errors = errors ?? Array.Empty<Error>();
         }
 
@@ -102,6 +105,15 @@ namespace Curiosity.Tools
 
             return new Response<T>(body, false, new[] { error });
         }
+
+        /// <summary>
+        /// Creates response for failed case.
+        /// </summary>
+        public static Response<T> Failed<T>(int errorCode, string errorDescription)
+        {
+            var error = new Error(errorCode, errorDescription);
+            return new Response<T>(default!, false, new[] { error });
+        }
     }
 
     /// <summary>
@@ -114,48 +126,10 @@ namespace Curiosity.Tools
         /// </summary>
         public T Body { get; }
 
+        /// <inheritdoc />
         public Response(T body, bool isSuccess, IReadOnlyList<Error>? errors) : base(isSuccess, errors)
         {
             Body = body;
-        }
-
-        /// <summary>
-        /// Creates response for failed case.
-        /// </summary>
-        public static Response<T> Successful(T body)
-        {
-            return new Response<T>(body, true, Array.Empty<Error>());
-        }
-
-        /// <summary>
-        /// Creates response for failed case.
-        /// </summary>
-        public new static Response<T> Failed(IReadOnlyList<Error> errors)
-        {
-            if (errors == null) throw new ArgumentNullException(nameof(errors));
-
-            return new Response<T>(default!, false, errors);
-        }
-
-        /// <summary>
-        /// Creates response for failed case.
-        /// </summary>
-        public new static Response<T> Failed(Error error)
-        {
-            if (error == null) throw new ArgumentNullException(nameof(error));
-
-            return new Response<T>(default!, false, new[] { error });
-        }
-
-        /// <summary>
-        /// Creates response for failed case.
-        /// </summary>
-        public static Response<T> Failed(Error error, T body)
-        {
-            if (error == null) throw new ArgumentNullException(nameof(error));
-            if (body == null) throw new ArgumentNullException(nameof(body));
-
-            return new Response<T>(body, false, new[] { error });
         }
     }
 }

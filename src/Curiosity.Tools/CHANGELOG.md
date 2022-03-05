@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.5] - 2022-03-05
+
+### Changed
+
+- Improved factory methods for `Response` classes.
+
 ## [1.4.4] - 2022-03-04
 
 ### Changed
