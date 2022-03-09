@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.1] - 2022-03-09
+
+## Change
+
+- Upgraded `Curiosity.Tools` to `1.4.5`
+
+### Changed
+
 ## [1.3.0] - 2021-12-02
 
 ### Changed
