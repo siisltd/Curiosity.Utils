@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.3] - Unreleased
+
+### Added
+
+- Added few sms error codes
+
 ## [1.3.2] - 2022-03-09
 
 ## Change

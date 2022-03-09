@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.4] - 2022-03-09
+
+### Added
+
+- Throwing a notification exception when something filed in the sending chanel
+
 ## [1.3.3] - 2022-03-09
 
 ## Change
