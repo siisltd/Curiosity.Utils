@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.5] - Unreleased
+
+### Added
+
+- Added mapping error codes from smsc to sms error code
+
 ## [1.2.4] - 2022-03-09
 
 ## Change

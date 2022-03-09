@@ -53,8 +53,17 @@ namespace Curiosity.Notifications.SMS
             // throw exception if something failed
             if (!result.IsSuccess)
             {
-                var error = result.Errors.FirstOrDefault() ?? new Error((int)SmsError.Unknown, "Unknown email error");
-                throw new InvalidOperationException($"Sending SMS to \"{notification.PhoneNumber}\" failed. SmsResult={error.Code}", new Exception(error.Description));
+                var error = result.Errors.FirstOrDefault() ?? new Error((int) SmsError.Unknown, "Unknown email error");
+                var notificationCode = error.Code switch
+                {
+                    1 => NotificationErrorCode.Auth,
+                    2 => NotificationErrorCode.Communication,
+                    4 => NotificationErrorCode.RateLimit,
+                    5 => NotificationErrorCode.NoMoney,
+                    _ => NotificationErrorCode.Unknown,
+                };
+                
+                throw new NotificationException(notificationCode, error.Description);
             }
         }
     }

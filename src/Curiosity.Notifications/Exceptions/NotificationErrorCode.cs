@@ -1,9 +1,6 @@
-namespace Curiosity.SMS
+﻿namespace Curiosity.Notifications
 {
-    /// <summary>
-    /// Errors of sending SMS.
-    /// </summary>
-    public enum SmsError
+    public enum NotificationErrorCode
     {
         /// <summary>
         /// None errors.
@@ -21,8 +18,18 @@ namespace Curiosity.SMS
         Communication = 2,
 
         /// <summary>
-        /// Unknown.
+        /// Unknown error.
         /// </summary>
-        Unknown = 3
+        Unknown = 3,
+        
+        /// <summary>
+        /// Reached the limit on attempts.
+        /// </summary>
+        RateLimit = 4,
+        
+        /// <summary>
+        /// Account has no money.
+        /// </summary>
+        NoMoney = 5,
     }
 }

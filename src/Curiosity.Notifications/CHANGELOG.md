@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1] - Unreleased
+
+### Added
+
+- Added notification exception with error codes
+
 ## [1.2.0] - 2021-08-31
 
 ### Changed

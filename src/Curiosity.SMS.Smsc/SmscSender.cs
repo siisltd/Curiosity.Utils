@@ -63,21 +63,18 @@ namespace Curiosity.SMS.Smsc
 
             _logger.LogInformation($"Отправляем sms на номер {phoneNumber}...");
 
+            // execute
             var response = await client.ExecuteAsync<SmscResponseData>(request, cancellationToken);
+            
             string resultJson;
             decimal? messageCost = null;
             if (response.IsSuccessful)
             {
                 resultJson = JsonConvert.SerializeObject(response.Data, SmsConstants.JsonSerializerSettings);
                 _logger.LogDebug(resultJson);
-                if ((response.Data.ErrorCode ?? 0) == 0)
-                {
-                    if (response.Data.Cost.HasValue)
-                        messageCost = response.Data.Cost;
 
-                    _logger.LogInformation($"Успешно отправили sms на номер {phoneNumber}");
-                }
-                else
+                // has sent error
+                if ((response.Data.ErrorCode ?? 0) != 0)
                 {
                     // if we got message denied error (6) and it is our first attempt, let's remove sender name and try again
                     // because SMSC can block SMS to Megafon and Tele2 with specified sender name when there is sender name is not agreed
@@ -89,9 +86,27 @@ namespace Curiosity.SMS.Smsc
 
                     var errorMessage = $"Ошибка при отправке sms на номер {phoneNumber} (error_code = {response.Data.ErrorCode}, error = \"{response.Data.Error}\")";
                     _logger.LogWarning($"Ошибка при отправке sms на номер {phoneNumber} (error_code = {response.Data.ErrorCode}, error = \"{response.Data.Error}\")");
-                    return Response<SmsSentResult>.Failed(new Error((int) SmsError.Unknown, errorMessage), new SmsSentResult(null, null, resultJson));
+
+                    // check error code
+                    switch (response.Data.ErrorCode)
+                    {
+                        case 1: // Ошибка в параметрах.
+                        case 2: // Неверный логин или пароль.
+                            return Response.Failed(new Error((int) SmsError.Auth, errorMessage), new SmsSentResult(null, null, resultJson));
+                        
+                        case 3: // Недостаточно средств на счёте Клиента.
+                            return Response.Failed(new Error((int) SmsError.NoMoney, errorMessage), new SmsSentResult(null, null, resultJson));
+
+                        case 4: // IP-адрес временно заблокирован из-за частых ошибок в запросах. 
+                        case 9: // Более 15 параллельных запросов под одним логином с разных подключений.
+                            return Response.Failed(new Error((int) SmsError.RateLimit, errorMessage), new SmsSentResult(null, null, resultJson));
+
+                        default:
+                            return Response.Failed(new Error((int) SmsError.Unknown, errorMessage), new SmsSentResult(null, null, resultJson));
+                    }
                 }
             }
+            // has HTTP error
             else
             {
                 var data = new SmscResponseData
@@ -115,16 +130,21 @@ namespace Curiosity.SMS.Smsc
                 _logger.LogWarning(
                     $"Ошибка при отправке sms на номер {phoneNumber} (error = \"{data.Error}\")");
 
-                return Response<SmsSentResult>.Failed(new Error((int)SmsError.Unknown, data.Error), new SmsSentResult(null, null, resultJson));
+                return Response.Failed(new Error((int)SmsError.Unknown, data.Error), new SmsSentResult(null, null, resultJson));
             }
 
+            // successfully sent
+            if (response.Data.Cost.HasValue)
+                messageCost = response.Data.Cost;
+
+            _logger.LogInformation($"Успешно отправили sms на номер {phoneNumber}");
+            
             int? sentSmsCount = null;
             if (response.IsSuccessful && response.Data != null! && response.Data.Count > 0)
                 sentSmsCount = response.Data.Count.Value;
 
             var result = new SmsSentResult(sentSmsCount, messageCost, resultJson);
-
-            return Response<SmsSentResult>.Successful(result);
+            return Response.Successful(result);
         }
 
         /// <inheritdoc />
