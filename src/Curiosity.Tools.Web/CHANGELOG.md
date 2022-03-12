@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.8] - 2022-03-12
+
+### Changed
+
+- Made `PathBase` in `ReverseProxyOptions` optional.
+
 ## [1.1.7] - 2021-11-29
 
 ### Changed

@@ -29,7 +29,7 @@ namespace Curiosity.Tools.Web.ReverseProxy
             
             app.UseForwardedHeaders();
 
-            if (!string.IsNullOrWhiteSpace(configuration.PathBase))
+            if (!String.IsNullOrWhiteSpace(configuration.PathBase))
             {
                 app.UsePathBase(configuration.PathBase);
                 app.Use((context, next) =>

@@ -18,7 +18,7 @@ namespace Curiosity.Tools.Web.ReverseProxy
         /// <пример>
         /// example.domain.me/api
         /// </пример>
-        public string PathBase { get; set; } = null!;
+        public string? PathBase { get; set; }
 
         /// <summary>
         /// IP reverse proxy
@@ -32,11 +32,7 @@ namespace Curiosity.Tools.Web.ReverseProxy
         /// <inheritdoc />
         public virtual IReadOnlyCollection<ConfigurationValidationError> Validate(string? prefix = null)
         {
-            var errors = new ConfigurationValidationErrorCollection(prefix);
-
-            errors.AddErrorIf(String.IsNullOrWhiteSpace(PathBase), nameof(PathBase), "can't be empty");
-            
-            return errors;
+            return Array.Empty<ConfigurationValidationError>();
         }
     }
 }
