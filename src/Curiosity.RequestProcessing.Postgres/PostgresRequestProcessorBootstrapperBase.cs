@@ -8,23 +8,31 @@ using Microsoft.Extensions.Logging;
 
 namespace Curiosity.RequestProcessing.Postgres
 {
+    /// <summary>
+    /// Базовый класс для бутстрапера обработчика запросов, который берет запросы от Postgres.
+    /// </summary>
     public abstract class PostgresRequestProcessorBootstrapperBase<
         TRequest,
-        TRequestEntity,
         TWorkerParams,
         TWorker,
         TDispatcher,
         TProcessingRequestInfo,
-        TOptions> : RequestProcessorBootstrapperBase<TRequest, TRequestEntity, TWorkerParams, TWorker, TDispatcher, TProcessingRequestInfo>
+        TOptions> : RequestProcessorBootstrapperBase<TRequest, TWorkerParams, TWorker, TDispatcher, TProcessingRequestInfo>
         where TRequest : IRequest
         where TWorker : WorkerBase<TRequest, TWorkerParams, TProcessingRequestInfo>
         where TWorkerParams : IWorkerExtraParams
-        where TDispatcher : RequestDispatcherBase<TRequest, TRequestEntity, TWorker, TWorkerParams, TProcessingRequestInfo>, IHostedService
+        where TDispatcher : RequestDispatcherBase<TRequest, TWorker, TWorkerParams, TProcessingRequestInfo>, IHostedService
         where TProcessingRequestInfo : class, IProcessingRequestInfo
         where TOptions : RequestProcessorNodeOptions, IPostgresRequestProcessorNodeOptions
     {
+        /// <summary>
+        /// Параметры получателя событий.
+        /// </summary>
         protected readonly PostgresEventReceiverOptions EventReceiverOptions;
 
+        /// <summary>
+        /// <inheritdoc cref="PostgresRequestProcessorBootstrapperBase{TRequest,TWorkerParams,TWorker,TDispatcher,TProcessingRequestInfo,TOptions}"/>
+        /// </summary>
         protected PostgresRequestProcessorBootstrapperBase(
             TOptions nodeOptions,
             ILoggerFactory loggerFactory,
@@ -35,6 +43,7 @@ namespace Curiosity.RequestProcessing.Postgres
             EventReceiverOptions = nodeOptions.PostgresEventReceiver;
         }
 
+        /// <inheritdoc />
         protected sealed override async Task StartEventReceiverAsync(IEventSource eventSource, CancellationToken cancellationToken = default)
         {
             if (eventSource == null) throw new ArgumentNullException(nameof(eventSource));

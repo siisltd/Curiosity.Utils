@@ -13,17 +13,15 @@ using Microsoft.Extensions.Logging;
 namespace Curiosity.RequestProcessing
 {
     /// <summary>
-    /// Бустрапер сервисов обработки запросов: подключается к БД, слушает события и управляет жизненным циклом диспетчера обработки запросов, а также созаёт воркеры.
+    /// Бустрапер сервисов обработки запросов: подключается к БД, слушает события и управляет жизненным циклом диспетчера обработки запросов, а также создает воркеры.
     /// </summary>
     /// <typeparam name="TRequest">Тип POCO класса запроса, который будет обрабатывать <see cref="TWorker"/>.</typeparam>
-    /// <typeparam name="TRequestEntity">Тип Entity сущности запроса, который будет доставаться из БД. Нужен для того, чтобы работала фильтрация запросов.</typeparam>
-    /// <typeparam name="TWorkerParams">Параметры для создания воркера, которые нельзя получить из DI (например, логгер, созданный с именем воркера)</typeparam>
+    /// <typeparam name="TWorkerParams">Параметры для создания воркера, которые нельзя получить из DI (например, логер, созданный с именем воркера)</typeparam>
     /// <typeparam name="TWorker">Тип воркера, который будет обрабатывать запросы.</typeparam>
     /// <typeparam name="TDispatcher">Тип диспетчера, который будет раскидывать запросы <see cref="TRequest"/> по воркерам <see cref="TWorker"/>.</typeparam>
     /// <typeparam name="TProcessingRequestInfo">Информация о запросе, который воркер обрабатывает в данный момент.</typeparam>
     public abstract class RequestProcessorBootstrapperBase<
         TRequest,
-        TRequestEntity,
         TWorkerParams,
         TWorker,
         TDispatcher,
@@ -31,7 +29,7 @@ namespace Curiosity.RequestProcessing
         where TRequest : IRequest
         where TWorker : WorkerBase<TRequest, TWorkerParams, TProcessingRequestInfo>
         where TWorkerParams : IWorkerExtraParams
-        where TDispatcher: RequestDispatcherBase<TRequest, TRequestEntity, TWorker, TWorkerParams, TProcessingRequestInfo>, IHostedService
+        where TDispatcher: RequestDispatcherBase<TRequest, TWorker, TWorkerParams, TProcessingRequestInfo>, IHostedService
         where TProcessingRequestInfo : class, IProcessingRequestInfo
     {
         /// <summary>
@@ -39,6 +37,9 @@ namespace Curiosity.RequestProcessing
         /// </summary>
         protected readonly ConcurrentDictionary<IEventSource, IEventReceiver> EventReceivers;
 
+        /// <summary>
+        /// Сконфигурированный ServiceProvider.
+        /// </summary>
         protected IServiceProvider ServiceProvider { get; }
 
         /// <summary>
@@ -67,6 +68,7 @@ namespace Curiosity.RequestProcessing
         /// </remarks>
         protected EventWaitHandle EventWaitHandle { get; }
 
+        /// <inheritdoc cref="RequestProcessorBootstrapperBase{TRequest,TWorkerParams,TWorker,TDispatcher,TProcessingRequestInfo}"/>
         protected RequestProcessorBootstrapperBase(
             RequestProcessorNodeOptions nodeOptions,
             ILoggerFactory loggerFactory,
@@ -84,6 +86,7 @@ namespace Curiosity.RequestProcessing
             EventReceivers = new ConcurrentDictionary<IEventSource, IEventReceiver>();
         }
 
+        /// <inheritdoc />
         public sealed override async Task StartAsync(CancellationToken cancellationToken)
         {
             Logger.LogDebug($"Запуск {NodeOptions.Name}...");
@@ -109,7 +112,7 @@ namespace Curiosity.RequestProcessing
             // запустим главный поток - периодический опрос БД
             await base.StartAsync(cancellationToken);
 
-            // просетим событие, чтобы сразу что-то полезное сделать
+            // установим событие, чтобы сразу что-то полезное сделать
             EventWaitHandle.Set();
 
             Logger.LogDebug($"{NodeOptions.Name} запущен");
@@ -158,7 +161,7 @@ namespace Curiosity.RequestProcessing
         /// Обрабатывает получения события ид БД.
         /// </summary>
         /// <remarks>
-        /// Базовая реализация просто сетит событие, чтобы диспетчер мог взять запросы в работу.
+        /// Базовая реализация просто устанавливает событие, чтобы диспетчер мог взять запросы в работу.
         /// </remarks>
         protected virtual void HandleDbEventReceived(object sender, IRequestProcessingEvent e)
         {
@@ -166,7 +169,7 @@ namespace Curiosity.RequestProcessing
         }
 
         /// <summary>
-        /// С заданной периодичностью сэтит <see cref="ManualResetEvent"/>
+        /// С заданной периодичностью устанавливает <see cref="ManualResetEvent"/>
         /// для проверки наличия новых запросов в БД
         /// </summary>
         protected sealed override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -199,6 +202,7 @@ namespace Curiosity.RequestProcessing
             Logger.LogDebug("Периодическая проверка очередей остановлена");
         }
 
+        /// <inheritdoc />
         public sealed override async Task StopAsync(CancellationToken cancellationToken)
         {
             Logger.LogDebug($"Остановка {NodeOptions.Name}...");
@@ -207,7 +211,7 @@ namespace Curiosity.RequestProcessing
             var dbEventListerStopTasks = new List<Task>();
             foreach (var monitoredDatabase in EventSources)
             {
-                dbEventListerStopTasks.Add(StopListenDbAsync(monitoredDatabase, cancellationToken));
+                dbEventListerStopTasks.Add(StopListenEventSourceAsync(monitoredDatabase, cancellationToken));
             }
             await Task.WhenAll(dbEventListerStopTasks);
 
@@ -223,7 +227,13 @@ namespace Curiosity.RequestProcessing
             Logger.LogDebug($"{NodeOptions.Name} остановлен");
         }
 
-        protected async Task StopListenDbAsync(IEventSource eventSource, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Прекращает прослушивание событий от БД.
+        /// </summary>
+        /// <param name="eventSource">Источник событий.</param>
+        /// <param name="cancellationToken">Токен отмены.</param>
+        /// <exception cref="InvalidOperationException"></exception>
+        protected async Task StopListenEventSourceAsync(IEventSource eventSource, CancellationToken cancellationToken = default)
         {
             if (eventSource == null) throw new ArgumentNullException(nameof(eventSource));
 
@@ -241,7 +251,7 @@ namespace Curiosity.RequestProcessing
         /// Действие по периодической проверки событий в БД.
         /// </summary>
         /// <remarks>
-        /// В базовой реализации просто сетит событие, чтобы выполнилась проверка БД.
+        /// В базовой реализации просто устанавливает событие, чтобы выполнилась проверка БД.
         /// Можно переопределить метод, если нужны дополнительное действия.
         /// </remarks>
         protected virtual Task PeriodicEventSourceCheckActionAsync(CancellationToken stoppingToken = default)
@@ -266,7 +276,7 @@ namespace Curiosity.RequestProcessing
             var workers = new List<TWorker>(workerOptions.WorkersCount);
             for (var i = 0; i < workerOptions.WorkersCount; i++)
             {
-                // сделаем каждому воркеру свой логгер, чтобы логи каждого воркера были в отдельном файле
+                // сделаем каждому воркеру свой логер, чтобы логи каждого воркера были в отдельном файле
                 var workerName = $"worker_{i}";
                 var workerLogger = LoggerFactory.CreateLogger(workerName);
 
@@ -284,7 +294,7 @@ namespace Curiosity.RequestProcessing
         }
 
         /// <summary>
-        /// Фабричный метод для создания параметров воркера <see cref="TWorkerParams"/>, которые он не сможем получить из DI (например, логгер, созданный с именем воркера)
+        /// Фабричный метод для создания параметров воркера <see cref="TWorkerParams"/>, которые он не сможем получить из DI (например, логер, созданный с именем воркера)
         /// </summary>
         protected abstract TWorkerParams CreateWorkerParams(ILogger logger);
 

@@ -3,6 +3,9 @@ using Microsoft.Extensions.Hosting;
 
 namespace Curiosity.RequestProcessing
 {
+    /// <summary>
+    /// Получатель событий для старта обработки.
+    /// </summary>
     public interface IEventReceiver : IHostedService
     {
         /// <summary>

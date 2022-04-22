@@ -29,11 +29,6 @@ namespace Curiosity.RequestProcessing
         public int EventsPeriodicCheckSec { get; set; } = 60;
 
         /// <summary>
-        /// Настройки фильтрации запросов.
-        /// </summary>
-        public FiltrationOptions Filtration { get; set; } = new FiltrationOptions();
-
-        /// <summary>
         /// Количество воркеров.
         /// </summary>
         public int WorkersCount { get; set; }
@@ -52,11 +47,6 @@ namespace Curiosity.RequestProcessing
             errors.AddErrorIf(EventsPeriodicCheckSec < 0, nameof(EventsPeriodicCheckSec), String.Format(ShouldBeEqualOrGreaterThanMask, 0));
             errors.AddErrorIf(WorkersCount <= 0, nameof(WorkersCount), String.Format(ShouldBeEqualOrGreaterThanMask, 1));
             errors.AddErrorIf(StateFlushPeriodSec <= 0, nameof(StateFlushPeriodSec), String.Format(ShouldBeEqualOrGreaterThanMask, 1));
-
-            if (Filtration != null!)
-            {
-                errors.AddErrors(Filtration.Validate($"{nameof(Filtration)}"));
-            }
 
             return errors;
         }

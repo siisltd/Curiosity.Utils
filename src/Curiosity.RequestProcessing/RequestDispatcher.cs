@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Curiosity.RequestProcessing.Workers;
@@ -16,13 +15,10 @@ namespace Curiosity.RequestProcessing
     /// Базовый класс диспетчера обработки запросов из очереди. Распределяет запросы по нужным воркерам.
     /// </summary>
     /// <typeparam name="TRequest">Тип запроса для обработки (POCO класс)</typeparam>
-    /// <typeparam name="TRequestEntity">
-    ///     Entity запроса, которая достаётся из очереди в базе и превращается в <typeparam name="TRequest"/> для обработки воркером.
-    /// </typeparam>
     /// <typeparam name="TWorker">Тип воркера, который используется в обработке</typeparam>
     /// <typeparam name="TWorkerExtraParams">Параметры для <see cref="TWorker"/>.</typeparam>
     /// <typeparam name="TProcessingRequestInfo">Информация о запросе, который воркер обрабатывает в данный момент.</typeparam>
-    public abstract class RequestDispatcherBase<TRequest, TRequestEntity, TWorker, TWorkerExtraParams, TProcessingRequestInfo> : BackgroundService
+    public abstract class RequestDispatcherBase<TRequest, TWorker, TWorkerExtraParams, TProcessingRequestInfo> : BackgroundService
         where TRequest : IRequest
         where TWorkerExtraParams : IWorkerExtraParams
         where TWorker : WorkerBase<TRequest, TWorkerExtraParams, TProcessingRequestInfo>
@@ -46,13 +42,17 @@ namespace Curiosity.RequestProcessing
         /// </remarks>
         protected EventWaitHandle NewEventWaitHandle { get; }
 
+        /// <summary>
+        /// Логер.
+        /// </summary>
         protected ILogger Logger { get; }
 
         /// <summary>
-        /// Ворккеры.
+        /// Воркеры.
         /// </summary>
         protected IReadOnlyList<TWorker> Workers { get; }
 
+        /// <inheritdoc cref="RequestDispatcherBase{TRequest,TWorker,TWorkerExtraParams,TProcessingRequestInfo}"/>
         protected RequestDispatcherBase(
             RequestProcessorNodeOptions nodeOptions,
             EventWaitHandle manualResetEvent,
@@ -75,8 +75,7 @@ namespace Curiosity.RequestProcessing
         /// Занимается распределение запросов по воркерам.
         /// </summary>
         /// <remarks>
-        /// Ждёт появления задачи в очереди, получает ее из базы (<typeparam name="TRequestEntity"/>), превращает в
-        /// POCO (<typeparam name="TRequest"/>) и отдаёт воркеру <see cref="TWorker"/>.
+        /// Ждет появления задачи в очереди, получает ее из базы и отдает воркеру <see cref="TWorker"/>.
         /// </remarks>
         protected sealed override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -118,11 +117,9 @@ namespace Curiosity.RequestProcessing
                     if (freeWorkers.Length == 0) continue;
 
                     // 2. Запрашиваем из БД запросы, удовлетворяющие фильтру и количеству свободных воркеров
-                    var expression = GetRequestFilterExpression();
                     sw.Restart();
                     var requests = await GetRequestsAsync(
                         freeWorkers.Length,
-                        expression,
                         stoppingToken);
                     sw.Stop();
 
@@ -165,26 +162,18 @@ namespace Curiosity.RequestProcessing
         }
 
         /// <summary>
-        /// Возвращает фильтрующее выражение, которое будет использоваться при получении запросов из БД.
-        /// </summary>
-        /// <returns></returns>
-        protected abstract Expression<Func<TRequestEntity, bool>> GetRequestFilterExpression();
-
-        /// <summary>
         /// Возвращает запросы для обработки.
         /// </summary>
         /// <param name="maxRequestsCount">
         ///     Максимальное количество запросов, которое можно вернуть.
         ///     Нужно, чтобы запрашивать запросы только под свободные воркеры.
         /// </param>
-        /// <param name="filtrationExpr">Выражение для фильтрации запросов на уровне БД.</param>
         /// <param name="cancellationToken">Токен отмены.</param>
         /// <remarks>
         /// Нужно переопределить в дочернем диспетчере этот метод, чтобы в нем реализовать логику запроса событий из БД.
         /// </remarks>
         protected abstract Task<IReadOnlyList<TRequest>?> GetRequestsAsync(
             int maxRequestsCount,
-            Expression<Func<TRequestEntity, bool>> filtrationExpr,
             CancellationToken cancellationToken = default);
     }
 }

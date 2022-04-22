@@ -12,6 +12,7 @@ namespace Curiosity.RequestProcessing.Postgres
         /// </summary>
         public string ConnectionString { get; }
 
+        /// <inheritdoc cref="MonitoredDatabase"/>
         public MonitoredDatabase(string connectionString)
         {
             if (String.IsNullOrWhiteSpace(connectionString))
@@ -43,16 +44,23 @@ namespace Curiosity.RequestProcessing.Postgres
             return ConnectionString.GetHashCode();
         }
 
+        /// <summary>
+        /// Equal compare.
+        /// </summary>
         public static bool operator ==(MonitoredDatabase? left, MonitoredDatabase? right)
         {
             return Equals(left, right);
         }
 
+        /// <summary>
+        /// Not equal compare.
+        /// </summary>
         public static bool operator !=(MonitoredDatabase? left, MonitoredDatabase? right)
         {
             return !Equals(left, right);
         }
 
+        /// <inheritdoc />
         public override string ToString()
         {
             return $"\"{ConnectionString}\"";

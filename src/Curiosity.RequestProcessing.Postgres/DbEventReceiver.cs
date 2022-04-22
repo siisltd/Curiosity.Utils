@@ -17,7 +17,7 @@ namespace Curiosity.RequestProcessing.Postgres
     /// <remarks>
     /// Создаёт новое подключение к БД и бесконечно слушает события от него.
     /// При получении события от БД уведомляет своих подписчиков об этом.
-    /// В случае любых ошибок пытается переподключиться к БД.
+    /// В случае любых ошибок пытается повторно подключиться к БД.
     /// </remarks>
     public class DbEventReceiver : BackgroundService, IEventReceiver
     {
@@ -38,6 +38,7 @@ namespace Curiosity.RequestProcessing.Postgres
         private string? _databaseName;
         private string? _databaseHost;
 
+        /// <inheritdoc cref="DbEventReceiver"/>
         public DbEventReceiver(
             PostgresEventReceiverOptions eventReceiverOptions,
             MonitoredDatabase monitoredDatabase,
@@ -50,7 +51,8 @@ namespace Curiosity.RequestProcessing.Postgres
 
             _eventsToSubscribe = new HashSet<string>(eventReceiverOptions.EventNames);
         }
-        
+
+        /// <inheritdoc />
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await Task.Yield();

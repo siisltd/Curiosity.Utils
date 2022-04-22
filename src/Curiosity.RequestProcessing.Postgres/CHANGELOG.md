@@ -1,18 +1,10 @@
 # Changelog
 
-## [1.2.0] - 2021-08-31
+## [1.1.0] - 2022-04-22
 
-### Changed
+### Removed
 
-- Notification infrastructure uses type of metadata class to match metadata and notification builders.
-
-## [1.1.0] - 2021-07-30
-
-### Added
-
-- Added `IEMailExtraParams` implementation.
-- Added `CancellationToken` to sender.
-- Added `IEMailNotificationPostProcessor`.
+- Removed filtration from package.
 
 ## [1.0.0] - 2021-03-15
 

@@ -18,6 +18,9 @@ namespace Curiosity.RequestProcessing.Postgres
         /// <inheritdoc />
         public string? Payload { get; }
 
+        /// <summary>
+        /// <inheritdoc cref="DbEvent"/>
+        /// </summary>
         public DbEvent(
             MonitoredDatabase databaseInfo,
             string eventName,

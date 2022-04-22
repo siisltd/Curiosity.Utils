@@ -6,6 +6,9 @@ using Microsoft.Extensions.Hosting;
 
 namespace Curiosity.RequestProcessing
 {
+    /// <summary>
+    /// Методы расширения по регистрации обработчиков запросов.
+    /// </summary>
     public static class RequestProcessorIocExtensions
     {
         /// <summary>
@@ -13,7 +16,6 @@ namespace Curiosity.RequestProcessing
         /// </summary>
         public static void AddRequestProcessor<
             TRequest,
-            TRequestEntity,
             TWorker,
             TWorkerParams,
             TProcessorBootstrapper,
@@ -23,12 +25,11 @@ namespace Curiosity.RequestProcessing
             this IServiceCollection services,
             TOptions processorNodeOptions)
             where TRequest : IRequest
-            where TRequestEntity : class
             where TWorkerParams : class, IWorkerExtraParams
-            where TDispatcher : RequestDispatcherBase<TRequest, TRequestEntity, TWorker, TWorkerParams, TProcessingRequestInfo>
+            where TDispatcher : RequestDispatcherBase<TRequest, TWorker, TWorkerParams, TProcessingRequestInfo>
             where TWorker : WorkerBase<TRequest, TWorkerParams, TProcessingRequestInfo>
             where TOptions : RequestProcessorNodeOptions
-            where TProcessorBootstrapper : RequestProcessorBootstrapperBase<TRequest, TRequestEntity, TWorkerParams, TWorker, TDispatcher, TProcessingRequestInfo>
+            where TProcessorBootstrapper : RequestProcessorBootstrapperBase<TRequest, TWorkerParams, TWorker, TDispatcher, TProcessingRequestInfo>
             where TProcessingRequestInfo : class, IProcessingRequestInfo
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
