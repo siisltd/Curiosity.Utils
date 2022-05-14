@@ -5,7 +5,7 @@
 ### Added
 
 - Added method to unzip archive.
-- 
+
 ## [1.2.0] - 2021-11-16
 
 ### Changed
