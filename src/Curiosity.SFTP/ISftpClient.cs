@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Curiosity.Tools.TempFiles;
@@ -73,5 +74,11 @@ namespace Curiosity.SFTP
         /// <param name="basePath">Base directory for combining path for file.</param>
         /// <param name="fileName">Relative (from base directory) file name.</param>
         bool IsExist(string basePath, string fileName);
+
+        /// <summary>
+        /// Returns info about directories files.
+        /// </summary>
+        /// <param name="basePath">Relative (from base directory) path to the directory.</param>
+        public IReadOnlyList<SftpFileInfo> ListDirectoryContents(string basePath);
     }
 }

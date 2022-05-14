@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using Curiosity.Tools.TempFiles;
@@ -8,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Polly;
 using Renci.SshNet;
 using Renci.SshNet.Common;
+using Renci.SshNet.Sftp;
 
 namespace Curiosity.SFTP.SSH.Net
 {
@@ -26,6 +29,7 @@ namespace Curiosity.SFTP.SSH.Net
         private readonly AsyncPolicy _retryAsyncPolicy;
         private readonly Policy _retryPolicy;
         
+        /// <inheritdoc cref="SftpClient"/>
         public SftpClient(
             SftpClientOptions options,
             ITempFileStreamFactory tempFileStreamFactory,
@@ -114,7 +118,7 @@ namespace Curiosity.SFTP.SSH.Net
             });
         }
 
-        private string GetFileFullPath([NotNull] string basePath, [NotNull] string fileName)
+        private string GetFileFullPath(string basePath, string fileName)
         {
             var tempFileName = fileName.Replace(@"\", "/").Trim('/');
             var filePath = Path.Combine(basePath, tempFileName).Replace(@"\", "/");
@@ -389,6 +393,78 @@ namespace Curiosity.SFTP.SSH.Net
             }
 
             throw new ArgumentException(LNG.SftpClient_AuthMethodsNotSpecified);
+        }
+
+        /// <inheritdoc />
+        public IReadOnlyList<SftpFileInfo> ListDirectoryContents(string basePath)
+        {
+            if (String.IsNullOrWhiteSpace(basePath)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(basePath));
+
+            return _retryPolicy.Execute<IReadOnlyList<SftpFileInfo>>(() =>
+            {
+                EnsureConnected();
+
+                if (!_sftpClient.Exists(basePath))
+                {
+                    _logger.LogWarning("Directory \"{Directory}\" doesn't exist", basePath);
+                    throw new SftpPathNotFoundException();
+                }
+
+                var files = _sftpClient.ListDirectory(basePath).ToArray();
+                if (files.Length == 0) return Array.Empty<SftpFileInfo>();
+
+                var result = new List<SftpFileInfo>(files.Length);
+                foreach (var remoteFile in files)
+                {
+                    if (remoteFile == null) continue;
+
+                    var fileInfo = new SftpFileInfo(
+                        remoteFile.Name,
+                        remoteFile.FullName,
+                        GetSftpFileType(remoteFile),
+                        remoteFile.Length,
+                        remoteFile.LastAccessTimeUtc,
+                        remoteFile.LastWriteTimeUtc);
+                    result.Add(fileInfo);
+                }
+
+                return result;
+            });
+        }
+
+        private static SftpFileType GetSftpFileType(SftpFile file)
+        {
+            SftpFileType fileType = SftpFileType.Unknown;
+            if (file.IsDirectory)
+            {
+                fileType = SftpFileType.Directory;
+            }
+            else if (file.IsRegularFile)
+            {
+                fileType = SftpFileType.Regular;
+            }
+            else if (file.IsSocket)
+            {
+                fileType = SftpFileType.Socket;
+            }
+            else if (file.IsBlockDevice)
+            {
+                fileType = SftpFileType.BlockDevice;
+            }
+            else if (file.IsCharacterDevice)
+            {
+                fileType = SftpFileType.CharacterDevice;
+            }
+            else if (file.IsNamedPipe)
+            {
+                fileType = SftpFileType.NamedPipe;
+            }
+            else if (file.IsSymbolicLink)
+            {
+                fileType = SftpFileType.NamedPipe;
+            }
+
+            return fileType;
         }
 
         /// <inheritdoc />
