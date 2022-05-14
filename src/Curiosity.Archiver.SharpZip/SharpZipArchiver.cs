@@ -254,7 +254,7 @@ namespace Curiosity.Archiver.SharpZip
         }
 
         /// <inheritdoc />
-        public string UnzipFileAsync(FileStream file, string? unzipDirectoryPath = null)
+        public string UnzipFile(FileStream file, string? unzipDirectoryPath = null)
         {
             if (file == null) throw new ArgumentNullException(nameof(file));
 

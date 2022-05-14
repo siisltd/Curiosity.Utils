@@ -77,6 +77,6 @@ namespace Curiosity.Archiver
         /// <param name="file">Stream with zip archive.</param>
         /// <param name="unzipDirectoryPath">Path to folder to store unzipped files. Folder will be created in a temp directory in no value specified.</param>
         /// <returns>Path to directory with unzipped files.</returns>
-        string UnzipFileAsync(FileStream file, string? unzipDirectoryPath = null);
+        string UnzipFile(FileStream file, string? unzipDirectoryPath = null);
     }
 }

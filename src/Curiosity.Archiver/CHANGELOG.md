@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.1] - 2022-05-14
+
+### Changed
+
+- Fixed naming of `UnzipFile` method.
+
 ## [1.3.0] - 2022-05-14
 
 ### Added
