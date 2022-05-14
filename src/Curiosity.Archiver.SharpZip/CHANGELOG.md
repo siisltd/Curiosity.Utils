@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.0] - 2022-05-14
+
+### Added
+
+- Added method to unzip archive.
+
 ## [1.2.0] - 2021-11-16
 
 ### Changed

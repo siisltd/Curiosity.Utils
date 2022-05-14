@@ -17,11 +17,6 @@ namespace Curiosity.Archiver.SharpZip
     public class SharpZipArchiver : IArchiver
     {
         /// <summary>
-        /// Factory to create <see cref="TempFileStream"/>.
-        /// </summary>
-        private readonly ITempFileStreamFactory _tempFileStreamFactory;
-
-        /// <summary>
         /// Size of buffer for reading data from file.
         /// </summary>
         /// <remarks>
@@ -40,7 +35,9 @@ namespace Curiosity.Archiver.SharpZip
         private readonly ArrayPool<byte> _arrayPool;
 
         private readonly TempFileOptions _tempFileOptions;
+        private readonly ITempFileStreamFactory _tempFileStreamFactory;
 
+        /// <inheritdoc cref="SharpZipArchiver"/>
         public SharpZipArchiver(
             ITempFileStreamFactory tempFileStreamFactory,
             TempFileOptions tempFileOptions)
@@ -103,7 +100,12 @@ namespace Curiosity.Archiver.SharpZip
             return ZipFilesToStreamAsync(sourceFileNames, useZip64, zipFileName, cts);
         }
 
-        public async Task<TempFileStream> ZipFilesToStreamAsync(IReadOnlyList<FileNames> sourceFiles, bool useZip64 = true, string? zipFileName = null, CancellationToken cts = default)
+        /// <inheritdoc />
+        public async Task<TempFileStream> ZipFilesToStreamAsync(
+            IReadOnlyList<FileNames> sourceFiles,
+            bool useZip64 = true,
+            string? zipFileName = null,
+            CancellationToken cts = default)
         {
             if (sourceFiles == null) throw new ArgumentNullException(nameof(sourceFiles));
 
@@ -203,7 +205,11 @@ namespace Curiosity.Archiver.SharpZip
         }
 
         /// <inheritdoc />
-        public async Task<string> ZipFilesToFileAsync(IReadOnlyList<FileNames> sourceFiles, bool useZip64 = true, string? zipFileName = null, CancellationToken cts = default)
+        public async Task<string> ZipFilesToFileAsync(
+            IReadOnlyList<FileNames> sourceFiles,
+            bool useZip64 = true,
+            string? zipFileName = null,
+            CancellationToken cts = default)
         {
             if (sourceFiles == null) throw new ArgumentNullException(nameof(sourceFiles));
 
@@ -245,6 +251,24 @@ namespace Curiosity.Archiver.SharpZip
             }
 
             return sourceFileNames;
+        }
+
+        /// <inheritdoc />
+        public string UnzipFileAsync(FileStream file, string? unzipDirectoryPath = null)
+        {
+            if (file == null) throw new ArgumentNullException(nameof(file));
+
+            // prepare directory for unzip files
+            var tempDirectoryPath = String.IsNullOrWhiteSpace(unzipDirectoryPath)
+                ? Path.Combine(_tempFileOptions.TempPath, "unzip", UniqueKeyGenerator.GenerateRandomKey(10))
+                : unzipDirectoryPath;
+            Directory.CreateDirectory(tempDirectoryPath);
+
+            // unzip
+            var fastZip = new FastZip();
+            fastZip.ExtractZip(file, tempDirectoryPath, FastZip.Overwrite.Never, null, null, null, true, false);
+
+            return tempDirectoryPath;
         }
     }
 }
