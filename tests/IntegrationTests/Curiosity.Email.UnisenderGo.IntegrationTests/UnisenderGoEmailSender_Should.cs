@@ -23,8 +23,8 @@ namespace Curiosity.Email.UnisenderGo.IntegrationTests
             _mockLogger = Mock.Of<ILogger<UnisenderGoEmailSender>>();
         }
 
-        [Fact]
-        // [Fact(Skip = "Only for manual testing")]
+        // [Fact]
+        [Fact(Skip = "Only for manual testing")]
         public async Task SendEmail_WithoutErrors()
         {
             // arrange
