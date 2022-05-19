@@ -1,5 +1,4 @@
 using System;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Curiosity.Configuration;
@@ -17,6 +16,7 @@ namespace Curiosity.EMail.Mailgun
         private readonly ILogger<MailgunEmailSender> _logger;
         private readonly MailgunEmailOptions _mailgunEmailOptions;
 
+        /// <inheritdoc cref="MailgunEmailSender"/>
         public MailgunEmailSender(
             ILogger<MailgunEmailSender> logger,
             MailgunEmailOptions mailgunEmailOptions)
@@ -39,9 +39,9 @@ namespace Curiosity.EMail.Mailgun
         /// <inheritdoc />
         public Task<Response> SendAsync(string toAddress, string subject, string body, bool isBodyHtml = false, CancellationToken cancellationToken = default)
         {
-            if (String.IsNullOrWhiteSpace(toAddress)) throw new ArgumentNullException(nameof(toAddress));
-            if (String.IsNullOrWhiteSpace(subject)) throw new ArgumentNullException(nameof(subject));
-            if (String.IsNullOrWhiteSpace(body)) throw new ArgumentNullException(nameof(body));
+            EmailGuard.AssertToAddress(toAddress);
+            EmailGuard.AssertSubject(subject);
+            EmailGuard.AssertBody(body);
 
             return SendAsync(
                 toAddress,
@@ -133,6 +133,7 @@ namespace Curiosity.EMail.Mailgun
             return Response.Successful();
         }
 
+        /// <inheritdoc />
         public Task<Response> SendAsync(
             string toAddress,
             string subject,
@@ -141,19 +142,28 @@ namespace Curiosity.EMail.Mailgun
             IEMailExtraParams emailExtraParams,
             CancellationToken cancellationToken = default)
         {
-            if (String.IsNullOrWhiteSpace(toAddress)) throw new ArgumentNullException(nameof(toAddress));
-            if (String.IsNullOrWhiteSpace(subject)) throw new ArgumentNullException(nameof(subject));
-            if (String.IsNullOrWhiteSpace(body)) throw new ArgumentNullException(nameof(body));
+            EmailGuard.AssertToAddress(toAddress);
+            EmailGuard.AssertSubject(subject);
+            EmailGuard.AssertBody(body);
+
             if (emailExtraParams == null) throw new ArgumentNullException(nameof(emailExtraParams));
 
-            if (!(emailExtraParams is MailgunEmailExtraParams mailGunEMailExtraParams))
-                throw new ArgumentException($"Only {typeof(MailgunEmailExtraParams)} is supported for this sender.", nameof(emailExtraParams));
+            MailgunEmailExtraParams? mailGunEMailExtraParams = null;
+            if (emailExtraParams is MailgunEmailExtraParams @params)
+            {
+                mailGunEMailExtraParams = @params;
+            }
+            else
+            {
+                if (!_mailgunEmailOptions.IgnoreIncorrectExtraParamsType)
+                    throw new ArgumentException($"Only {typeof(MailgunEmailExtraParams)} is supported for this sender.", nameof(emailExtraParams));
+            }
 
-            var user = mailGunEMailExtraParams.MailgunUser ?? _mailgunEmailOptions.MailgunUser;
-            var apiKey = mailGunEMailExtraParams.MailgunApiKey ?? _mailgunEmailOptions.MailgunApiKey;
-            var domain = mailGunEMailExtraParams.MailgunDomain ?? _mailgunEmailOptions.MailgunDomain;
-            var emailFrom = mailGunEMailExtraParams.EmailFrom ?? _mailgunEmailOptions.EmailFrom;
-            var region = mailGunEMailExtraParams.MailgunRegion ?? _mailgunEmailOptions.MailgunRegion;
+            var user = mailGunEMailExtraParams?.MailgunUser ?? _mailgunEmailOptions.MailgunUser;
+            var apiKey = mailGunEMailExtraParams?.MailgunApiKey ?? _mailgunEmailOptions.MailgunApiKey;
+            var domain = mailGunEMailExtraParams?.MailgunDomain ?? _mailgunEmailOptions.MailgunDomain;
+            var emailFrom = mailGunEMailExtraParams?.EmailFrom ?? _mailgunEmailOptions.EmailFrom;
+            var region = mailGunEMailExtraParams?.MailgunRegion ?? _mailgunEmailOptions.MailgunRegion;
 
             return SendAsync(
                 toAddress,

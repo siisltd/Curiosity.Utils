@@ -30,11 +30,12 @@ namespace Curiosity.EMail.Mailgun
         /// </summary>
         public MailgunRegion? MailgunRegion { get; }
 
+        /// <inheritdoc cref="MailgunEmailExtraParams"/>
         public MailgunEmailExtraParams(
-            string? mailgunUser,
-            string? mailgunApiKey,
-            string? mailgunDomain,
-            string? emailFrom,
+            string? mailgunUser = null,
+            string? mailgunApiKey = null,
+            string? mailgunDomain = null,
+            string? emailFrom = null,
             MailgunRegion? mailgunRegion = null)
         {
             MailgunApiKey = mailgunApiKey;

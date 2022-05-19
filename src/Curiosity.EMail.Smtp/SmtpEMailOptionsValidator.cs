@@ -4,6 +4,9 @@ using Curiosity.Configuration;
 
 namespace Curiosity.EMail.Smtp
 {
+    /// <summary>
+    /// Class for validating <see cref="ISmtpEMailOptions"/>.
+    /// </summary>
     public static class SmtpEMailOptionsValidator
     {
         /// <summary>

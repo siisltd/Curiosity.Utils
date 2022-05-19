@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.5] - 2022-05-19
+
+## Added
+
+- Added option for ignoring incorrect extra params type.
+
+## [1.3.4] - 2022-05-19
+
+## Added
+
+- Guard for checking email params.
+
 ## [1.3.3] - 2022-03-09
 
 ## Change

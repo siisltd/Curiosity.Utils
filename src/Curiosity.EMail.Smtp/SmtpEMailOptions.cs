@@ -27,6 +27,11 @@ namespace Curiosity.EMail.Smtp
         /// <inheritdoc />
         public string SenderName { get; set; } = null!;
 
+        /// <summary>
+        /// Should sender send email if incorrect type of extra params was passed?
+        /// </summary>
+        public bool IgnoreIncorrectExtraParamsType { get; set; } = false;
+
         /// <inheritdoc />
         public virtual IReadOnlyCollection<ConfigurationValidationError> Validate(string? prefix = null)
         {

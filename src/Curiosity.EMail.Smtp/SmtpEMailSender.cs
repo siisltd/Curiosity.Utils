@@ -17,6 +17,7 @@ namespace Curiosity.EMail.Smtp
         private readonly ISmtpEMailOptions _emailOptions;
         private readonly ILogger _logger;
 
+        /// <inheritdoc cref="SmtpEMailSender"/>
         public SmtpEMailSender(
             ISmtpEMailOptions smtpEMailOptions,
             ILogger<SmtpEMailSender> logger)
@@ -30,12 +31,9 @@ namespace Curiosity.EMail.Smtp
         /// <inheritdoc />
         public Task<Response> SendAsync(string toAddress, string subject, string body, bool isBodyHtml = false, CancellationToken cancellationToken = default)
         {
-            if (String.IsNullOrWhiteSpace(toAddress))
-                throw new ArgumentNullException(nameof(toAddress));
-            if (String.IsNullOrWhiteSpace(subject))
-                throw new ArgumentNullException(nameof(subject));
-            if (String.IsNullOrWhiteSpace(body))
-                throw new ArgumentNullException(nameof(body));
+            EmailGuard.AssertToAddress(toAddress);
+            EmailGuard.AssertSubject(subject);
+            EmailGuard.AssertBody(body);
 
             var senderName = _emailOptions.SenderName.Trim();
             var emailFrom = _emailOptions.EMailFrom.Trim();
@@ -54,7 +52,7 @@ namespace Curiosity.EMail.Smtp
             string? replyTo,
             CancellationToken cancellationToken = default)
         {
-            _logger.LogInformation("Sending EMail to {0} with the subject \"{1}\", text.Length = {2}",
+            _logger.LogDebug("Sending EMail to \"{ToAddress}\" with the subject \"{Subject}\", text.Length = {BodyTextLength}",
                 toAddress,
                 subject,
                 body.Length);
@@ -102,35 +100,42 @@ namespace Curiosity.EMail.Smtp
                     await smtpClient.DisconnectAsync(true, cancellationToken);
                 }
 
-                _logger.LogInformation("EMail message was successfully sent to {0}", toAddress);
+                _logger.LogInformation("EMail message was successfully sent to \"{ToAddress}\"", toAddress);
 
                 return Response.Successful();
             }
             catch (Exception e)
             {
-                _logger.LogError(e, $"Error sending EMail message to {0}. Reason: {e.Message}", toAddress);
+                _logger.LogError(e, "Error sending EMail message to \"{ToAddress}\"", toAddress);
 
                 //todo analyze exceptions and return more specified EmailError
                 return Response.Failed(new Error((int) EmailError.Unknown, e.Message));
             }
         }
 
+        /// <inheritdoc />
         public Task<Response> SendAsync(string toAddress, string subject, string body, bool isBodyHtml, IEMailExtraParams emailExtraParams, CancellationToken cancellationToken = default)
         {
-            if (String.IsNullOrWhiteSpace(toAddress))
-                throw new ArgumentNullException(nameof(toAddress));
-            if (String.IsNullOrWhiteSpace(subject))
-                throw new ArgumentNullException(nameof(subject));
-            if (String.IsNullOrWhiteSpace(body))
-                throw new ArgumentNullException(nameof(body));
+            EmailGuard.AssertToAddress(toAddress);
+            EmailGuard.AssertSubject(subject);
+            EmailGuard.AssertBody(body);
 
             if (emailExtraParams == null) throw new ArgumentNullException(nameof(emailExtraParams));
-            if (!(emailExtraParams is SmtpEMailExtraParams smtpEMailExtraParams))
-                throw new ArgumentException($"Only {typeof(SmtpEMailExtraParams)} is supported.", nameof(emailExtraParams));
 
-            var senderName = smtpEMailExtraParams.SenderName?.Trim() ?? _emailOptions.SenderName.Trim();
-            var emailFrom = smtpEMailExtraParams.EMailFrom?.Trim() ?? _emailOptions.EMailFrom.Trim();
-            var replyTo = smtpEMailExtraParams.ReplyTo?.Trim() ?? _emailOptions.ReplyTo?.Trim();
+            SmtpEMailExtraParams? smtpEMailExtraParams = null;
+            if (emailExtraParams is SmtpEMailExtraParams @params)
+            {
+                smtpEMailExtraParams = @params;
+            }
+            else
+            {
+                if (!_emailOptions.IgnoreIncorrectExtraParamsType)
+                    throw new ArgumentException($"Only {typeof(SmtpEMailExtraParams)} is supported for this sender.", nameof(emailExtraParams));
+            }
+
+            var senderName = smtpEMailExtraParams?.SenderName?.Trim() ?? _emailOptions.SenderName.Trim();
+            var emailFrom = smtpEMailExtraParams?.EMailFrom?.Trim() ?? _emailOptions.EMailFrom.Trim();
+            var replyTo = smtpEMailExtraParams?.ReplyTo?.Trim() ?? _emailOptions.ReplyTo?.Trim();
 
             return SendAsync(toAddress, subject, body, isBodyHtml, senderName, emailFrom, replyTo, cancellationToken);
         }
