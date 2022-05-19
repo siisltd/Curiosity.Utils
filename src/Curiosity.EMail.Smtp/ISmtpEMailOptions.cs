@@ -41,5 +41,10 @@ namespace Curiosity.EMail.Smtp
         /// Human readable sender name.
         /// </summary>
         string SenderName { get; }
+
+        /// <summary>
+        /// Should sender send email if incorrect extra params were passed (eg. with another type)?
+        /// </summary>
+        bool IgnoreIncorrectExtraParamsType { get; }
     }
 }

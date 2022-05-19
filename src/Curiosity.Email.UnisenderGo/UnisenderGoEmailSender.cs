@@ -292,7 +292,7 @@ namespace Curiosity.Email.UnisenderGo
             }
             else
             {
-                 if (!_options.IgnoreIncorrectExtraParams)
+                 if (!_options.IgnoreIncorrectExtraParamsType)
                      throw new ArgumentException($"Only {typeof(UnisenderGoEmailExtraParams)} is supported for this sender.", nameof(emailExtraParams));
             }
 

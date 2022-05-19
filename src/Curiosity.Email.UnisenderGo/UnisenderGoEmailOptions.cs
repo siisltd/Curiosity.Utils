@@ -30,9 +30,9 @@ namespace Curiosity.Email.UnisenderGo
         public string FromName { get; set; } = null!;
 
         /// <summary>
-        /// Should sender send email if incorrect extra params were passed?
+        /// Should sender send email if incorrect type of extra params was passed?
         /// </summary>
-        public bool IgnoreIncorrectExtraParams { get; set; } = false;
+        public bool IgnoreIncorrectExtraParamsType { get; set; } = false;
 
         /// <summary>
         /// Reply address for EMail.

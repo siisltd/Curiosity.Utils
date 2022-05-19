@@ -18,7 +18,11 @@ namespace Curiosity.EMail.Smtp
         /// </summary>
         public string? ReplyTo { get; }
 
-        public SmtpEMailExtraParams(string? eMailFrom, string? senderName, string? replyTo)
+        /// <inheritdoc cref="SmtpEMailExtraParams"/>
+        public SmtpEMailExtraParams(
+            string? eMailFrom = null,
+            string? senderName = null,
+            string? replyTo = null)
         {
             EMailFrom = eMailFrom;
             SenderName = senderName;
