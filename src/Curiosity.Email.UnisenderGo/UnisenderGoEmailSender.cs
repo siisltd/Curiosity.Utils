@@ -43,6 +43,10 @@ namespace Curiosity.Email.UnisenderGo
             bool isBodyHtml = false,
             CancellationToken cancellationToken = default)
         {
+            EmailGuard.AssertToAddress(toAddress);
+            EmailGuard.AssertToAddress(subject);
+            EmailGuard.AssertToAddress(body);
+
             return SendAsync(
                 toAddress,
                 subject,
@@ -64,7 +68,7 @@ namespace Curiosity.Email.UnisenderGo
             string subject,
             string body,
             bool isBodyHtml,
-            string unisenderGoApiKey,
+            string apiKey,
             string emailFrom,
             string fromName,
             UnisenderGoRegion region,
@@ -74,6 +78,12 @@ namespace Curiosity.Email.UnisenderGo
             string? unsubscribeUrl,
             CancellationToken cancellationToken = default)
         {
+            // some basic checks
+            UnisenderGoGuard.AssertApiKey(apiKey);
+            UnisenderGoGuard.AssertEmailFrom(emailFrom);
+            UnisenderGoGuard.AssertFromName(fromName);
+            UnisenderGoGuard.AssertRegion(region);
+
             string unisenderGoHost;
 
             // select API host address based on region
@@ -95,7 +105,7 @@ namespace Curiosity.Email.UnisenderGo
             var restRequest = new RestRequest();
 
             // add api key
-            restRequest.AddHeader("X-API-KEY", unisenderGoApiKey);
+            restRequest.AddHeader("X-API-KEY", apiKey);
 
             // build message body
             var messageBody = new UnisenderGoSendEmailMessageBody();
@@ -275,17 +285,25 @@ namespace Curiosity.Email.UnisenderGo
 
             if (emailExtraParams == null) throw new ArgumentNullException(nameof(emailExtraParams));
 
-            if (!(emailExtraParams is UnisenderGoEmailExtraParams unisenderGoEmailExtraParams))
-                throw new ArgumentException($"Only {typeof(UnisenderGoEmailExtraParams)} is supported for this sender.", nameof(emailExtraParams));
+            UnisenderGoEmailExtraParams? unisenderGoEmailExtraParams = null;
+            if (emailExtraParams is UnisenderGoEmailExtraParams @params)
+            {
+                unisenderGoEmailExtraParams = @params;
+            }
+            else
+            {
+                 if (!_options.IgnoreIncorrectExtraParams)
+                     throw new ArgumentException($"Only {typeof(UnisenderGoEmailExtraParams)} is supported for this sender.", nameof(emailExtraParams));
+            }
 
-            var apiKey = unisenderGoEmailExtraParams.ApiKey ?? _options.ApiKey;
-            var emailFrom = unisenderGoEmailExtraParams.EmailFrom ?? _options.EmailFrom;
-            var fromName = unisenderGoEmailExtraParams.FromName ?? _options.FromName;
-            var region = unisenderGoEmailExtraParams.Region ?? _options.Region;
-            var replyTo = unisenderGoEmailExtraParams.ReplyTo ?? _options.ReplyTo;
-            var trackLinks = unisenderGoEmailExtraParams.TrackLinks ?? _options.TrackLinks;
-            var trackReads = unisenderGoEmailExtraParams.TrackReads ?? _options.TrackReads;
-            var unsubscribeUrl = unisenderGoEmailExtraParams.UnsubscribeUrl ?? _options.UnsubscribeUrl;
+            var apiKey = unisenderGoEmailExtraParams?.ApiKey ?? _options.ApiKey;
+            var emailFrom = unisenderGoEmailExtraParams?.EmailFrom ?? _options.EmailFrom;
+            var fromName = unisenderGoEmailExtraParams?.FromName ?? _options.FromName;
+            var region = unisenderGoEmailExtraParams?.Region ?? _options.Region;
+            var replyTo = unisenderGoEmailExtraParams?.ReplyTo ?? _options.ReplyTo;
+            var trackLinks = unisenderGoEmailExtraParams?.TrackLinks ?? _options.TrackLinks;
+            var trackReads = unisenderGoEmailExtraParams?.TrackReads ?? _options.TrackReads;
+            var unsubscribeUrl = unisenderGoEmailExtraParams?.UnsubscribeUrl ?? _options.UnsubscribeUrl;
 
             return SendAsync(
                 toAddress,
