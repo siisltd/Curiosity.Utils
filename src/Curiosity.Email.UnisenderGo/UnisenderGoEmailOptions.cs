@@ -55,7 +55,7 @@ namespace Curiosity.Email.UnisenderGo
         public bool? TrackReads { get; set; }
 
         /// <inheritdoc />
-        public IReadOnlyCollection<ConfigurationValidationError> Validate(string? prefix = null)
+        public virtual IReadOnlyCollection<ConfigurationValidationError> Validate(string? prefix = null)
         {
             var errors = new ConfigurationValidationErrorCollection(prefix);
 
