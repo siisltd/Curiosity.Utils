@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.4] - 2022-05-19
+
+## Added
+
+- Guard for checking email params.
+
 ## [1.3.3] - 2022-03-09
 
 ## Change

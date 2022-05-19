@@ -1,0 +1,58 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+
+        <PackageId>Curiosity.EMail.UnisenderGo</PackageId>
+        <Title>Curiosity.EMail.UnisenderGo</Title>
+        <Description>Unisender.Go email sender. Uses Unisender.Go API to send emails.</Description>
+        <Summary>Unisender.Go email sender</Summary>
+        <PackageTags>Curiosity; EMail; Unisender; UnisenderGo; siisltd</PackageTags>
+        <Language>English</Language>
+
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <FileVersion>1.0.0</FileVersion>
+        <PackageVersion>1.0.0</PackageVersion>
+
+        <Authors>Max Markelow (@markeli)</Authors>
+        <Company>SIIS Ltd</Company>
+        <Copyright>SIIS Ltd, 2022</Copyright>
+
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+        <PackageProjectUrl>https://github.com/siisltd/Curiosity.Utils</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
+        <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Curiosity.EMail.UnisenderGo/CHANGELOG.md</PackageReleaseNotes>
+
+        <LangVersion>8</LangVersion>
+        <Nullable>enable</Nullable>
+        <IsPackable>true</IsPackable>
+
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageIcon>siisltd.png</PackageIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\siisltd.png" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Curiosity.Configuration\Curiosity.Configuration.csproj" />
+      <ProjectReference Include="..\Curiosity.EMail\Curiosity.EMail.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+      <PackageReference Include="RestSharp" Version="106.15.0" />
+      <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="106.15.0" />
+    </ItemGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DocumentationFile>bin\Release\Curiosity.EMail.UnisenderGo.xml</DocumentationFile>
+    </PropertyGroup>
+
+</Project>

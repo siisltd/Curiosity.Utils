@@ -1,0 +1,8 @@
+UnisenderGo:
+  ApiKey: <key stored in a secret>
+  Region: Russia
+  EmailFrom: <email from>
+  FromName: Curiosity
+  UnsubscribeUrl: <url>
+  TrackReads: true
+  TrackLinks: true

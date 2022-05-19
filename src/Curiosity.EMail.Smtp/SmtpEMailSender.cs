@@ -17,6 +17,7 @@ namespace Curiosity.EMail.Smtp
         private readonly ISmtpEMailOptions _emailOptions;
         private readonly ILogger _logger;
 
+        /// <inheritdoc cref="SmtpEMailSender"/>
         public SmtpEMailSender(
             ISmtpEMailOptions smtpEMailOptions,
             ILogger<SmtpEMailSender> logger)
@@ -54,7 +55,7 @@ namespace Curiosity.EMail.Smtp
             string? replyTo,
             CancellationToken cancellationToken = default)
         {
-            _logger.LogInformation("Sending EMail to {0} with the subject \"{1}\", text.Length = {2}",
+            _logger.LogDebug("Sending EMail to {0} with the subject \"{1}\", text.Length = {2}",
                 toAddress,
                 subject,
                 body.Length);
@@ -115,6 +116,7 @@ namespace Curiosity.EMail.Smtp
             }
         }
 
+        /// <inheritdoc />
         public Task<Response> SendAsync(string toAddress, string subject, string body, bool isBodyHtml, IEMailExtraParams emailExtraParams, CancellationToken cancellationToken = default)
         {
             if (String.IsNullOrWhiteSpace(toAddress))

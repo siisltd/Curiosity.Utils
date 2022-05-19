@@ -1,5 +1,4 @@
 using System;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Curiosity.Configuration;
@@ -17,6 +16,7 @@ namespace Curiosity.EMail.Mailgun
         private readonly ILogger<MailgunEmailSender> _logger;
         private readonly MailgunEmailOptions _mailgunEmailOptions;
 
+        /// <inheritdoc cref="MailgunEmailSender"/>
         public MailgunEmailSender(
             ILogger<MailgunEmailSender> logger,
             MailgunEmailOptions mailgunEmailOptions)
@@ -133,6 +133,7 @@ namespace Curiosity.EMail.Mailgun
             return Response.Successful();
         }
 
+        /// <inheritdoc />
         public Task<Response> SendAsync(
             string toAddress,
             string subject,

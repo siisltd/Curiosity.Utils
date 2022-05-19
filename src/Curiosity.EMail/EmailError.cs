@@ -28,6 +28,11 @@ namespace Curiosity.EMail
         /// <summary>
         /// Sending was interrupted by sender because we have rich the limits.
         /// </summary>
-        RateLimit = 4
+        RateLimit = 4,
+
+        /// <summary>
+        /// Send data was incorrect.
+        /// </summary>
+        IncorrectRequestData = 5
     }
 }
