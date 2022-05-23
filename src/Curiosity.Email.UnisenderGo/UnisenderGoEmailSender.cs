@@ -102,11 +102,6 @@ namespace Curiosity.Email.UnisenderGo
             };
             restClient.UseNewtonsoftJson(_serializerSettings);
 
-            var restRequest = new RestRequest();
-
-            // add api key
-            restRequest.AddHeader("X-API-KEY", apiKey);
-
             // build message body
             var messageBody = new UnisenderGoSendEmailMessageBody();
             if (isBodyHtml)
@@ -134,11 +129,13 @@ namespace Curiosity.Email.UnisenderGo
                 FromEmail = emailFrom,
                 FromName = fromName
             };
-            if (trackLinks.HasValue && trackLinks.Value)
+
+            // configure tracking
+            if (trackLinks.HasValue)
             {
                 message.TrackLinks = trackLinks.Value.ToUnisenderGoBool();
             }
-            if (trackReads.HasValue && trackReads.Value)
+            if (trackReads.HasValue)
             {
                 message.TrackRead = trackReads.Value.ToUnisenderGoBool();
             }
@@ -158,10 +155,14 @@ namespace Curiosity.Email.UnisenderGo
                 Message = message
             };
 
+            // build request
+            var restRequest = new RestRequest();
+            restRequest.AddHeader("X-API-KEY", apiKey);
             restRequest.AddJsonBody(sendEmailRequest);
             restRequest.Resource = "email/send.json";
             restRequest.Method = Method.POST;
 
+            // send
             _logger.LogTrace("Sending email to \"{Email}\"...", toAddress);
             var response = await restClient.ExecuteAsync(restRequest, cancellationToken);
             if (!response.IsSuccessful)
