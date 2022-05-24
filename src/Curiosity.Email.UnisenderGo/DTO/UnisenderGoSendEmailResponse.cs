@@ -6,7 +6,7 @@ namespace Curiosity.Email.UnisenderGo
     /// <summary>
     /// Response of sending <see cref="UnisenderGoSendEmailRequest"/>.
     /// </summary>
-    public class UnisenderGoSendEmailResponse
+    internal class UnisenderGoSendEmailResponse
     {
         /// <summary>
         /// Status of sending email.
@@ -52,7 +52,7 @@ namespace Curiosity.Email.UnisenderGo
         /// - Other statuses may appear in the future.
         /// </remarks>
         [JsonProperty("failed_emails")]
-        public string? FailedEmails { get; set; }
+        public Dictionary<string, string>? FailedEmails { get; set; }
 
         /// <summary>
         /// Error message in English.Required if <see cref="Status"/> is "error".
