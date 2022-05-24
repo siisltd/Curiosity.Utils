@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.3] - 2022-05-24
+
+### Fixed
+                       
+- Fixed parsing failed emails list.
+
 ## [1.0.2] - 2022-05-23
 
 ### Fixed

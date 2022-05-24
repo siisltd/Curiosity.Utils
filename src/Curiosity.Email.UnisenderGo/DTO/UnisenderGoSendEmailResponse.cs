@@ -52,7 +52,7 @@ namespace Curiosity.Email.UnisenderGo
         /// - Other statuses may appear in the future.
         /// </remarks>
         [JsonProperty("failed_emails")]
-        public IReadOnlyList<string>? FailedEmails { get; set; }
+        public string? FailedEmails { get; set; }
 
         /// <summary>
         /// Error message in English.Required if <see cref="Status"/> is "error".
