@@ -281,7 +281,7 @@ namespace Curiosity.RequestProcessing
                 var workerLogger = LoggerFactory.CreateLogger(workerName);
 
                 // сформируем параметры для воркера
-                var createWorkerParams = CreateWorkerParams(workerLogger);
+                var createWorkerParams = CreateWorkerParams(workerName, workerLogger);
 
                 // и создадим воркер
                 logger.LogDebug($"Создаём worker с именем \"{workerName}\"...");
@@ -296,7 +296,9 @@ namespace Curiosity.RequestProcessing
         /// <summary>
         /// Фабричный метод для создания параметров воркера <see cref="TWorkerParams"/>, которые он не сможем получить из DI (например, логер, созданный с именем воркера)
         /// </summary>
-        protected abstract TWorkerParams CreateWorkerParams(ILogger logger);
+        /// <param name="workerName">Название воркера.</param>
+        /// <param name="logger">Логер для воркера.</param>
+        protected abstract TWorkerParams CreateWorkerParams(string workerName, ILogger logger);
 
         /// <summary>
         /// Фабричный метод для создания воркеров.
