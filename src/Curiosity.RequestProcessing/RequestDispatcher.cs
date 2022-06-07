@@ -136,10 +136,12 @@ namespace Curiosity.RequestProcessing
                         var worker = freeWorkers[index];
                         var request = requests[requestIndex];
 
-                        worker.ProcessRequestSafelyAsync(request, stoppingToken).WithCompletion(_ =>
+                        worker.ProcessRequestSafelyAsync(request, stoppingToken).WithCompletion(t =>
                         {
                             // после обработки запроса надо сбросить event, чтобы сразу проверить наличие новых запросов в очередях
                             NewEventWaitHandle.Set();
+
+                            HandleRequestProcessingCompletionAsync(request, t.IsCompletedSuccessfully).WithExceptionLogger(Logger);
                         });
 
                         requestIndex++;
@@ -175,5 +177,16 @@ namespace Curiosity.RequestProcessing
         protected abstract Task<IReadOnlyList<TRequest>?> GetRequestsAsync(
             int maxRequestsCount,
             CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Позволяет обработать запрос после того, как воркер закончил работу с запросом. 
+        /// </summary>
+        /// <param name="request">Запрос.</param>
+        /// <param name="isSuccessful">Результат обработку.</param>
+        /// <returns></returns>
+        protected virtual Task HandleRequestProcessingCompletionAsync(TRequest request, bool isSuccessful)
+        {
+            return Task.CompletedTask;
+        }
     }
 }

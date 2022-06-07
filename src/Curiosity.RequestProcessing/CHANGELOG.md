@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.3] - 2022-06-07
+
+### Added
+
+- Added virtual method to process request after worker completion.
+
 ## [1.2.2] - 2022-06-07
 
 ### Removed
