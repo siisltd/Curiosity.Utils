@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.2] - 2022-06-07
+
+### Removed
+
+- Removed properties from `IRequestProcessingEvent`
+
 ## [1.2.1] - 2022-06-07
 
 ### Changed

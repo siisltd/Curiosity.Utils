@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.2] - 2022-06-07
+
+### Changed
+
+- Update `Curiosity.RequestProcessing` to `1.1.2`
+
 ## [1.1.1] - 2022-06-07
 
 ### Changed

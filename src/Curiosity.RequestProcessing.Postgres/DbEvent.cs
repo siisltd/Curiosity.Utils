@@ -12,10 +12,14 @@ namespace Curiosity.RequestProcessing.Postgres
         /// </summary>
         public MonitoredDatabase DatabaseInfo { get; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Название события/канала уведомления.
+        /// </summary>
         public string EventName { get; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Аргументы события.
+        /// </summary>
         public string? Payload { get; }
 
         /// <summary>

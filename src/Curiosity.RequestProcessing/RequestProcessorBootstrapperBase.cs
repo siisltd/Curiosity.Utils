@@ -153,9 +153,9 @@ namespace Curiosity.RequestProcessing
         /// <summary>
         /// Запускает прослушивание событий для указанной БД.
         /// </summary>
-        /// <param name="monitoredDatabase">БД, события от которой надо слушать.</param>
+        /// <param name="eventSource">Источник событий.</param>
         /// <param name="cancellationToken">Токен отмены.</param>
-        protected abstract Task StartEventReceiverAsync(IEventSource monitoredDatabase, CancellationToken cancellationToken = default);
+        protected abstract Task StartEventReceiverAsync(IEventSource eventSource, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Обрабатывает получения события ид БД.
