@@ -163,7 +163,7 @@ namespace Curiosity.RequestProcessing
         /// <remarks>
         /// Базовая реализация просто устанавливает событие, чтобы диспетчер мог взять запросы в работу.
         /// </remarks>
-        protected virtual void HandleDbEventReceived(object sender, IRequestProcessingEvent e)
+        protected virtual void HandleEventReceived(object sender, IRequestProcessingEvent e)
         {
             EventWaitHandle.Set();
         }
@@ -244,7 +244,7 @@ namespace Curiosity.RequestProcessing
             await eventReceiver.StopAsync(cancellationToken);
 
             // отпишемся от событий
-            eventReceiver.OnEventReceived -= HandleDbEventReceived;
+            eventReceiver.OnEventReceived -= HandleEventReceived;
         }
 
         /// <summary>

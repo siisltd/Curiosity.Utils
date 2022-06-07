@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1] - 2022-06-07
+
+### Changed
+
+- Renamed `HandleDbEventReceived` -> `HandleEventReceived`
+
 ## [1.2.0] - 2022-06-02
 
 ### Added

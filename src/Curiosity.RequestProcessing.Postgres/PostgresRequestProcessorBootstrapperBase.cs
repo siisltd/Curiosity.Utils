@@ -60,7 +60,7 @@ namespace Curiosity.RequestProcessing.Postgres
                 dbEventListenerLogger);
 
             // подпишемся на события в этой БД и запустим слушателя
-            dbEventListener.OnEventReceived += HandleDbEventReceived;
+            dbEventListener.OnEventReceived += HandleEventReceived;
 
             await dbEventListener.StartAsync(cancellationToken);
 
