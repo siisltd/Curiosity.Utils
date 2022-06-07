@@ -141,8 +141,9 @@ namespace Curiosity.RequestProcessing
                             // после обработки запроса надо сбросить event, чтобы сразу проверить наличие новых запросов в очередях
                             NewEventWaitHandle.Set();
 
-                            HandleRequestProcessingCompletionAsync(request, t.IsCompletedSuccessfully).WithExceptionLogger(Logger);
+                            HandleRequestProcessingCompletionAsync(request, t.IsCompletedSuccessfully, stoppingToken).WithExceptionLogger(Logger);
                         });
+                        await HandleRequestProcessingStartedAsync(request, stoppingToken);
 
                         requestIndex++;
                     }
@@ -179,12 +180,22 @@ namespace Curiosity.RequestProcessing
             CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Позволяет обработать запрос после того, как воркер закончил работу с запросом. 
+        /// Позволяет обработать запрос до того, как воркер начал работу с ним. 
+        /// </summary>
+        /// <param name="request">Запрос.</param>
+        /// <param name="cancellationToken">Токен отмены.</param>
+        protected virtual Task HandleRequestProcessingStartedAsync(TRequest request, CancellationToken cancellationToken = default)
+        {
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Позволяет обработать запрос после того, как воркер закончил работу с ним. 
         /// </summary>
         /// <param name="request">Запрос.</param>
         /// <param name="isSuccessful">Результат обработку.</param>
-        /// <returns></returns>
-        protected virtual Task HandleRequestProcessingCompletionAsync(TRequest request, bool isSuccessful)
+        /// <param name="cancellationToken">Токен отмены.</param>
+        protected virtual Task HandleRequestProcessingCompletionAsync(TRequest request, bool isSuccessful, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
