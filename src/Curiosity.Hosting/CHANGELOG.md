@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.2] - 2022-06-07
+
+### Added
+
+- Added method to transform configuration before printing and validation.
+
+### Added
+
 ## [1.2.1] - 2021-11-16
 
 ### Added

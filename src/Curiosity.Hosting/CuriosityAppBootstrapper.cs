@@ -70,6 +70,9 @@ namespace Curiosity.Hosting
             var logger = LogManager.GetCurrentClassLogger();
             logger.Info($"Using configurations from directory \"{configurationProvider.PathToConfigurationFiles}\"'");
 
+            // transform configuration if we can
+            TransformConfiguration(configuration);
+
             // print configuration
             var configPrinter = new ConfigurationPrinter();
             var configLog = configPrinter.GetLog(configuration);
@@ -122,11 +125,27 @@ namespace Curiosity.Hosting
             }
         }
         
+        /// <summary>
+        /// Loads configuration for NLog.
+        /// </summary>
+        /// <param name="path">Path for config file.</param>
         protected virtual void LoadLoggingConfiguration(string path)
         {
             LogManager.LoadConfiguration(path);
         }
-        
+
+        /// <summary>
+        /// Transform configuration before validation.
+        /// </summary>
+        /// <param name="configuration">Unvalidated configuration.</param>
+        /// <returns>Transformed configuration if this method was overriden.</returns>
+        /// <remarks>
+        /// By default method doesn't transform configuration.
+        /// </remarks>
+        protected virtual void TransformConfiguration(TConfiguration configuration)
+        {
+        }
+
         /// <summary>
         /// Runs application.
         /// </summary>
