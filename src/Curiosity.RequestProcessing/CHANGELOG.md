@@ -4,13 +4,13 @@
 
 ### Removed
 
-- Removed properties from `IRequestProcessingEvent`
+- Removed properties from `IRequestProcessingEvent`.
 
 ## [1.2.1] - 2022-06-07
 
 ### Changed
 
-- Renamed `HandleDbEventReceived` -> `HandleEventReceived`
+- Renamed `HandleDbEventReceived` -> `HandleEventReceived`.
 
 ## [1.2.0] - 2022-06-02
 
