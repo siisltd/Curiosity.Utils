@@ -20,17 +20,20 @@ namespace Curiosity.RequestProcessing
     /// <typeparam name="TWorker">Тип воркера, который будет обрабатывать запросы.</typeparam>
     /// <typeparam name="TDispatcher">Тип диспетчера, который будет раскидывать запросы <see cref="TRequest"/> по воркерам <see cref="TWorker"/>.</typeparam>
     /// <typeparam name="TProcessingRequestInfo">Информация о запросе, который воркер обрабатывает в данный момент.</typeparam>
+    /// <typeparam name="TOptions">Общие параметры обработчика запросов.</typeparam>
     public abstract class RequestProcessorBootstrapperBase<
         TRequest,
         TWorkerParams,
         TWorker,
         TDispatcher,
-        TProcessingRequestInfo> : BackgroundService
+        TProcessingRequestInfo,
+        TOptions> : BackgroundService
         where TRequest : IRequest
-        where TWorker : WorkerBase<TRequest, TWorkerParams, TProcessingRequestInfo>
+        where TWorker : WorkerBase<TRequest, TWorkerParams, TProcessingRequestInfo, TOptions>
         where TWorkerParams : IWorkerExtraParams
-        where TDispatcher: RequestDispatcherBase<TRequest, TWorker, TWorkerParams, TProcessingRequestInfo>, IHostedService
+        where TDispatcher: RequestDispatcherBase<TRequest, TWorker, TWorkerParams, TProcessingRequestInfo, TOptions>, IHostedService
         where TProcessingRequestInfo : class, IProcessingRequestInfo
+        where TOptions: RequestProcessorNodeOptions 
     {
         /// <summary>
         /// Слушатели событий в БД (можно одновременно слушать события из разных БД).
@@ -45,7 +48,7 @@ namespace Curiosity.RequestProcessing
         /// <summary>
         /// Общие параметры обработчика запросов.
         /// </summary>
-        protected RequestProcessorNodeOptions NodeOptions { get; }
+        protected TOptions NodeOptions { get; }
 
         protected ILogger Logger { get; }
         protected ILoggerFactory LoggerFactory { get; }
@@ -68,9 +71,9 @@ namespace Curiosity.RequestProcessing
         /// </remarks>
         protected EventWaitHandle EventWaitHandle { get; }
 
-        /// <inheritdoc cref="RequestProcessorBootstrapperBase{TRequest,TWorkerParams,TWorker,TDispatcher,TProcessingRequestInfo}"/>
+        /// <inheritdoc cref="RequestProcessorBootstrapperBase{TRequest,TWorkerParams,TWorker,TDispatcher,TProcessingRequestInfo,TOptions}"/>
         protected RequestProcessorBootstrapperBase(
-            RequestProcessorNodeOptions nodeOptions,
+            TOptions nodeOptions,
             ILoggerFactory loggerFactory,
             IServiceProvider serviceProvider)
         {

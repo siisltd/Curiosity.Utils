@@ -18,11 +18,13 @@ namespace Curiosity.RequestProcessing
     /// <typeparam name="TWorker">Тип воркера, который используется в обработке</typeparam>
     /// <typeparam name="TWorkerExtraParams">Параметры для <see cref="TWorker"/>.</typeparam>
     /// <typeparam name="TProcessingRequestInfo">Информация о запросе, который воркер обрабатывает в данный момент.</typeparam>
-    public abstract class RequestDispatcherBase<TRequest, TWorker, TWorkerExtraParams, TProcessingRequestInfo> : BackgroundService
+    /// <typeparam name="TOptions">Общие параметры обработчика запросов.</typeparam>
+    public abstract class RequestDispatcherBase<TRequest, TWorker, TWorkerExtraParams, TProcessingRequestInfo, TOptions> : BackgroundService
         where TRequest : IRequest
         where TWorkerExtraParams : IWorkerExtraParams
-        where TWorker : WorkerBase<TRequest, TWorkerExtraParams, TProcessingRequestInfo>
+        where TWorker : WorkerBase<TRequest, TWorkerExtraParams, TProcessingRequestInfo, TOptions>
         where TProcessingRequestInfo : class, IProcessingRequestInfo
+        where TOptions: RequestProcessorNodeOptions
     {
         /// <summary>
         /// Периодичность записи в лог текущего состояния диспетчера (сколько воркеров загружено).
@@ -30,9 +32,14 @@ namespace Curiosity.RequestProcessing
         private readonly TimeSpan _stateFlushPeriod;
 
         /// <summary>
+        /// Общие параметры обработчика запросов.
+        /// </summary>
+        protected TOptions NodeOptions { get; }
+
+        /// <summary>
         /// Имя приложения-обработчика.
         /// </summary>
-        protected string NodeName { get; }
+        protected string NodeName => NodeOptions.Name;
 
         /// <summary>
         /// Событие, по наступлению которого необходимо по новой проверить наличие запросов в очереди.
@@ -52,15 +59,14 @@ namespace Curiosity.RequestProcessing
         /// </summary>
         protected IReadOnlyList<TWorker> Workers { get; }
 
-        /// <inheritdoc cref="RequestDispatcherBase{TRequest,TWorker,TWorkerExtraParams,TProcessingRequestInfo}"/>
+        /// <inheritdoc cref="RequestDispatcherBase{TRequest,TWorker,TWorkerExtraParams,TProcessingRequestInfo,TOptions}"/>
         protected RequestDispatcherBase(
-            RequestProcessorNodeOptions nodeOptions,
+            TOptions nodeOptions,
             EventWaitHandle manualResetEvent,
             IReadOnlyList<TWorker> workers,
             ILogger logger)
         {
-            if (nodeOptions == null) throw new ArgumentNullException(nameof(nodeOptions));
-            NodeName = nodeOptions.Name;
+            NodeOptions = nodeOptions ?? throw new ArgumentNullException(nameof(nodeOptions));
             NewEventWaitHandle = manualResetEvent ?? throw new ArgumentNullException(nameof(manualResetEvent));
 
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));

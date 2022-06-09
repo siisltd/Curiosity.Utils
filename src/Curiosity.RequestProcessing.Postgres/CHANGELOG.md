@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.0] - 2022-06-09
+
+### Changed
+
+- Made options parameters generic for dispatcher, bootstrapper and worker.
+
 ## [1.1.2] - 2022-06-07
 
 ### Changed

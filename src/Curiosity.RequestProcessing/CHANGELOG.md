@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0] - 2022-06-09
+
+### Changed
+
+- Made options parameters generic for dispatcher, bootstrapper and worker. 
+- Made `IsBusy` virtual in `WorkerBase`. 
+
 ## [1.2.3] - 2022-06-07
 
 ### Added

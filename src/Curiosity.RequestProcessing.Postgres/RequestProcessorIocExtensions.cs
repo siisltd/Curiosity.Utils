@@ -2,7 +2,6 @@
 using Curiosity.Configuration;
 using Curiosity.RequestProcessing.Workers;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace Curiosity.RequestProcessing.Postgres
 {
@@ -23,8 +22,8 @@ namespace Curiosity.RequestProcessing.Postgres
             TOptions processorNodeOptions)
             where TRequest : IRequest
             where TWorkerParams : class, IWorkerExtraParams
-            where TDispatcher : RequestDispatcherBase<TRequest, TWorker, TWorkerParams, TProcessingRequestInfo>
-            where TWorker : WorkerBase<TRequest, TWorkerParams, TProcessingRequestInfo>
+            where TDispatcher : RequestDispatcherBase<TRequest, TWorker, TWorkerParams, TProcessingRequestInfo, TOptions>
+            where TWorker : WorkerBase<TRequest, TWorkerParams, TProcessingRequestInfo, TOptions>
             where TOptions : RequestProcessorNodeOptions, IPostgresRequestProcessorNodeOptions
             where TProcessorBootstrapper : PostgresRequestProcessorBootstrapperBase<TRequest, TWorkerParams, TWorker, TDispatcher, TProcessingRequestInfo, TOptions>
             where TProcessingRequestInfo : class, IProcessingRequestInfo

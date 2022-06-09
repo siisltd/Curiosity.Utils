@@ -26,10 +26,10 @@ namespace Curiosity.RequestProcessing
             TOptions processorNodeOptions)
             where TRequest : IRequest
             where TWorkerParams : class, IWorkerExtraParams
-            where TDispatcher : RequestDispatcherBase<TRequest, TWorker, TWorkerParams, TProcessingRequestInfo>
-            where TWorker : WorkerBase<TRequest, TWorkerParams, TProcessingRequestInfo>
+            where TDispatcher : RequestDispatcherBase<TRequest, TWorker, TWorkerParams, TProcessingRequestInfo, TOptions>
+            where TWorker : WorkerBase<TRequest, TWorkerParams, TProcessingRequestInfo, TOptions>
             where TOptions : RequestProcessorNodeOptions
-            where TProcessorBootstrapper : RequestProcessorBootstrapperBase<TRequest, TWorkerParams, TWorker, TDispatcher, TProcessingRequestInfo>
+            where TProcessorBootstrapper : RequestProcessorBootstrapperBase<TRequest, TWorkerParams, TWorker, TDispatcher, TProcessingRequestInfo, TOptions>
             where TProcessingRequestInfo : class, IProcessingRequestInfo
         {
             if (services == null) throw new ArgumentNullException(nameof(services));

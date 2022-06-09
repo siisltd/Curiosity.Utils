@@ -17,11 +17,11 @@ namespace Curiosity.RequestProcessing.Postgres
         TWorker,
         TDispatcher,
         TProcessingRequestInfo,
-        TOptions> : RequestProcessorBootstrapperBase<TRequest, TWorkerParams, TWorker, TDispatcher, TProcessingRequestInfo>
+        TOptions> : RequestProcessorBootstrapperBase<TRequest, TWorkerParams, TWorker, TDispatcher, TProcessingRequestInfo, TOptions>
         where TRequest : IRequest
-        where TWorker : WorkerBase<TRequest, TWorkerParams, TProcessingRequestInfo>
+        where TWorker : WorkerBase<TRequest, TWorkerParams, TProcessingRequestInfo, TOptions>
         where TWorkerParams : IWorkerExtraParams
-        where TDispatcher : RequestDispatcherBase<TRequest, TWorker, TWorkerParams, TProcessingRequestInfo>, IHostedService
+        where TDispatcher : RequestDispatcherBase<TRequest, TWorker, TWorkerParams, TProcessingRequestInfo, TOptions>, IHostedService
         where TProcessingRequestInfo : class, IProcessingRequestInfo
         where TOptions : RequestProcessorNodeOptions, IPostgresRequestProcessorNodeOptions
     {

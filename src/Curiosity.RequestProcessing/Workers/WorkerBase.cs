@@ -11,40 +11,56 @@ namespace Curiosity.RequestProcessing.Workers
     /// <typeparam name="TRequest">Тип запроса</typeparam>
     /// <typeparam name="TWorkerParams">Доп. параметры для воркера.</typeparam>
     /// <typeparam name="TProcessingRequestInfo">Информация о запросе, который воркер обрабатывает в данный момент.</typeparam>
-    public abstract class WorkerBase<TRequest, TWorkerParams, TProcessingRequestInfo>
+    /// <typeparam name="TOptions">Общие параметры обработчика запросов.</typeparam>
+    public abstract class WorkerBase<TRequest, TWorkerParams, TProcessingRequestInfo, TOptions>
         where TRequest : IRequest
         where TWorkerParams : IWorkerExtraParams
         where TProcessingRequestInfo : class, IProcessingRequestInfo
+        where TOptions: RequestProcessorNodeOptions
     {
         /// <summary>
         /// Воркер в данный момент обрабатывает новый запрос?
         /// </summary>
-        public bool IsBusy => ProcessingRequest != null;
+        /// <remarks>
+        /// Можно переопределить, чтобы реализовать свою логику определения занятости воркера.
+        /// </remarks>
+        public virtual bool IsBusy => ProcessingRequest != null;
 
         /// <summary>
         /// Информация о запросе, который сейчас обрабатывается воркером.
         /// </summary>
         public TProcessingRequestInfo? ProcessingRequest { get; private set; }
 
+        /// <summary>
+        /// Логер воркера.
+        /// </summary>
+        /// <exception cref="InvalidOperationException"></exception>
         protected ILogger Logger
         {
             get
             {
                 if (_logger == null)
-                    throw new InvalidOperationException($"{nameof(WorkerBase<TRequest, TWorkerParams, TProcessingRequestInfo>)} is not initialized. Call {nameof(Init)} first");
+                    throw new InvalidOperationException($"{nameof(WorkerBase<TRequest, TWorkerParams, TProcessingRequestInfo, TOptions>)} is not initialized. Call {nameof(Init)} first");
                 
                 return _logger;
             }
         }
         private ILogger? _logger;
 
-        protected readonly RequestProcessorNodeOptions NodeOptions;
+        /// <summary>
+        /// Общие параметры обработчика запросов.
+        /// </summary>
+        protected TOptions NodeOptions { get; }
 
-        protected WorkerBase(RequestProcessorNodeOptions nodeOptions)
+        /// <inheritdoc cref="WorkerBase{TRequest,TWorkerParams,TProcessingRequestInfo,TOptions}"/>
+        protected WorkerBase(TOptions nodeOptions)
         {
             NodeOptions = nodeOptions ?? throw new ArgumentNullException(nameof(nodeOptions));
         }
 
+        /// <summary>
+        /// Инициализирует воркер указанными параметрами.
+        /// </summary>
         public virtual void Init(TWorkerParams workerParams)
         {
             if (workerParams == null) throw new ArgumentNullException(nameof(workerParams));
