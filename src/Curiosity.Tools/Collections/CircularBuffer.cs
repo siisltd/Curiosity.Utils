@@ -16,7 +16,7 @@ namespace Curiosity.Tools.Collections
     /// </summary>
     public class CircularBuffer<T> : IEnumerable<T>
     {
-        private readonly T[] _buffer;
+        private T[] _buffer;
 
         /// <summary>
         /// The _start. Index of the first element in buffer.
@@ -259,6 +259,17 @@ namespace Curiosity.Tools.Collections
         public IList<ArraySegment<T>> ToArraySegments()
         {
             return new [] { ArrayOne(), ArrayTwo() };
+        }
+
+        /// <summary>
+        /// Erases all data in a buffer.
+        /// </summary>
+        public void Clear()
+        {
+            _buffer = new T[_buffer.Length];
+            _size = _buffer.Length;
+            _start = 0;
+            _end = 0;
         }
 
         #region IEnumerable<T> implementation

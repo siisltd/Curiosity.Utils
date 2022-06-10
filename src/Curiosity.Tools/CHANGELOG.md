@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.6] - 2022-06-10
+
+### Added
+
+- Added `Clear` method to `CircularBuffer`.
+
 ## [1.4.5] - 2022-03-05
 
 ### Changed
