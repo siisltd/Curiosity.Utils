@@ -118,14 +118,14 @@ namespace Curiosity.RequestProcessing
                     }
 
                     // 1. Получим свободных воркеров
-                    var freeWorkers = Workers.Where(x => !x.IsBusy).ToArray();
-                    Logger.LogTrace($"{freeWorkers.Length} воркеров доступно для обработки запросов");
-                    if (freeWorkers.Length == 0) continue;
+                    var freeWorkers = GetFreeWorkers();
+                    Logger.LogTrace($"{freeWorkers.Count} воркеров доступно для обработки запросов");
+                    if (freeWorkers.Count == 0) continue;
 
                     // 2. Запрашиваем из БД запросы, удовлетворяющие фильтру и количеству свободных воркеров
                     sw.Restart();
                     var requests = await GetRequestsAsync(
-                        freeWorkers.Length,
+                        freeWorkers.Count,
                         stoppingToken);
                     sw.Stop();
 
@@ -135,7 +135,7 @@ namespace Curiosity.RequestProcessing
                     // 3. раскидываем полученные запросы по воркерам
                     var requestIndex = 0;
                     Logger.LogTrace("Распределяем запросы по свободным воркерам...");
-                    for (var index = 0; index < freeWorkers.Length; index++)
+                    for (var index = 0; index < freeWorkers.Count; index++)
                     {
                         if (requestIndex == requests.Count) break;
 
@@ -155,7 +155,7 @@ namespace Curiosity.RequestProcessing
                     }
 
                     // если после того, как раскидали запросы, есть еще свободные воркеры, попробуем раскидать дальше
-                    if (freeWorkers.Length > requests.Count)
+                    if (freeWorkers.Count > requests.Count)
                         NewEventWaitHandle.Set();
                 }
                 // Идет остановка - все под контролем
@@ -168,6 +168,14 @@ namespace Curiosity.RequestProcessing
                     Logger.LogError(ex, $"Необработанное исключение при распределении запросов воркерам. Исключение: {ex.Message}");
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns free workers that are ready for request processing.
+        /// </summary>
+        protected virtual IReadOnlyList<TWorker> GetFreeWorkers()
+        {
+            return Workers.Where(x => !x.IsBusy).ToArray();
         }
 
         /// <summary>

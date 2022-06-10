@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.1] - 2022-06-10
+
+### Added
+
+- Added virtual method for fetching free workers to dispatcher.
+
 ## [1.3.0] - 2022-06-09
 
 ### Changed
