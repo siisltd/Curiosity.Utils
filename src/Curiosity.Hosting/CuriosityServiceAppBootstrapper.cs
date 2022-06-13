@@ -24,6 +24,9 @@ namespace Curiosity.Hosting
         private Action<HostBuilderContext, IServiceCollection, TConfiguration>? _configureServiceActionWithConfiguration;
         private Action<HostBuilderContext, IServiceCollection, TConfiguration, TArgs>? _configureServiceActionWithConfigurationAndArgs;
         private Action<IHostBuilder>? _configureHostAction;
+        private Action<IHostBuilder, TConfiguration>? _configureHostActionWithConfiguration;
+        private Action<IHostBuilder, TArgs>? _configureHostActionWithCLIArgis;
+        private Action<IHostBuilder, TConfiguration, TArgs>? _configureHostActionWithConfigurationAndCLIArgis;
 
         /// <summary>
         /// Configures services using specified delegate.
@@ -67,6 +70,39 @@ namespace Curiosity.Hosting
         public CuriosityServiceAppBootstrapper<TArgs, TConfiguration> ConfigureHost(Action<IHostBuilder> configureHostAction)
         {
             _configureHostAction = configureHostAction;
+            return this;
+        }
+
+        /// <summary>
+        /// Configures app's host using specified delegate.
+        /// </summary>
+        /// <param name="configureHostAction">Delegate for configuration host via <see cref="IHostBuilder"/>.</param>
+        /// <returns>Returns current bootstrapper instance.</returns>
+        public CuriosityServiceAppBootstrapper<TArgs, TConfiguration> ConfigureHost(Action<IHostBuilder, TConfiguration> configureHostAction)
+        {
+            _configureHostActionWithConfiguration = configureHostAction;
+            return this;
+        }
+
+        /// <summary>
+        /// Configures app's host using specified delegate.
+        /// </summary>
+        /// <param name="configureHostAction">Delegate for configuration host via <see cref="IHostBuilder"/>.</param>
+        /// <returns>Returns current bootstrapper instance.</returns>
+        public CuriosityServiceAppBootstrapper<TArgs, TConfiguration> ConfigureHost(Action<IHostBuilder, TArgs> configureHostAction)
+        {
+            _configureHostActionWithCLIArgis = configureHostAction;
+            return this;
+        }
+
+        /// <summary>
+        /// Configures app's host using specified delegate.
+        /// </summary>
+        /// <param name="configureHostAction">Delegate for configuration host via <see cref="IHostBuilder"/>.</param>
+        /// <returns>Returns current bootstrapper instance.</returns>
+        public CuriosityServiceAppBootstrapper<TArgs, TConfiguration> ConfigureHost(Action<IHostBuilder, TConfiguration, TArgs> configureHostAction)
+        {
+            _configureHostActionWithConfigurationAndCLIArgis = configureHostAction;
             return this;
         }
 
@@ -124,6 +160,9 @@ namespace Curiosity.Hosting
             
             // configure host
             _configureHostAction?.Invoke(hostBuilder);
+            _configureHostActionWithConfiguration?.Invoke(hostBuilder, configuration);
+            _configureHostActionWithCLIArgis?.Invoke(hostBuilder, arguments);
+            _configureHostActionWithConfigurationAndCLIArgis?.Invoke(hostBuilder, configuration, arguments);
 
             // init and run
             var host = hostBuilder.Build();

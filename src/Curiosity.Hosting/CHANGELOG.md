@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.3] - 2022-06-13
+
+### Added
+
+- Extended methods for configuration host from bootstrapper.
+
 ## [1.2.2] - 2022-06-07
 
 ### Added
