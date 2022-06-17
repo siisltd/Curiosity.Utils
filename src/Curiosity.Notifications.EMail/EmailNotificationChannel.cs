@@ -10,15 +10,16 @@ using Microsoft.Extensions.Logging;
 namespace Curiosity.Notifications.EMail
 {
     /// <summary>
-    /// Channel for sending EMail notifications.
+    /// <inheritdoc cref="IEmailNotificationChannel"/>
     /// Uses registered at IoC implementation of <see cref="IEMailSender"/> to send notifications.
     /// </summary>
-    public class EmailNotificationChannel : NotificationChannelBase<EmailNotification>
+    public class EmailNotificationChannel : NotificationChannelBase<EmailNotification>, IEmailNotificationChannel
     {
         private readonly IEMailSender _sender;
 
         private readonly IReadOnlyList<IEMailNotificationPostProcessor> _postProcessors;
 
+        /// <inheritdoc cref="EmailNotificationChannel"/>
         public EmailNotificationChannel(
             ILogger<EmailNotificationChannel> logger,
             IEMailSender sender,

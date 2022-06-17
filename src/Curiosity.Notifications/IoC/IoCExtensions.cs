@@ -21,7 +21,7 @@ namespace Curiosity.Notifications
 
             return services;
         }
-        
+
         /// <summary>
         /// Adds specified notification channel.
         /// </summary>
@@ -37,6 +37,28 @@ namespace Curiosity.Notifications
             services.TryAddSingleton<T>();
             services.AddSingleton<INotificationChannel>(c => c.GetRequiredService<T>());
             services.AddSingleton<IHostedService>(c => c.GetRequiredService<T>());
+
+            return services;
+        }
+
+        /// <summary>
+        /// Adds specified notification channel.
+        /// </summary>
+        /// <remarks>
+        /// Channel is added as hosted service and notification channel.
+        /// </remarks>
+        public static IServiceCollection AddCuriosityNotificationChannel<TType, TImplementation>(this IServiceCollection services) 
+            where TType: class, INotificationChannel
+            where TImplementation: class, TType, INotificationChannel, IHostedService
+        {
+            if (services == null) throw new ArgumentNullException(nameof(services));
+
+            services.AddCuriosityNotificator();
+            
+            services.TryAddSingleton<TImplementation>();
+            services.AddSingleton<TType>(c => c.GetRequiredService<TImplementation>());
+            services.AddSingleton<INotificationChannel>(c => c.GetRequiredService<TImplementation>());
+            services.AddSingleton<IHostedService>(c => c.GetRequiredService<TImplementation>());
 
             return services;
         }

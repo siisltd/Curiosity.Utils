@@ -9,13 +9,11 @@ using Microsoft.Extensions.Logging;
 
 namespace Curiosity.Notifications.SMS
 {
-    /// <summary>
-    /// Channel for sending SMS notifications.
-    /// </summary>
+    /// <inheritdoc cref="SmsNotificationChannel"/>
     /// <remarks>
     /// Uses default implementation of <see cref="ISmsSender"/> to sent SMS.
     /// </remarks>
-    public class SmsNotificationChannel : NotificationChannelBase<SmsNotification>
+    public class SmsNotificationChannel : NotificationChannelBase<SmsNotification>, ISmsNotificationChannel
     {
         private readonly ISmsSender _smsSender;
 

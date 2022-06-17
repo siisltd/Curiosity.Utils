@@ -17,7 +17,7 @@ namespace Curiosity.Notifications.EMail
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 
-            services.AddCuriosityNotificationChannel<EmailNotificationChannel>();
+            services.AddCuriosityNotificationChannel<IEmailNotificationChannel, EmailNotificationChannel>();
 
             return services;
         }

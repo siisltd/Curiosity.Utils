@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.3] - 2022-06-17
+
+### Added
+
+- Added new method for registering channel.
+
 ## [1.2.2] - 2022-06-17
 
 ### Added

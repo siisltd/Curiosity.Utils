@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.3] - 2022-06-17
+
+### Added
+
+- Added `IEmailNotificationChannel`.
+
 ## [1.3.2] - 2022-06-17
 
 ### Fixed

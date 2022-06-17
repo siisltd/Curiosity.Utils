@@ -63,10 +63,7 @@ namespace Curiosity.Tools.Collections
         /// </remarks>
         public static IEnumerable<IReadOnlyList<T>> Permute<T>(this IReadOnlyList<T> items)
         {
-            foreach (var readOnlyList in Permute(items, 0, new List<T>(items.Count), new bool[items.Count]))
-            {
-                yield return readOnlyList;
-            }
+            return Permute(items, 0, new List<T>(items.Count), new bool[items.Count]);
         }
 
         private static IEnumerable<IReadOnlyList<T>> Permute<T>(IReadOnlyList<T> items, int index, List<T> permutation, bool[] used)

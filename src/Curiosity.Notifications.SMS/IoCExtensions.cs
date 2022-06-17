@@ -14,7 +14,7 @@ namespace Curiosity.Notifications.SMS
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 
-            services.AddCuriosityNotificationChannel<SmsNotificationChannel>();
+            services.AddCuriosityNotificationChannel<ISmsNotificationChannel, SmsNotificationChannel>();
 
             return services;
         }

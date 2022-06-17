@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.6] - 2022-06-17
+
+### Added
+
+- Added `ISmsNotificationChannel`.
+
 ## [1.3.5] - 2022-06-17
 
 ### Fixed
