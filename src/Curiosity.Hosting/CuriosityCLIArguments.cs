@@ -1,4 +1,5 @@
 using System.Reflection;
+using Curiosity.Configuration;
 using EntryPoint;
 
 namespace Curiosity.Hosting
@@ -6,8 +7,9 @@ namespace Curiosity.Hosting
     /// <summary>
     /// Basic CLI arguments for any Marvin app.
     /// </summary>
-    public class CuriosityCLIArguments : BaseCliArguments
+    public class CuriosityCLIArguments : BaseCliArguments, ILoggableOptions
     {
+        /// <inheritdoc cref="CuriosityCLIArguments"/>
         public CuriosityCLIArguments() : this(Assembly.GetEntryAssembly()?.GetName().Name ?? "MarvinApp")
         {
         }
