@@ -36,20 +36,28 @@ namespace Curiosity.Notifications.EMail
             if (notification == null) throw new ArgumentNullException(nameof(notification));
 
             // send EMail
-            var result = notification.ExtraParams == null
-                ? await _sender.SendAsync(
-                    notification.Email,
-                    notification.Subject,
-                    notification.Body,
-                    notification.IsBodyHtml,
-                    cancellationToken)
-                : await _sender.SendAsync(
-                    notification.Email,
-                    notification.Subject,
-                    notification.Body,
-                    notification.IsBodyHtml,
-                    notification.ExtraParams,
-                    cancellationToken);
+            Response result;
+            try
+            {
+                result = notification.ExtraParams == null
+                    ? await _sender.SendAsync(
+                        notification.Email,
+                        notification.Subject,
+                        notification.Body,
+                        notification.IsBodyHtml,
+                        cancellationToken)
+                    : await _sender.SendAsync(
+                        notification.Email,
+                        notification.Subject,
+                        notification.Body,
+                        notification.IsBodyHtml,
+                        notification.ExtraParams,
+                        cancellationToken);
+            }
+            catch (Exception e)
+            {
+                throw new NotificationException(NotificationErrorCode.Unknown, "Unknown error while sending email notification", e);
+            }
 
             // execute post processing
             for (var i = 0; i < _postProcessors.Count; i++)
@@ -66,11 +74,22 @@ namespace Curiosity.Notifications.EMail
                 }
             }
 
-            // throw exception on failed result
+            // throw exception if something failed
             if (!result.IsSuccess)
             {
-                var error = result.Errors.FirstOrDefault() ?? new Error((int)EmailError.Unknown, "Unknown email error");
-                throw new InvalidOperationException($"Sending email to \"{notification.Email}\" failed. EmailResult={error.Code}", new Exception(error.Description));
+                var error = result.Errors.FirstOrDefault() ?? new Error((int) EmailError.Unknown, "Unknown email error");
+                var errorCode = (EmailError) error.Code;
+                var notificationCode = errorCode switch
+                {
+                    EmailError.Auth => NotificationErrorCode.Auth,
+                    EmailError.Communication => NotificationErrorCode.Communication,
+                    EmailError.RateLimit => NotificationErrorCode.RateLimit,
+                    EmailError.NoMoney => NotificationErrorCode.NoMoney,
+                    EmailError.IncorrectRequestData => NotificationErrorCode.IncorrectRequestData,
+                    _ => NotificationErrorCode.Unknown,
+                };
+                
+                throw new NotificationException(notificationCode, error.Description);
             }
         }
     }

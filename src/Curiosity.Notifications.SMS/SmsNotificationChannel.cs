@@ -9,12 +9,19 @@ using Microsoft.Extensions.Logging;
 
 namespace Curiosity.Notifications.SMS
 {
+    /// <summary>
+    /// Channel for sending SMS notifications.
+    /// </summary>
+    /// <remarks>
+    /// Uses default implementation of <see cref="ISmsSender"/> to sent SMS.
+    /// </remarks>
     public class SmsNotificationChannel : NotificationChannelBase<SmsNotification>
     {
         private readonly ISmsSender _smsSender;
 
         private readonly IReadOnlyList<ISmsNotificationPostProcessor> _postProcessors;
 
+        /// <inheritdoc cref="SmsNotificationChannel"/>
         public SmsNotificationChannel(
             ILogger<SmsNotificationChannel> logger,
             ISmsSender smsSender,
@@ -26,14 +33,23 @@ namespace Curiosity.Notifications.SMS
             _postProcessors = postProcessors.ToArray();
         }
 
+        /// <inheritdoc />
         protected override async Task ProcessNotificationAsync(SmsNotification notification, CancellationToken cancellationToken = default)
         {
             if (notification == null) throw new ArgumentNullException(nameof(notification));
 
             // send SMS
-            var result = notification.ExtraParams == null
-                ? await _smsSender.SendSmsAsync(notification.PhoneNumber, notification.Message, cancellationToken)
-                : await _smsSender.SendSmsAsync(notification.PhoneNumber, notification.Message, notification.ExtraParams, cancellationToken);
+            Response<SmsSentResult> result;
+            try
+            {
+                result = notification.ExtraParams == null
+                    ? await _smsSender.SendSmsAsync(notification.PhoneNumber, notification.Message, cancellationToken)
+                    : await _smsSender.SendSmsAsync(notification.PhoneNumber, notification.Message, notification.ExtraParams, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                throw new NotificationException(NotificationErrorCode.Unknown, "Unexpected error while sending SMS", e);
+            }
 
             // execute post processing
             for (var i = 0; i < _postProcessors.Count; i++)

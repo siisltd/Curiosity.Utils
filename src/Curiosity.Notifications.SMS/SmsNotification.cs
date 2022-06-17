@@ -12,17 +12,17 @@ namespace Curiosity.Notifications.SMS
         /// Type of a SMS notification.
         /// </summary>
         public static readonly string Type = "curiosity.notifications.sms";
-        
+
         /// <summary>
         /// The type of channel through which the notification will be sent
         /// </summary>
         public string ChannelType => Type;
-        
+
         /// <summary>
         /// Phone number to send notification to. 
         /// </summary>
         public string PhoneNumber { get; }
-        
+
         /// <summary>
         /// Content of an SMS.
         /// </summary>
@@ -36,6 +36,7 @@ namespace Curiosity.Notifications.SMS
         /// </remarks>
         public ISmsExtraParams? ExtraParams { get; }
 
+        /// <inheritdoc cref="SmsNotification"/>
         public SmsNotification(
             string phoneNumber, 
             string message,

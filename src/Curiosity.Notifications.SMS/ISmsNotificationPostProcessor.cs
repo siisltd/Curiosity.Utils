@@ -13,10 +13,10 @@ namespace Curiosity.Notifications.SMS
         /// <summary>
         /// Processes specified SMS notification after notification has been sent.
         /// </summary>
-        /// <param name="notification">Send EMail notification.</param>
+        /// <param name="notification">Sent EMail notification.</param>
         /// <param name="result">Result of sending <paramref name="notification"/>.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns></returns>
-        public Task ProcessAsync(SmsNotification notification, Response<SmsSentResult> result, CancellationToken cancellationToken = default);
+        public ValueTask ProcessAsync(SmsNotification notification, Response<SmsSentResult> result, CancellationToken cancellationToken = default);
     }
 }

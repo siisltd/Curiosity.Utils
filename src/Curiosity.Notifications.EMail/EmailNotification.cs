@@ -12,27 +12,27 @@ namespace Curiosity.Notifications.EMail
         /// Type of an EMail notification.
         /// </summary>
         public static readonly string Type = "curiosity.notifications.email";
-        
+
         /// <summary>
         /// The type of channel through which the notification will be sent
         /// </summary>
         public string ChannelType => Type;
-        
+
         /// <summary>
         /// EMail to send notification to.
         /// </summary>
         public string Email { get; }
-        
+
         /// <summary>
         /// EMail subject.
         /// </summary>
         public string Subject { get; }
-        
+
         /// <summary>
         /// The body of a EMail message.
         /// </summary>
         public string Body { get; }
-        
+
         /// <summary>
         /// Is <see cref="Body"/> content present in a HTML format.
         /// </summary>
@@ -46,6 +46,7 @@ namespace Curiosity.Notifications.EMail
         /// </remarks>
         public IEMailExtraParams? ExtraParams { get; }
 
+        /// <inheritdoc cref="EmailNotification"/>
         public EmailNotification(
             string email, 
             string subject, 

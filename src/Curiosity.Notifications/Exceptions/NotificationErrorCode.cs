@@ -1,5 +1,8 @@
 ﻿namespace Curiosity.Notifications
 {
+    /// <summary>
+    /// Notification send error code. 
+    /// </summary>
     public enum NotificationErrorCode
     {
         /// <summary>
@@ -31,5 +34,10 @@
         /// Account has no money.
         /// </summary>
         NoMoney = 5,
+
+        /// <summary>
+        /// Send data was incorrect.
+        /// </summary>
+        IncorrectRequestData = 6
     }
 }

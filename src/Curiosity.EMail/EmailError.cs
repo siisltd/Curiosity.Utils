@@ -31,8 +31,13 @@ namespace Curiosity.EMail
         RateLimit = 4,
 
         /// <summary>
+        /// No money on account.
+        /// </summary>
+        NoMoney = 5,
+
+        /// <summary>
         /// Send data was incorrect.
         /// </summary>
-        IncorrectRequestData = 5
+        IncorrectRequestData = 6
     }
 }

@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.3.2] - 2022-06-17
+
+### Fixed
+
+- Throwing `NotificationException` from channel when sending failed with unexpected exception.
+
+### Changed
+
+- Replaced Task by ValueTask in `IEMailNotificationPostProcessor`.
+
 ## [1.3.1] - 2022-03-09
 
 ## Change

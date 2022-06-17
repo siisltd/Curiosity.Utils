@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.2] - 2022-06-17
+
+### Added
+
+- Added new error code for invalid request data.
+
 ## [1.2.1] - 2022-03-09
 
 ### Added

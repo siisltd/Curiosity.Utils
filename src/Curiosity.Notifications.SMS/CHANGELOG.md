@@ -1,10 +1,20 @@
 # Changelog
 
+## [1.3.5] - 2022-06-17
+
+### Fixed
+
+- Throwing `NotificationException` from channel when sending failed with unexpected exception.
+
+### Changed
+
+- Replaced Task by ValueTask in `ISmsNotificationPostProcessor`.
+- 
 ## [1.3.4] - 2022-03-09
 
 ### Added
 
-- Throwing a notification exception when something filed in the sending chanel
+- Throwing a notification exception when something failed in the sending chanel
 
 ## [1.3.3] - 2022-03-09
 
