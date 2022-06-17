@@ -244,7 +244,8 @@ namespace Curiosity.Email.UnisenderGo
                                 ? $"UnisenderErrorCode={unisenderGoFailedResponse.Code}: {unisenderGoFailedResponse.Message}"
                                 : "UnisenderGo is unavailable. Please, try again later"));
                     default:
-                        return Response.Failed(new Error((int)EmailError.Unknown, "Unknown error"));
+                        var extraInfo = $"StatusCode={(int)response.StatusCode}; Message=\"{unisenderGoFailedResponse?.Message ?? "<none>"}\"";
+                        return Response.Failed(new Error((int)EmailError.Unknown, $"Unknown error. Extra info: {extraInfo}"));
                 }
             }
 

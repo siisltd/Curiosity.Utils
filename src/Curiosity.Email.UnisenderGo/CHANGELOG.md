@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.5] - 2022-06-17
+
+### Added
+                       
+- Added extra info about failed request.
+
 ## [1.0.4] - 2022-05-24
 
 ### Fixed
