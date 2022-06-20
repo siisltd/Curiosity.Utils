@@ -15,12 +15,19 @@ namespace Curiosity.Notifications
     public abstract class NotificationChannelBase<TNotification> : BackgroundService, INotificationChannel
         where TNotification : class, INotification
     {
+        /// <inheritdoc />
         public string ChannelType { get;}
         
         private readonly BlockingCollection<NotificationQueueItem<TNotification>> _notificationQueue;
-        protected readonly ILogger Logger;
-        private bool _isChannelReady;
 
+        private bool _isChannelReady;
+        
+        /// <summary>
+        /// Logger.
+        /// </summary>
+        protected readonly ILogger Logger;
+
+        /// <inheritdoc cref="NotificationChannelBase{TNotification}"/>
         protected NotificationChannelBase(ILogger logger, string channelType)
         {
             ChannelType = channelType;
@@ -98,7 +105,7 @@ namespace Curiosity.Notifications
                     }
                     catch (Exception e)
                     {
-                        Logger.LogError(e, $"Error while sending notification via channel \"{ChannelType}\". Reason: {e.Message}");
+                        Logger.LogWarning(e, $"Error while sending notification via channel \"{ChannelType}\". Reason: {e.Message}");
                         tcs.SetException(e);
                     }
 

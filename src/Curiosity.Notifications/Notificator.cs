@@ -13,6 +13,7 @@ namespace Curiosity.Notifications
         private readonly Dictionary<Type, Dictionary<string, INotificationBuilder>> _buildersPerType;
         private readonly ILogger _logger;
 
+        /// <inheritdoc cref="Notificator"/>
         public Notificator(
             IEnumerable<INotificationChannel> channels,
             IEnumerable<INotificationBuilder> notificationBuilders,

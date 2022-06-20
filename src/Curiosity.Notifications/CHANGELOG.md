@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.4] - 2022-06-20
+
+### Changed
+
+- Changed log lever of processed exception to `warn` instead of `error` at `NotificationChannelBase`. 
+
 ## [1.2.3] - 2022-06-17
 
 ### Added
