@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.1] - 2022-06-20
+
+### Changed
+
+- Changed log level to `warn` instead of `error` at `SmtpEmailSender`.
+
 ## [1.3.0] - 2022-05-19
 
 ## Added

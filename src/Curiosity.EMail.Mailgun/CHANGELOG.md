@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.6] - 2022-06-20
+
+### Changed
+
+- Changed log level to `warn` instead of `error` at `MailgunEmailSender`.
+
 ## [1.3.5] - 2022-05-19
 
 ## Added

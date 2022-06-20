@@ -108,7 +108,7 @@ namespace Curiosity.EMail.Mailgun
             var response = await restClient.ExecuteAsync(restRequest, cancellationToken);
             if (!response.IsSuccessful)
             {
-                _logger.LogError($"Error sending message to {toAddress}. StatusCode = {response.StatusCode.ToString()}. Response: {response.Content}");
+                _logger.LogWarning($"Error sending message to {toAddress}. StatusCode = {response.StatusCode.ToString()}. Response: {response.Content}");
 
                 return ((int)response.StatusCode) == 420
                 ? Response.Failed(new Error((int)EmailError.RateLimit, response.Content))

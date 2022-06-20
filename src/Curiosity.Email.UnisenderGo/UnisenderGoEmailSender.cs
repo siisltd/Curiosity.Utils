@@ -167,7 +167,7 @@ namespace Curiosity.Email.UnisenderGo
             var response = await restClient.ExecuteAsync(restRequest, cancellationToken);
             if (!response.IsSuccessful)
             {
-                _logger.LogError(
+                _logger.LogWarning(
                     "Error sending message to \"{ToAddress}\". StatusCode = {ResponseStatusCode}. Response: {ResponseContent}",
                     toAddress,
                     response.StatusCode,

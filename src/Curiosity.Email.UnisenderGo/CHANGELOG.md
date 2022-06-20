@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.6] - 2022-06-20
+
+### Changed
+
+- Changed log level to `warn` instead of `error` at `UnisenderGoEmailSender`.
+
 ## [1.0.5] - 2022-06-17
 
 ### Added

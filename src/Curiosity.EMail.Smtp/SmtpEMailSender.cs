@@ -106,7 +106,7 @@ namespace Curiosity.EMail.Smtp
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Error sending EMail message to \"{ToAddress}\"", toAddress);
+                _logger.LogWarning(e, "Error sending EMail message to \"{ToAddress}\"", toAddress);
 
                 //todo analyze exceptions and return more specified EmailError
                 return Response.Failed(new Error((int) EmailError.Unknown, e.Message));
