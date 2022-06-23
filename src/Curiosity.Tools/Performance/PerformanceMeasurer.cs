@@ -14,12 +14,15 @@ namespace Curiosity.Tools.Performance
         private readonly Stopwatch _stopwatch;
         private string _name = null!;
 
+        /// <summary>
+        /// <inheritdoc cref="PerformanceMeasurer"/>
+        /// </summary>
         public PerformanceMeasurer()
         {
             _stopwatch = new Stopwatch();
         }
 
-        public void Init(ILogger logger, string name)
+        internal void Init(ILogger logger, string name)
         {
             if (String.IsNullOrWhiteSpace(name)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(name));
 
@@ -35,11 +38,11 @@ namespace Curiosity.Tools.Performance
             if (_stopwatch.IsRunning)
             {
                 _stopwatch.Stop();
-                _stopwatch.Reset();
                 if (_logger != null && _logger.IsEnabled(LogLevel.Information))
                 {
                     _logger.LogInformation("{MeasurerName} -> {MeasurerSpentTime} ms", _name, _stopwatch.ElapsedMilliseconds);
                 }
+                _stopwatch.Reset();
 
                 Pool.Return(this);
             }

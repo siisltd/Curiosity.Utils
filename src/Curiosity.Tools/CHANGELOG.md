@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.8] - 2022-06-23
+
+### Fixed
+
+- Fixed incorrect time measuring in `PerformanceMeasurer`.
+
 ## [1.4.7] - 2022-06-23
 
 ### Fixed
