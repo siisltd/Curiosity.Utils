@@ -35,6 +35,7 @@ namespace Curiosity.Tools.Performance
             if (_stopwatch.IsRunning)
             {
                 _stopwatch.Stop();
+                _stopwatch.Reset();
                 if (_logger != null && _logger.IsEnabled(LogLevel.Information))
                 {
                     _logger.LogInformation("{MeasurerName} -> {MeasurerSpentTime} ms", _name, _stopwatch.ElapsedMilliseconds);
