@@ -60,6 +60,7 @@ namespace Curiosity.Email.UnisenderGo
                 _options.TrackLinks,
                 _options.TrackReads,
                 _options.UnsubscribeUrl,
+                _options.SkipUnisenderUnsubscribeFooter,
                 cancellationToken);
         }
 
@@ -76,6 +77,7 @@ namespace Curiosity.Email.UnisenderGo
             bool? trackLinks,
             bool? trackReads,
             string? unsubscribeUrl,
+            bool? skipUnisenderUnsubscribeFooter,
             CancellationToken cancellationToken = default)
         {
             // some basic checks
@@ -138,6 +140,12 @@ namespace Curiosity.Email.UnisenderGo
             if (trackReads.HasValue)
             {
                 message.TrackRead = trackReads.Value.ToUnisenderGoBool();
+            }
+
+            // configure unsubscribe footer
+            if (skipUnisenderUnsubscribeFooter.HasValue)
+            {
+                message.SkipUnsubscribe = skipUnisenderUnsubscribeFooter.Value.ToUnisenderGoBool();
             }
 
             // configure extra options
@@ -306,6 +314,7 @@ namespace Curiosity.Email.UnisenderGo
             var trackLinks = unisenderGoEmailExtraParams?.TrackLinks ?? _options.TrackLinks;
             var trackReads = unisenderGoEmailExtraParams?.TrackReads ?? _options.TrackReads;
             var unsubscribeUrl = unisenderGoEmailExtraParams?.UnsubscribeUrl ?? _options.UnsubscribeUrl;
+            var skipUnisenderUnsubscribeFooter = unisenderGoEmailExtraParams?.SkipUnisenderUnsubscribeFooter ?? _options.SkipUnisenderUnsubscribeFooter;
 
             return SendAsync(
                 toAddress,
@@ -320,6 +329,7 @@ namespace Curiosity.Email.UnisenderGo
                 trackLinks,
                 trackReads,
                 unsubscribeUrl,
+                skipUnisenderUnsubscribeFooter,
                 cancellationToken);
         }
     }

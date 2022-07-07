@@ -6,3 +6,4 @@ UnisenderGo:
   UnsubscribeUrl: <url>
   TrackReads: true
   TrackLinks: true
+  SkipUnisenderUnsubscribeFooter: true

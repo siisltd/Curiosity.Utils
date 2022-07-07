@@ -32,7 +32,11 @@ namespace Curiosity.Email.UnisenderGo.IntegrationTests
             var sender = new UnisenderGoEmailSender(_mockLogger, _fixture.UnisenderGoEmailOptions);
 
             // act
-            var result = await sender.SendAsync("mm@siisltd.ru", "Hello from Curiosity!", "This is integration test of UnisenderGoEmailSender. We test passing unsubscribe url, tracking reads and links.", true);
+            var result = await sender.SendAsync(
+                "mm@siisltd.ru",
+                "Hello from Curiosity!", 
+                $"This is integration test of UnisenderGoEmailSender. We test passing unsubscribe url, tracking reads and links. Unsubscribe here: {_fixture.UnisenderGoEmailOptions.UnsubscribeUrl}",
+                true);
 
             // assert
             result.IsSuccess.Should().BeTrue(result.Errors.FirstOrDefault()?.Description ?? "unknown");

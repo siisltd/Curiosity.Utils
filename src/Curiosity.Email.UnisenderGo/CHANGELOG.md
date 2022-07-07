@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.7] - 2022-07-07
+
+### Added
+
+- Added option for skipping unsubscribe footer from Unisender.
+
 ## [1.0.6] - 2022-06-20
 
 ### Changed

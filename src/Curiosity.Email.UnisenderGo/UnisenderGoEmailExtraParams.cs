@@ -47,6 +47,15 @@ namespace Curiosity.Email.UnisenderGo
         /// </summary>
         public bool? TrackReads { get; }
 
+        /// <summary>
+        /// Should Unisender add their footer with unsubscribed url.
+        /// </summary>
+        /// <remarks>
+        /// This option can not affect on anything if Unisender doesn't activate disabling footer for client.
+        /// </remarks>
+        public bool? SkipUnisenderUnsubscribeFooter { get; }
+
+        /// <inheritdoc cref="UnisenderGoEmailExtraParams"/>
         public UnisenderGoEmailExtraParams(
             string? apiKey = null,
             UnisenderGoRegion? region = null,
@@ -55,7 +64,8 @@ namespace Curiosity.Email.UnisenderGo
             string? replyTo = null,
             string? unsubscribeUrl = null,
             bool? trackLinks = null,
-            bool? trackReads = null)
+            bool? trackReads = null,
+            bool? skipUnisenderUnsubscribeFooter = null)
         {
             if (apiKey != null)
                 UnisenderGoGuard.AssertApiKey(apiKey);
@@ -74,6 +84,7 @@ namespace Curiosity.Email.UnisenderGo
             UnsubscribeUrl = unsubscribeUrl;
             TrackLinks = trackLinks;
             TrackReads = trackReads;
+            SkipUnisenderUnsubscribeFooter = skipUnisenderUnsubscribeFooter;
         }
     }
 }

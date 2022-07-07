@@ -53,6 +53,14 @@ namespace Curiosity.Email.UnisenderGo
         /// Is tracking email reading enabled?
         /// </summary>
         public bool? TrackReads { get; set; }
+        
+        /// <summary>
+        /// Should Unisender add their footer with unsubscribed url.
+        /// </summary>
+        /// <remarks>
+        /// This option can not affect on anything if Unisender doesn't activate disabling footer for client.
+        /// </remarks>
+        public bool? SkipUnisenderUnsubscribeFooter { get; set; }
 
         /// <inheritdoc />
         public virtual IReadOnlyCollection<ConfigurationValidationError> Validate(string? prefix = null)
