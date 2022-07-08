@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.3.3] - Unreleased
+## [1.3.3] - 2022-07-08
 
 ### Added
 
