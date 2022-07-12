@@ -133,20 +133,11 @@ namespace Curiosity.Email.UnisenderGo
             };
 
             // configure tracking
-            if (trackLinks.HasValue)
-            {
-                message.TrackLinks = trackLinks.Value.ToUnisenderGoBool();
-            }
-            if (trackReads.HasValue)
-            {
-                message.TrackRead = trackReads.Value.ToUnisenderGoBool();
-            }
+            message.TrackLinks = trackLinks.ToNullableInt();
+            message.TrackRead = trackReads.ToNullableInt();
 
             // configure unsubscribe footer
-            if (skipUnisenderUnsubscribeFooter.HasValue)
-            {
-                message.SkipUnsubscribe = skipUnisenderUnsubscribeFooter.Value.ToUnisenderGoBool();
-            }
+            message.SkipUnsubscribe = skipUnisenderUnsubscribeFooter.ToNullableInt();
 
             // configure extra options
             if (!String.IsNullOrWhiteSpace(unsubscribeUrl))

@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.8] - 2022-07-12
+
+### Fixed
+
+- Simplified converting `bool?` to `int?`.
+
 ## [1.0.7] - 2022-07-07
 
 ### Added
