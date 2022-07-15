@@ -13,15 +13,24 @@ namespace Curiosity.Tools.Web.ModelBinders
     /// </remarks>
     public class TrimStringNewtonsoftConverter : JsonConverter<string?>
     {
+        /// <inheritdoc />
         public override bool CanRead => true;
 
+        /// <inheritdoc />
         public override bool CanWrite => false;
 
-        public override string? ReadJson(JsonReader reader, Type objectType, string? existingValue, bool hasExistingValue, JsonSerializer serializer)
+        /// <inheritdoc />
+        public override string? ReadJson(
+            JsonReader reader,
+            Type objectType,
+            string? existingValue,
+            bool hasExistingValue,
+            JsonSerializer serializer)
         {
             return (reader.Value as string)?.Trim();
         }
 
+        /// <inheritdoc />
         public override void WriteJson(JsonWriter writer, string? value, JsonSerializer serializer)
         {
             throw new NotImplementedException();

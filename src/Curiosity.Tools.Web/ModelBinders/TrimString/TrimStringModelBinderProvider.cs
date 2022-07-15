@@ -2,19 +2,17 @@ using System;
 using System.Linq;
 using Curiosity.Tools.Attributes;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Curiosity.Tools.Web.ModelBinders
 {
+    /// <summary>
+    /// Provider of <see cref="TrimStringModelBinder"/>.
+    /// </summary>
     public class TrimStringModelBinderProvider : IModelBinderProvider
     {
-        private readonly ILoggerFactory _loggerFactory;
-
-        public TrimStringModelBinderProvider(ILoggerFactory loggerFactory)
-        {
-            _loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
-        }
-
+        /// <inheritdoc />
         public IModelBinder? GetBinder(ModelBinderProviderContext context)
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
@@ -31,8 +29,9 @@ namespace Curiosity.Tools.Web.ModelBinders
             if (property == null || !property.GetCustomAttributes(true).OfType<TrimStringAttribute>().Any())
                 return null;
 
+            var loggerFactory = context.Services.GetRequiredService<ILoggerFactory>();
             // Everything worked out successfully-we return the correct Binder.
-            return new TrimStringModelBinder(metadata.ModelType, _loggerFactory);
+            return new TrimStringModelBinder(metadata.ModelType, loggerFactory);
         }
     }
 }

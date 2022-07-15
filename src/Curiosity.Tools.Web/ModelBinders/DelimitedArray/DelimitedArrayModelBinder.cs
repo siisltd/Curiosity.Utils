@@ -6,15 +6,20 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Curiosity.Tools.Web.ModelBinders
 {
+    /// <summary>
+    /// Class for binding arrays to model. Arrays are string, where items are delimited by some chars.
+    /// </summary>
     public class DelimitedArrayModelBinder : IModelBinder
     {
         private readonly char[] _delimiters;
 
+        /// <inheritdoc cref="DelimitedArrayModelBinder"/>
         public DelimitedArrayModelBinder(char[] delimiters)
         {
             _delimiters = delimiters ?? throw new ArgumentNullException(nameof(delimiters));
         }
 
+        /// <inheritdoc />
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
             if (bindingContext == null)

@@ -6,15 +6,20 @@ using Microsoft.Extensions.Logging;
 
 namespace Curiosity.Tools.Web.ModelBinders
 {
+    /// <summary>
+    /// Model binder that binds string fields and trim it before binding.
+    /// </summary>
     public class TrimStringModelBinder: IModelBinder
     {
         private readonly SimpleTypeModelBinder _baseBinder;
 
+        /// <inheritdoc cref="TrimStringModelBinder"/>
         public TrimStringModelBinder(Type modelType, ILoggerFactory loggerFactory)
         {
             _baseBinder = new SimpleTypeModelBinder(modelType, loggerFactory);
         }
-        
+
+        /// <inheritdoc />
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
             if (bindingContext == null) throw new ArgumentNullException(nameof(bindingContext));

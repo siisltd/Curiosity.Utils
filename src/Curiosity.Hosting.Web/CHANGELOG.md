@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.2] - 2022-07-15
+
+### Changed
+
+- Updated `Curiosity.Tools.Web`.
+
 ## [1.2.1] - 2022-06-07
 
 ### Changed

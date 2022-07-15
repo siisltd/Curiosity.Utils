@@ -8,15 +8,20 @@ using Microsoft.Extensions.Logging;
 
 namespace Curiosity.Tools.Web.ModelBinders
 {
+    /// <summary>
+    /// Binds DateTime to model.
+    /// </summary>
     public class DateTimeModelBinder : IModelBinder
     {
         private readonly SimpleTypeModelBinder _baseBinder;
 
+        /// <inheritdoc cref="DateTimeModelBinder"/>
         public DateTimeModelBinder(Type modelType, ILoggerFactory loggerFactory)
         {
             _baseBinder = new SimpleTypeModelBinder(modelType, loggerFactory);
         }
 
+        /// <inheritdoc />
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
             if (bindingContext == null) throw new ArgumentNullException(nameof(bindingContext));

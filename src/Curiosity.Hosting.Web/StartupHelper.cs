@@ -7,12 +7,17 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.Logging;
 
 namespace Curiosity.Hosting.Web
 {
+    /// <summary>
+    /// Helps configuring web apps startup.
+    /// </summary>
     public static class StartupHelper
     {
+        /// <summary>
+        /// Adds pre-configured MVC to IoC with basic Curiosity services. 
+        /// </summary>
         public static IMvcBuilder ConfigureCuriosityMvc(this IServiceCollection services, ICuriosityWebAppConfiguration configuration)
         {
             services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
@@ -25,14 +30,13 @@ namespace Curiosity.Hosting.Web
                 });
             
             var serviceProvider = services.BuildServiceProvider();
-            var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
 
             var mvcBuilder = services
                 .AddMvc(options =>
                 {
                     options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true;
                     
-                    options.ModelBinderProviders.Insert(0, new TrimStringModelBinderProvider(loggerFactory));
+                    options.ModelBinderProviders.Insert(0, new TrimStringModelBinderProvider());
 
                     var stringLocalizerFactory = serviceProvider.GetService<IStringLocalizerFactory>();
                     var assembly = Assembly.GetExecutingAssembly();

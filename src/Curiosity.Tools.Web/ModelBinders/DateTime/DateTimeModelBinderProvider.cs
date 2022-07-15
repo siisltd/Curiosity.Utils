@@ -1,25 +1,24 @@
 using System;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Curiosity.Tools.Web.ModelBinders
 {
+    /// <summary>
+    /// Provider of <see cref="DateTimeModelBinder"/>.
+    /// </summary>
     public class DateTimeModelBinderProvider : IModelBinderProvider
     {
-        private readonly ILoggerFactory _loggerFactory; 
-        
-        public DateTimeModelBinderProvider(ILoggerFactory loggerFactory)
-        {
-            _loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
-        }
-        
+        /// <inheritdoc />
         public IModelBinder? GetBinder(ModelBinderProviderContext context)
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
 
             if (!context.Metadata.IsComplexType && (context.Metadata.ModelType == typeof(DateTime) || context.Metadata.ModelType == typeof(DateTime?)))
             {
-                return new DateTimeModelBinder(context.Metadata.ModelType, _loggerFactory);
+                var loggerFactory = context.Services.GetRequiredService<ILoggerFactory>();
+                return new DateTimeModelBinder(context.Metadata.ModelType, loggerFactory);
             }
 
             return null;

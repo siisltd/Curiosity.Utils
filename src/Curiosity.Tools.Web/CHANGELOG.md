@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.9] - 2022-07-15
+
+### Changed
+
+- Modified `ModelBinderProvider` classes to use `ILoggerFactory` from context services.
+
 ## [1.1.8] - 2022-03-12
 
 ### Changed
