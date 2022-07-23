@@ -3,16 +3,28 @@ using System.Threading;
 
 namespace Curiosity.Tools
 {
+
+    public class UniqueIdGenerationException : Exception
+    {
+        public UniqueIdGenerationException(string message) : base(message)
+        {
+
+        }
+    }
+
     /// <summary>
-    /// Генератор уникальных ИД на базе Twitter Snowflake.
+    /// Class for generating unique Ids based on Twitter Snowflake algorithm.
     /// </summary>
     /// <remarks>
-    /// Подробнее можно почитать тут: https://www.callicoder.com/distributed-unique-id-sequence-number-generator/
+    /// More details here: https://www.callicoder.com/distributed-unique-id-sequence-number-generator/
     /// </remarks>
     public static class UniqueIdGenerator
     {
+        private const int MaxGeneratorId = 1024;
+        private const int MaxSequenceId = 4096;
+
         // 13 apr 2020 (in Ticks / 10000)
-        private const long StartEpoch = 63722332800000;
+        private const long ModelStartEpoch = 63722332800000;
         private static long _generatorId = -1;
 
         private static long _sequenceId;
@@ -25,14 +37,13 @@ namespace Curiosity.Tools
         private static readonly object LockObj = new object();
         
         /// <summary>
-        /// Инициализирует генератор
+        /// Initializes generator.
         /// </summary>
-        /// <param name="generatorId">ИД генератора. Должен быть уникальным среди всех запущенных приложений. Проверки уникальности нет.</param>
-        /// <exception cref="ArgumentException">Если меньше 0 или больше максимального значения.</exception>
+        /// <param name="generatorId">Generator id. Should be unique among all created generators in the system. Method doesn't contains unique check.</param>
         public static void Initialize(int generatorId)
         {
-            if (generatorId < 0 || generatorId > 1024)
-                throw new ArgumentException($"{nameof(generatorId)} should be between 0 and 1024");
+            if (generatorId < 0 || generatorId > MaxGeneratorId)
+                throw new ArgumentException($"{nameof(generatorId)} should be between 0 and {MaxGeneratorId}");
 
             _generatorId = generatorId;
         }
@@ -49,19 +60,19 @@ namespace Curiosity.Tools
 
             lock (LockObj)
             {
-                var sequenceId = (_sequenceId++) % 4096;
+                var sequenceId = _sequenceId++ % MaxSequenceId;
                 while (true)
                 {
-                    var timeStamp = (System.DateTime.UtcNow.Ticks / 10000) - StartEpoch;
+                    var timeStamp = DateTime.UtcNow.Ticks / 10000 - ModelStartEpoch;
 
                     if (timeStamp < _lastTimestamp)
                     {
-                        // ждём, вдруг время корректировалось
+                        // wait, it's time for correction
                         Thread.Sleep(200);
                         
-                        timeStamp = (System.DateTime.UtcNow.Ticks / 10000) - StartEpoch;
+                        timeStamp = DateTime.UtcNow.Ticks / 10000 - ModelStartEpoch;
                         if (timeStamp < _lastTimestamp)
-                            throw new InvalidOperationException("Invalid system clock");
+                            throw new UniqueIdGenerationException($"Invalid system clock. Timestamp={timeStamp}, LastTimestamp={_lastTimestamp}");
                     }
 
                     if (timeStamp == _lastTimestamp && sequenceId < _lastSequenceId)
@@ -74,8 +85,8 @@ namespace Curiosity.Tools
                     _lastSequenceId = sequenceId;
 
                     return timeStamp << 22 // 41 bit
-                           | ((_generatorId % 1024) << 12) // 10 bit 
-                           | (sequenceId % 4096); // 12 bit
+                           | ((_generatorId % MaxGeneratorId) << 12) // 10 bit 
+                           | (sequenceId % MaxSequenceId); // 12 bit
                 }
             }
         }

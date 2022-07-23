@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.9] - 2022-07-23
+
+### Changed
+
+- Throwing `UniqueIdGenerationException` instead of `InvalidOperationException` when system clock is invalid at `UniqueIdGenerator`.
+
 ## [1.4.8] - 2022-06-23
 
 ### Fixed
