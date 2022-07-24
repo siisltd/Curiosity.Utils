@@ -57,7 +57,7 @@ namespace Curiosity.Tools
         /// <returns>Application version</returns>
         public static string GetAssemblyVersion()
         {
-            var version = Assembly.GetExecutingAssembly().GetName().Version; 
+            var version = Assembly.GetEntryAssembly()?.GetName().Version ?? Assembly.GetExecutingAssembly()?.GetName().Version; 
             return version?.ToString() ?? throw new InvalidOperationException("Can't get executing assembly.");
         }
     }

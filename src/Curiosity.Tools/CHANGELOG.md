@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.10] - 2022-07-24
+
+### Fixed
+
+- Fixed showing current application version.
+
 ## [1.4.9] - 2022-07-23
 
 ### Changed
