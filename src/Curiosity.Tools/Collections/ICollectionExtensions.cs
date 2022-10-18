@@ -45,9 +45,10 @@ namespace Curiosity.Tools.Collections
                     return false;
                 }
             }
-
+            
             return cnt.Values.All(c => c == 0);
         }
+        
         public static bool IsScrambledEquals<T>(this IList<T>? list1, IList<T>? list2)
         {
             if (list1 == null || list2 == null) return false;
