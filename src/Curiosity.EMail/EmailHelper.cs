@@ -24,11 +24,11 @@ namespace Curiosity.EMail
             if (String.IsNullOrWhiteSpace(emails))
                 return allowEmptyString;
 
-            var splittedEmails = emails.Split(Separators, StringSplitOptions.RemoveEmptyEntries);
-            
-            for (var i = 0; i < splittedEmails.Length; i++)
+            var splitEmails = emails.Split(Separators, StringSplitOptions.RemoveEmptyEntries);
+
+            for (var i = 0; i < splitEmails.Length; i++)
             {
-                var email = splittedEmails[i].Trim();
+                var email = splitEmails[i].Trim();
                 if (!IsEmailValid(email))
                 {
                     return false;
