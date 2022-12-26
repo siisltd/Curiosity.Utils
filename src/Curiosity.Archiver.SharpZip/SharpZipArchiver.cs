@@ -68,7 +68,11 @@ namespace Curiosity.Archiver.SharpZip
                     UseZip64 = useZip64 ? UseZip64.On : UseZip64.Off,
                     RestoreDateTimeOnExtract = true,
                     RestoreAttributesOnExtract = true,
-                    CompressionLevel = Deflater.CompressionLevel.BEST_COMPRESSION
+                    CompressionLevel = Deflater.CompressionLevel.BEST_COMPRESSION,
+                    EntryFactory = new ZipEntryFactory
+                    {
+                        IsUnicodeText = true
+                    }
                 };
 
                 fastZip.CreateZip(archivePath, dirToCompressPath, true, (string) null!, null);
