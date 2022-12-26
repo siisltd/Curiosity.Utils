@@ -45,7 +45,43 @@ namespace Curiosity.Tools.Collections
                     return false;
                 }
             }
+            
+            return cnt.Values.All(c => c == 0);
+        }
+        
+        public static bool IsScrambledEquals<T>(this IList<T>? list1, IList<T>? list2)
+        {
+            if (list1 == null || list2 == null) return false;
+            if (list1.Count != list2.Count) return false;
 
+            var cnt = new Dictionary<T, int>(list1.Count);
+
+            for (int i = 0; i < list1.Count; i++)
+            {
+                var item = list1[i];
+                if (cnt.ContainsKey(item))
+                {
+                    cnt[item]++;
+                }
+                else
+                {
+                    cnt.Add(item, 1);
+                } 
+            }
+
+            for (int i = 0; i < list2.Count; i++)
+            {
+                var item = list2[i];
+                if (cnt.ContainsKey(item))
+                {
+                    cnt[item]--;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+           
             return cnt.Values.All(c => c == 0);
         }
     }
