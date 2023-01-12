@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\src\Hosting\Curiosity.Hosting\Curiosity.Hosting.csproj" />
+      <ProjectReference Include="..\..\..\..\src\Messaging\Curiosity.RabbitMQ\Curiosity.RabbitMQ.csproj" />
+      <ProjectReference Include="..\Curiosity.RequestProcessing.RabbitMQ.Sample.Common\Curiosity.RequestProcessing.RabbitMQ.Sample.Common.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="RabbitMQ.Client" Version="6.3.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="config.yml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Include="..\..\..\NLog.config">
+        <Link>NLog.config</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+</Project>

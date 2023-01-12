@@ -35,6 +35,7 @@ public class RabbitMqRpcClientFactory
             HostName = options.HostName,
             UserName = options.UserName,
             Password = options.Password,
+            Port = options.Port,
             ClientProvidedName = $"{options.ClientName}_rpc_client",
             NetworkRecoveryInterval = NetworkRecoveryInterval,
             AutomaticRecoveryEnabled = true,

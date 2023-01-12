@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Curiosity.RequestProcessing.Postgres
 {
-    public static class RequestProcessorIocExtensions
+    public static class IocExtensions
     {
         /// <summary>
         /// Добавляет основные сервисы для обработки запросов.

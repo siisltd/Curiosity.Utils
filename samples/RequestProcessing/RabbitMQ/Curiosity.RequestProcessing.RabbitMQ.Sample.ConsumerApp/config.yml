@@ -1,0 +1,20 @@
+# Configures logging
+Log:
+  # Path to NLog.config file
+  LogConfigurationPath: ./NLog.config
+  # Path to logs out directory
+  LogOutputDirectory: ./logs
+  
+# Options for request processing
+RequestProcessor:
+  # Processor's name
+  Name: Sample RabbitMQ Consumer
+  # Count of running workers
+  WorkersCount: 4
+  # Connection to RabbitMQ
+  RabbitMQEventReceiver:
+    HostName: localhost
+    UserName: test
+    Password: test
+    QueueName: test
+    Port: 5674

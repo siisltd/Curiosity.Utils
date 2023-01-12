@@ -5,9 +5,9 @@
 
         <PackageId>Curiosity.RequestProcessing.Postgres</PackageId>
         <Title>Curiosity.RequestProcessing.Postgres</Title>
-        <Description>Services to receive reqesut from Postgres</Description>
-        <Summary>Services to receive reqesut from Postgres.</Summary>
-        <PackageTags>Curiosity; Request; Queue; Workers; Processors; Postgres</PackageTags>
+        <Description>Services to receive and process reqesuts/events from Postgres</Description>
+        <Summary>Services to receive and process reqesuts/events from Postgres.</Summary>
+        <PackageTags>Curiosity; Request; Queue; Workers; Processors; Postgres; Events; Messaging</PackageTags>
         <Language>English</Language>
 
         <AssemblyVersion>1.0.0</AssemblyVersion>

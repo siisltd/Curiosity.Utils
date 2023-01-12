@@ -14,6 +14,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OtherTests", "OtherTests", "{40355A8B-26D9-44D7-8AE4-255142B7C711}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{A7A87B49-2E4C-4A0A-92F4-7C7849F36A84}"
+	ProjectSection(SolutionItems) = preProject
+		samples\NLog.config = samples\NLog.config
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Curiosity.SampleWebApp", "samples\Curiosity.SampleWebApp\Curiosity.SampleWebApp.csproj", "{9C3EFD51-4681-4CBC-8CB1-0DD69FA9899A}"
 EndProject
@@ -128,6 +131,21 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.Notifications.EMail.UnitTests", "tests\UnitTests\Notifications\Curiosity.Notifications.EMail.UnitTests\Curiosity.Notifications.EMail.UnitTests.csproj", "{F4B0B14E-35DF-488E-B865-DB98DD8F1E09}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.RabbitMQ", "src\Messaging\Curiosity.RabbitMQ\Curiosity.RabbitMQ.csproj", "{7D3A1A31-667E-4FD7-9D35-4431E0D63AFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.RequestProcessing.RabbitMQ", "src\RequestProcessing\Curiosity.RequestProcessing.RabbitMQ\Curiosity.RequestProcessing.RabbitMQ.csproj", "{679EA2D4-6F6F-44B1-BCF0-B6F71B730AEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RequestProcessing", "RequestProcessing", "{FF5F7FC5-D590-4141-A1F7-3585BF7639DD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RabbitMQ", "RabbitMQ", "{7CFB0FEF-A83E-41F5-AAF7-61B84D18D243}"
+	ProjectSection(SolutionItems) = preProject
+		samples\RequestProcessing\RabbitMQ\rabbitmq-docker-compose.yml = samples\RequestProcessing\RabbitMQ\rabbitmq-docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.RequestProcessing.RabbitMQ.Sample.ConsumerApp", "samples\RequestProcessing\RabbitMQ\Curiosity.RequestProcessing.RabbitMQ.Sample.ConsumerApp\Curiosity.RequestProcessing.RabbitMQ.Sample.ConsumerApp.csproj", "{83CEF9F6-F912-4664-A238-9FDDD7E057BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.RequestProcessing.RabbitMQ.Sample.Common", "samples\RequestProcessing\RabbitMQ\Curiosity.RequestProcessing.RabbitMQ.Sample.Common\Curiosity.RequestProcessing.RabbitMQ.Sample.Common.csproj", "{CE399C64-3A60-475C-B6A8-045461FA2EDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.RequestProcessing.RabbitMQ.Sample.ProducerApp", "samples\RequestProcessing\RabbitMQ\Curiosity.RequestProcessing.RabbitMQ.Sample.ProducerApp\Curiosity.RequestProcessing.RabbitMQ.Sample.ProducerApp.csproj", "{97ED36AE-E975-4CF8-BDDB-226DB0032531}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -295,6 +313,22 @@ Global
 		{7D3A1A31-667E-4FD7-9D35-4431E0D63AFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D3A1A31-667E-4FD7-9D35-4431E0D63AFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D3A1A31-667E-4FD7-9D35-4431E0D63AFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{679EA2D4-6F6F-44B1-BCF0-B6F71B730AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{679EA2D4-6F6F-44B1-BCF0-B6F71B730AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{679EA2D4-6F6F-44B1-BCF0-B6F71B730AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{679EA2D4-6F6F-44B1-BCF0-B6F71B730AEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83CEF9F6-F912-4664-A238-9FDDD7E057BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83CEF9F6-F912-4664-A238-9FDDD7E057BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83CEF9F6-F912-4664-A238-9FDDD7E057BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83CEF9F6-F912-4664-A238-9FDDD7E057BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE399C64-3A60-475C-B6A8-045461FA2EDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE399C64-3A60-475C-B6A8-045461FA2EDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE399C64-3A60-475C-B6A8-045461FA2EDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE399C64-3A60-475C-B6A8-045461FA2EDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97ED36AE-E975-4CF8-BDDB-226DB0032531}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97ED36AE-E975-4CF8-BDDB-226DB0032531}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97ED36AE-E975-4CF8-BDDB-226DB0032531}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97ED36AE-E975-4CF8-BDDB-226DB0032531}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -360,6 +394,12 @@ Global
 		{5E902C05-3508-437B-A618-246B9C9B43E9} = {E9B593D3-0F74-4622-BC91-92431770EA5E}
 		{F4B0B14E-35DF-488E-B865-DB98DD8F1E09} = {931F7AED-601C-4627-B6A1-09BA05E95F1F}
 		{7D3A1A31-667E-4FD7-9D35-4431E0D63AFC} = {9CB5824D-17D9-4ED7-8DD8-6B26A1D3353A}
+		{679EA2D4-6F6F-44B1-BCF0-B6F71B730AEB} = {BBB9139C-E302-45A2-BF9E-90307E5E10A9}
+		{FF5F7FC5-D590-4141-A1F7-3585BF7639DD} = {A7A87B49-2E4C-4A0A-92F4-7C7849F36A84}
+		{7CFB0FEF-A83E-41F5-AAF7-61B84D18D243} = {FF5F7FC5-D590-4141-A1F7-3585BF7639DD}
+		{83CEF9F6-F912-4664-A238-9FDDD7E057BC} = {7CFB0FEF-A83E-41F5-AAF7-61B84D18D243}
+		{CE399C64-3A60-475C-B6A8-045461FA2EDD} = {7CFB0FEF-A83E-41F5-AAF7-61B84D18D243}
+		{97ED36AE-E975-4CF8-BDDB-226DB0032531} = {7CFB0FEF-A83E-41F5-AAF7-61B84D18D243}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA1A20A2-0D4E-492D-877C-0A36F18FBFF1}

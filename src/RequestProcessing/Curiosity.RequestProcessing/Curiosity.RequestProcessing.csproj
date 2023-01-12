@@ -5,8 +5,8 @@
 
         <PackageId>Curiosity.RequestProcessing</PackageId>
         <Title>Curiosity.RequestProcessing</Title>
-        <Description>Infrastructure for processing request from an queue.</Description>
-        <Summary>Infrastructure for processing request from a queue.</Summary>
+        <Description>Infrastructure for processing request/events from an queue.</Description>
+        <Summary>Infrastructure for processing requests/events from a queue.</Summary>
         <PackageTags>Curiosity; Request; Queue; Workers; Processors</PackageTags>
         <Language>English</Language>
 

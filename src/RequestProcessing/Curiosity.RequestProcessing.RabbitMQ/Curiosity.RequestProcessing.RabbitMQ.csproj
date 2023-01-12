@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+
+        <PackageId>Curiosity.RequestProcessing.RabbitMQ</PackageId>
+        <Title>Curiosity.RequestProcessing.RabbitMQ</Title>
+        <Description>Services to receive and process reqesuts/events from RabbitMQ.</Description>
+        <Summary>Services to receive and process requests/events from RabbitMQ.</Summary>
+        <PackageTags>Curiosity; Request; Queue; Workers; Processors; RabbitMQ; RPC; AMQP; Messaging</PackageTags>
+        <Language>English</Language>
+
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <FileVersion>1.0.0</FileVersion>
+        <PackageVersion>1.0.0</PackageVersion>
+
+        <Authors>Max Markelow (@markeli)</Authors>
+        <Company>SIIS Ltd</Company>
+        <Copyright>SIIS Ltd, 2023</Copyright>
+
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+        <PackageProjectUrl>https://github.com/siisltd/Curiosity.Utils</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
+        <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/RequestProcessing/Curiosity.RequestProcessing.RabbitMQ/CHANGELOG.md</PackageReleaseNotes>
+
+        <OutputType>Library</OutputType>
+        <LangVersion>10</LangVersion>
+        <Nullable>enable</Nullable>
+        <IsPackable>true</IsPackable>
+    </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\Messaging\Curiosity.RabbitMQ\Curiosity.RabbitMQ.csproj" />
+      <ProjectReference Include="..\Curiosity.RequestProcessing\Curiosity.RequestProcessing.csproj" />
+    </ItemGroup>
+
+</Project>
