@@ -13,7 +13,9 @@ namespace Curiosity.Emails.UnitTests
         [InlineData("john@siisltd.ru", true)]
         [InlineData("john+1@siisltd.ru", true)]
         [InlineData("иван@siisltd.ru", true)]
+        [InlineData("ИВАН@siisltd.ru", true)]
         [InlineData("test.test@-com", false)]
+        [InlineData("TESt.TEST@-com", false)]
         [InlineData("mail.mail-test", false)]
         [InlineData("adil.mir762@gmail-com", false)]
         public void ValidateEmail(string testedEmail, bool expectedResult)
