@@ -1,11 +1,17 @@
 # Changelog
 
+## [1.3.2] - 2022-12-26
+
+### Fixed
+
+- Added unicode support for file names to `ZipDirAsync` method.
+
 ## [1.3.1] - 2022-05-14
 
 ### Changed
 
 - Fixed naming of `UnzipFile` method.
-- 
+
 ## [1.3.0] - 2022-05-14
 
 ### Added

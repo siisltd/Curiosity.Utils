@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.4.11] - 2022-12-26
+
+### Fixed
+
+- Removed empty lines from some files
+
+### Changed
+
+- Replaced foreach by simple loop at `ICollectionExtensions`.
+
 ## [1.4.10] - 2022-07-24
 
 ### Fixed
