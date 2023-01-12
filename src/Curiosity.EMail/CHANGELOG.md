@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.6] - 2023-01-12
+
+## Added
+
+- Added support of cyrillic symbols to email regex pattern.
+
 ## [1.3.5] - 2022-05-19
 
 ## Added

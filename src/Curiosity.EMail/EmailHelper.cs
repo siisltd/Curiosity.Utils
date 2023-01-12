@@ -65,7 +65,7 @@ namespace Curiosity.EMail
         /// <remarks>
         /// Source link: https://stackoverflow.com/a/8829363/7087479
         /// </remarks>
-        private const string EmailPattern = @"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
+        private const string EmailPattern = @"^[a-zA-Zа-яА-Я0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
 
         /// <summary>
         /// Checks that email address is valid.
