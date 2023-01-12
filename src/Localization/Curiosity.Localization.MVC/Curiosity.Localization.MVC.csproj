@@ -16,7 +16,7 @@
 
         <Authors>Max Markelow (@markeli), Andrei Vinogradov (@anri-vin)</Authors>
         <Company>SIIS Ltd</Company>
-        <Copyright>SIIS Ltd, 2021</Copyright>
+        <Copyright>SIIS Ltd, 2023</Copyright>
 
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -24,6 +24,7 @@
         <PackageProjectUrl>https://github.com/siisltd/Curiosity.Utils</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
+        <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Localization/Curiosity.Localization.MVC/CHANGELOG.md</PackageReleaseNotes>
 
         <OutputType>Library</OutputType>
         <LangVersion>8</LangVersion>

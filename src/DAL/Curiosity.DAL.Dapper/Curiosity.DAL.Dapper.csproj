@@ -15,7 +15,7 @@
         <PackageVersion>1.1.1</PackageVersion>
 
         <Authors>Max Markelow (@markeli)</Authors>
-        <Copyright>SIIS Ltd, 2021</Copyright>
+        <Copyright>SIIS Ltd, 2023s</Copyright>
 
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -23,7 +23,7 @@
         <PackageProjectUrl>https://github.com/siisltd/Curiosity.Utils</PackageProjectUrl>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
-        <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Curiosity.DAL.Dapper/CHANGELOG.md</PackageReleaseNotes>
+        <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/DAL/Curiosity.DAL.Dapper/CHANGELOG.md</PackageReleaseNotes>
 
         <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
