@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+
+        <PackageId>Curiosity.RabbitMQ</PackageId>
+        <Title>Curiosity.RabbitMQ</Title>
+        <Description>Reliable .NET client for RabbitMQ for RPC communication</Description>
+        <Summary>Containts RPC client for RabbitMQ.</Summary>
+        <PackageTags>Curiosity; siisltd; Messaging; RPC; RabbitMQ; Messages; Queue;</PackageTags>
+        <Language>English</Language>
+
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <FileVersion>1.0.0</FileVersion>
+        <PackageVersion>1.0.0</PackageVersion>
+
+        <Authors>Max Markelow (@markeli)</Authors>
+        <Company>SIIS Ltd</Company>
+        <Copyright>SIIS Ltd, 2023</Copyright>
+
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+        <PackageProjectUrl>https://github.com/siisltd/Curiosity.Utils</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
+        <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Messaging/Curiosity.RabbitMQ/CHANGELOG.md</PackageReleaseNotes>
+
+        <LangVersion>11</LangVersion>
+        <Nullable>enable</Nullable>
+        <IsPackable>true</IsPackable>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageIcon>siisltd.png</PackageIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\..\siisltd.png" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Configuration\Curiosity.Configuration\Curiosity.Configuration.csproj" />
+      <ProjectReference Include="..\..\Misc\Curiosity.Tools\Curiosity.Tools.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+      <PackageReference Include="RabbitMQ.Client" Version="6.3.0" />
+    </ItemGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DocumentationFile>bin\Release\Curiosity.RabbitMQ.xml</DocumentationFile>
+    </PropertyGroup>
+</Project>

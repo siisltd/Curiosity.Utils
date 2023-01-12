@@ -127,6 +127,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.Tools.UnitTests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.Notifications.EMail.UnitTests", "tests\UnitTests\Notifications\Curiosity.Notifications.EMail.UnitTests\Curiosity.Notifications.EMail.UnitTests.csproj", "{F4B0B14E-35DF-488E-B865-DB98DD8F1E09}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.RabbitMQ", "src\Messaging\Curiosity.RabbitMQ\Curiosity.RabbitMQ.csproj", "{7D3A1A31-667E-4FD7-9D35-4431E0D63AFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -289,6 +291,10 @@ Global
 		{F4B0B14E-35DF-488E-B865-DB98DD8F1E09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4B0B14E-35DF-488E-B865-DB98DD8F1E09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4B0B14E-35DF-488E-B865-DB98DD8F1E09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D3A1A31-667E-4FD7-9D35-4431E0D63AFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D3A1A31-667E-4FD7-9D35-4431E0D63AFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D3A1A31-667E-4FD7-9D35-4431E0D63AFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D3A1A31-667E-4FD7-9D35-4431E0D63AFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -353,6 +359,7 @@ Global
 		{5B75CFCE-38EF-46BA-85C9-0C6D2F1E18E3} = {E9B593D3-0F74-4622-BC91-92431770EA5E}
 		{5E902C05-3508-437B-A618-246B9C9B43E9} = {E9B593D3-0F74-4622-BC91-92431770EA5E}
 		{F4B0B14E-35DF-488E-B865-DB98DD8F1E09} = {931F7AED-601C-4627-B6A1-09BA05E95F1F}
+		{7D3A1A31-667E-4FD7-9D35-4431E0D63AFC} = {9CB5824D-17D9-4ED7-8DD8-6B26A1D3353A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA1A20A2-0D4E-492D-877C-0A36F18FBFF1}
