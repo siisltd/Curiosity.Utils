@@ -1,5 +1,6 @@
 using System;
 using Curiosity.Configuration;
+using Curiosity.RabbitMQ.RPC;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 

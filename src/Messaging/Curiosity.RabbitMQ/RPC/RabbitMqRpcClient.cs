@@ -10,7 +10,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
 
-namespace Curiosity.RabbitMQ;
+namespace Curiosity.RabbitMQ.RPC;
 
 /// <summary>
 /// RPC client that used RabbitMQ queues to emulate RPC.

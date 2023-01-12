@@ -3,7 +3,7 @@ using Curiosity.Configuration;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 
-namespace Curiosity.RabbitMQ;
+namespace Curiosity.RabbitMQ.RPC;
 
 /// <summary>
 /// Factory to creates new instance of <see cref="RabbitMqRpcClient"/>.
