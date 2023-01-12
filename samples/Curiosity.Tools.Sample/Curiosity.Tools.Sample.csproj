@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Curiosity.Tools\Curiosity.Tools.csproj" />
+      <ProjectReference Include="..\..\src\Misc\Curiosity.Tools\Curiosity.Tools.csproj" />
     </ItemGroup>
 
 </Project>

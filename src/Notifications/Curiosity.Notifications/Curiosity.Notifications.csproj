@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework><PackageId>Curiosity.Hosting.Web</PackageId>
+        
+        <PackageId>Curiosity.Notifications</PackageId>
+        <Title>Curiosity.Notifications</Title>
+        <Description>Base classes for creating and processing notifications.</Description>
+        <Summary>Base classes for creating and processing notifications.</Summary>
+        <PackageTags>Curiosity; Notifications; Channels; siisltd</PackageTags>
+        <Language>English</Language>
+
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <FileVersion>1.0.0</FileVersion>
+        <PackageVersion>1.2.4</PackageVersion>
+
+        <Authors>Max Markelow (@markeli), Andrey Ioch (@DevCorvette)</Authors>
+        <Company>SIIS Ltd</Company>
+        <Copyright>SIIS Ltd, 2022</Copyright>
+
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+        <PackageProjectUrl>https://github.com/siisltd/Curiosity.Utils</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
+        <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Curiosity.Notifications/CHANGELOG.md</PackageReleaseNotes>
+
+        <OutputType>Library</OutputType>
+        <LangVersion>8</LangVersion>
+        <Nullable>enable</Nullable>
+        <IsPackable>true</IsPackable>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageIcon>siisltd.png</PackageIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\..\siisltd.png" Pack="true" PackagePath="\" />
+    </ItemGroup>
+    
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\netstandard2.1\Curiosity.Notifications.xml</DocumentationFile>
+    </PropertyGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.1" />
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.10" />
+    </ItemGroup>
+
+</Project>

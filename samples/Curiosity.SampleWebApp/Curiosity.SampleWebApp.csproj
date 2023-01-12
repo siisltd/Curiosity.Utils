@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <IsPackable>false</IsPackable>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -15,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Curiosity.Hosting.Web\Curiosity.Hosting.Web.csproj" />
+      <ProjectReference Include="..\..\src\Hosting\Curiosity.Hosting.Web\Curiosity.Hosting.Web.csproj" />
     </ItemGroup>
 
 </Project>

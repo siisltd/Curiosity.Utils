@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+
+        <PackageId>Curiosity.DateTime.DbSync</PackageId>
+        <Title>Curiosity.DateTime.DbSync</Title>
+        <Description>Service for syncrhonizing DateTime via database.</Description>
+        <Summary>Service for syncrhonizing DateTime via database.</Summary>
+        <PackageTags>Curiosity; date time tools; tools; database; siisltd</PackageTags>
+        <Language>English</Language>
+
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <FileVersion>1.0.0</FileVersion>
+        <PackageVersion>1.2.0</PackageVersion>
+
+        <Authors>Max Markelow (@markeli)</Authors>
+        <Copyright>SIIS Ltd, 2021</Copyright>
+
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+        <PackageProjectUrl>https://github.com/siisltd/Curiosity.Utils</PackageProjectUrl>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
+        <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Curiosity.DateTime.DbSync/CHANGELOG.md</PackageReleaseNotes>
+
+        <LangVersion>8</LangVersion>
+        <Nullable>enable</Nullable>
+        <IsPackable>true</IsPackable>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageIcon>siisltd.png</PackageIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\..\siisltd.png" Pack="true" PackagePath="\" />
+    </ItemGroup>
+    
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\Curiosity.DateTime.DbSync.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\DAL\Curiosity.DAL\Curiosity.DAL.csproj" />
+      <ProjectReference Include="..\Curiosity.Tools\Curiosity.Tools.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.21" />
+    </ItemGroup>
+
+</Project>
