@@ -11,7 +11,7 @@
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.0.0</PackageVersion>
+        <PackageVersion>1.0.1</PackageVersion>
 
         <Authors>Max Markelow (@markeli)</Authors>
         <Company>SIIS Ltd</Company>
@@ -33,6 +33,22 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Messaging\Curiosity.RabbitMQ\Curiosity.RabbitMQ.csproj" />
       <ProjectReference Include="..\Curiosity.RequestProcessing\Curiosity.RequestProcessing.csproj" />
+    </ItemGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DocumentationFile>bin\Release\netstandard2.1\Curiosity.RequestProcessing.RabbitMQ.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageIcon>siisltd.png</PackageIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\..\siisltd.png">
+            <Pack>true</Pack>
+            <PackagePath>/</PackagePath>
+            <Link>siisltd.png</Link>
+        </None>
     </ItemGroup>
 
 </Project>
