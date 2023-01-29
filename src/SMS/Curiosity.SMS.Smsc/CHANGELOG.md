@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.0] - 2023-01-29
+
+### Changed
+
+- Upgraded `RestSharp` up to `108.0.3`.
+
 ## [1.2.6] - 2022-07-0
 
 ### Added

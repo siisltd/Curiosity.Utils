@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0] - 2023-01-29
+
+### Changed
+
+- Upgraded `Polly` up to `7.2.3`.
+- Upgraded `SSH.NET` up to `2020.0.2`.
+
 ## [1.3.0] - 2022-05-14
 
 ### Added

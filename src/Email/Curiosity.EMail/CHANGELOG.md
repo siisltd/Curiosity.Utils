@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0] - 2023-01-29
+
+### Changed
+
+- Upgraded `Microsoft`'s packages up to `6.*` versions.
+- Upgraded `MimeKit`' up to `3.4.3`.
+
 ## [1.3.7] - 2023-01-12
 
 ## Changed

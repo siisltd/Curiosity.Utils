@@ -118,7 +118,7 @@ namespace Curiosity.Archiver.SharpZip
 
             try
             {
-                using (var zipStream = new ZipOutputStream(tempStream))
+                await using (var zipStream = new ZipOutputStream(tempStream))
                 {
                     zipStream.IsStreamOwner = false;
                     await ZipFilesAsync(buffer, zipStream, sourceFiles, useZip64, cts);
@@ -131,7 +131,7 @@ namespace Curiosity.Archiver.SharpZip
             catch
             {
                 _arrayPool.Return(buffer);
-                tempStream?.Dispose();
+                await tempStream.DisposeAsync();
                 throw;
             }
         }

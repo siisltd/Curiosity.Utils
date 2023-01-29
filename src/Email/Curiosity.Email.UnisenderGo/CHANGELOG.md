@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0] - 2023-01-29
+
+### Changed
+
+- Upgraded `RestSharp` up to `108.0.3`.
+- Upgraded `Newtonsoft.Json` up to `13.0.2`.
+
 ## [1.0.8] - 2022-07-12
 
 ### Fixed

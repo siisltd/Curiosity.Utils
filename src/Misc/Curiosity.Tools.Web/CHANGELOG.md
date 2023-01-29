@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0] - 2023-01-29
+
+### Changed
+
+- Upgraded `Microsoft`'s packages up to `6.*` versions.
+- Upgraded `HtmlSanitizer` up to `8.0.645`.
+- Upgraded `Flurl.Http` up to `3.2.4`.
+
 ## [1.1.9] - 2022-07-15
 
 ### Changed

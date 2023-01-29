@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0] - 2023-01-29
+
+### Changed
+
+- Upgraded `Microsoft`'s packages up to `6.*` versions.
+- Upgraded `NodaTime` up to `3.1.6`.
+
 ## [1.4.11] - 2022-12-26
 
 ### Fixed

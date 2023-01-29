@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.0] - 2023-01-29
+
+### Changed
+
+- Upgraded `SharpZipLib` to `1.4.1`.
+
 ## [1.3.2] - 2022-12-26
 
 ### Fixed

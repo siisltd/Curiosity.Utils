@@ -1,6 +1,6 @@
 using System;
 using System.Net;
-using Ganss.XSS;
+using Ganss.Xss;
 
 namespace Curiosity.Tools.Web
 {
