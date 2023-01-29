@@ -43,7 +43,7 @@ public class SampleRequestDispatcher : RabbitMQRequestDispatcherBase<
         var result = new List<RabbitMQRequestWrapper<SampleRequest>>(maxRequestsCount);
 
          // just read requests from the inner queue
-         while (ReceivedEvents.TryDequeue(out var rabbitMQEvent) && result.Count < maxRequestsCount)
+         while (result.Count < maxRequestsCount && ReceivedEvents.TryDequeue(out var rabbitMQEvent))
          {
              try
              {
