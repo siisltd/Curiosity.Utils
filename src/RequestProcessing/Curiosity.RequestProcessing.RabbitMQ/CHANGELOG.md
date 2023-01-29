@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1] - 2022-01-29
+
+### Fixed
+
+- Added extra event set after RabbitMQ request processing
+
 ## [1.2.0] - 2022-01-29
 
 ### Changed
