@@ -68,7 +68,7 @@ public abstract class RabbitMQRequestProcessorBootstrapperBase<
             logger,
             NodeOptions.WorkersCount);
 
-        receiver.OnEventReceived += HandleEventReceived!;
+        receiver.OnEventReceived += HandleEventReceived;
 
         // start receiving
         await receiver.StartAsync(cancellationToken);

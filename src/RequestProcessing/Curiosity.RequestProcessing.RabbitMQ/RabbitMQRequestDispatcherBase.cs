@@ -41,6 +41,7 @@ public abstract class RabbitMQRequestDispatcherBase<TRequest, TWorker, TWorkerEx
         ReceivedEvents = receivedEvents ?? throw new ArgumentNullException(nameof(receivedEvents));
     }
 
+    /// <inheritdoc />
     protected override Task HandleRequestProcessingCompletionAsync(RabbitMQRequestWrapper<TRequest> request, bool isSuccessful, CancellationToken cancellationToken = default)
     {
         // confirm or reject event 
