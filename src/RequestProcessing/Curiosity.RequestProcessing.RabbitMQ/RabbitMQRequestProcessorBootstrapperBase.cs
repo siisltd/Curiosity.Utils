@@ -66,7 +66,7 @@ public abstract class RabbitMQRequestProcessorBootstrapperBase<
         var receiver = new RabbitMQEventReceiver(
             rabbitMQEventSource.RabbitMQOptions,
             logger,
-            NodeOptions.WorkersCount);
+            Convert.ToInt32(Math.Round(NodeOptions.WorkersCount * NodeOptions.RabbitMQEventReceiver.QosMultiplier)));
 
         receiver.OnEventReceived += HandleEventReceived;
 

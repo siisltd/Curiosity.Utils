@@ -44,6 +44,11 @@ public class RabbitMQEventReceiverOptions : ILoggableOptions, IValidatableOption
     /// </summary>
     public string QueueName { get; set; } = null!;
 
+    /// <summary>
+    /// Multiplier for QoS to increase inner queue size.
+    /// </summary>
+    public decimal QosMultiplier { get; set; } = 1;
+
     /// <inheritdoc />
     public IReadOnlyCollection<ConfigurationValidationError> Validate(string? prefix = null)
     {
@@ -56,6 +61,9 @@ public class RabbitMQEventReceiverOptions : ILoggableOptions, IValidatableOption
         errors.AddErrorIf(Port < 1, nameof(Port), "can't be less than 1");
         errors.AddErrorIf(String.IsNullOrEmpty(QueueName), nameof(QueueName), "can't be empty");
         errors.AddErrorIf(ExchangeName == null!, nameof(ExchangeName), "can't be null");
+        errors.AddErrorIf(QosMultiplier < 1, nameof(QosMultiplier), "can't be less than 1");
+        errors.AddErrorIf(QosMultiplier >= 20, nameof(QosMultiplier), "can't be greater than 20");
+
 
         return errors;
     }

@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.2] - 2022-01-30
+
+### Added
+
+- Added `QoS` multiplier.
+
 ## [1.2.1] - 2022-01-29
 
 ### Fixed
