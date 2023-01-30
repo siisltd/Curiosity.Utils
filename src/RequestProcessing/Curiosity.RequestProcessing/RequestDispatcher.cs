@@ -144,10 +144,10 @@ namespace Curiosity.RequestProcessing
 
                         worker.ProcessRequestSafelyAsync(request, stoppingToken).WithCompletion(t =>
                         {
+                            HandleRequestProcessingCompletionAsync(request, t.IsCompletedSuccessfully, stoppingToken).WithExceptionLogger(Logger);
+
                             // после обработки запроса надо сбросить event, чтобы сразу проверить наличие новых запросов в очередях
                             NewEventWaitHandle.Set();
-
-                            HandleRequestProcessingCompletionAsync(request, t.IsCompletedSuccessfully, stoppingToken).WithExceptionLogger(Logger);
                         });
                         await HandleRequestProcessingStartedAsync(request, stoppingToken);
 

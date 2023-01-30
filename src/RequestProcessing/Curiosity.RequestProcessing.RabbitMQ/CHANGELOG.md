@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.3] - 2022-01-30
+
+### Added
+
+- Removed event set from request processing completion action.
+
 ## [1.2.2] - 2022-01-30
 
 ### Added

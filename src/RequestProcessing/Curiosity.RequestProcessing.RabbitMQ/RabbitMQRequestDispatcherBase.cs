@@ -56,9 +56,6 @@ public abstract class RabbitMQRequestDispatcherBase<TRequest, TWorker, TWorkerEx
 
         Logger.LogDebug("Internal received events queue size: {QueueSize}", ReceivedEvents.Count);
 
-        // we truly remove item from RabbitMQ queue, let's clean up it
-        NewEventWaitHandle.Set();
-
         return Task.CompletedTask;
     }
 }

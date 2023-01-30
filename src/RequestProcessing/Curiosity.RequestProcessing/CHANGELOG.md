@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.1] - 2023-01-30
+
+### Changed
+
+- Set event only after executing request completion actions.
+
 ## [1.4.0] - 2023-01-29
 
 ### Changed
