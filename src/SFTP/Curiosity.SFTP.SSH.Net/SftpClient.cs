@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -24,7 +23,6 @@ namespace Curiosity.SFTP.SSH.Net
         private readonly Renci.SshNet.SftpClient _sftpClient;
         private readonly ITempFileStreamFactory _tempFileStreamFactory;
         private readonly ILogger<SftpClient> _logger;
-
 
         private readonly AsyncPolicy _retryAsyncPolicy;
         private readonly Policy _retryPolicy;

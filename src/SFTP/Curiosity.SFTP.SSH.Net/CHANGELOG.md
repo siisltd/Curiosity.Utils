@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.1] - 2023-03-14
+
+### Fixed
+
+- #51: Fixed namespace for `ResourceManager`.
+
 ## [1.4.0] - 2023-01-29
 
 ### Changed

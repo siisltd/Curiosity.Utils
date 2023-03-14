@@ -20,12 +20,11 @@ namespace Curiosity.SFTP.SSH.Net
 
             System.Diagnostics.Debug.Assert(value != null);
 
-            if (formatterNames != null)
+            if (formatterNames == null) return value;
+
+            for (var i = 0; i < formatterNames.Length; i++)
             {
-                for (var i = 0; i < formatterNames.Length; i++)
-                {
-                    value = value.Replace("{" + formatterNames[i] + "}", "{" + i + "}");
-                }
+                value = value.Replace("{" + formatterNames[i] + "}", "{" + i + "}");
             }
 
             return value;
