@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.5.0] - 2023-01-29
+
+### Removed
+
+- Removed `ToPageAsync` method with implicit calling count over query. 
+
 ## [1.4.0] - 2023-01-29
 
 ### Changed
