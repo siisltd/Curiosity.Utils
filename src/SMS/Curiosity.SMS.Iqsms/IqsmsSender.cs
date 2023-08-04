@@ -3,6 +3,7 @@ using Curiosity.Configuration;
 using Curiosity.Tools;
 using Microsoft.Extensions.Logging;
 using RestSharp;
+using System;
 
 namespace Curiosity.SMS.Iqsms;
 
@@ -48,10 +49,21 @@ public class IqsmsSender : IIqsmsSender
         string message,
         string login,
         string password,
-        string senderName,
+        string? senderName,
         CancellationToken cancellationToken)
     {
-        var client = new RestClient("https://api.iqsms.ru/messages/v2/send?text=hello_world");
+        // transform to +71234567890
+        if (_options.AutoTransformPhoneNumber)
+        {
+            phoneNumber = phoneNumber[0] switch
+            {
+                '8' => String.Concat("+7", phoneNumber.AsSpan(1)),
+                '7' => "+" + phoneNumber,
+                _ => phoneNumber,
+            };
+        }
+        
+        var client = new RestClient("https://api.iqsms.ru/messages/v2/send");
         var request = new RestRequest
         {
             Method = Method.Get
@@ -59,9 +71,12 @@ public class IqsmsSender : IIqsmsSender
 
         request.AddQueryParameter("login", login);
         request.AddQueryParameter("password", password);
-        request.AddQueryParameter("sender", senderName);
         request.AddQueryParameter("phone", phoneNumber);
         request.AddQueryParameter("text", message);
+        
+        if(!String.IsNullOrWhiteSpace(senderName))
+            request.AddQueryParameter("sender", senderName);
+
 
         _logger.LogInformation($"Отправляем sms на номер {phoneNumber}...");
 

@@ -22,7 +22,15 @@ public class IqsmsOptions : IValidatableOptions, ILoggableOptions
     /// <summary>
     /// Sender's name.
     /// </summary>
-    public string Sender { get; set; } = null!;
+    public string? Sender { get; set; }
+
+    /// <summary>
+    /// When true, automatically transforms phone numbers to the form +71234567890
+    /// </summary>
+    /// <remarks>
+    /// iqsms.ru requires phone number in format +71234567890
+    /// </remarks>
+    public bool AutoTransformPhoneNumber { get; set; } = true;
 
     /// <inheritdoc />
     public IReadOnlyCollection<ConfigurationValidationError> Validate(string? prefix = null)
@@ -30,7 +38,6 @@ public class IqsmsOptions : IValidatableOptions, ILoggableOptions
         var errors = new ConfigurationValidationErrorCollection(prefix);
         errors.AddErrorIf(String.IsNullOrEmpty(Login), nameof(Login), CanNotBeEmptyErrorDescription);
         errors.AddErrorIf(String.IsNullOrEmpty(Password), nameof(Password), CanNotBeEmptyErrorDescription);
-        errors.AddErrorIf(String.IsNullOrEmpty(Sender), nameof(Sender), CanNotBeEmptyErrorDescription);
 
         return errors;
     }
