@@ -1,9 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>netstandard2.1</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <PackageVersion>1.0.1</PackageVersion>
+        <PackageIcon>siisltd.png</PackageIcon>
+        <Title>Curiosity.SMS.Iqsms</Title>
+        <Description>Classes for sending SMS via iqsms.ru.</Description>
+        <Copyright>SIIS Ltd, 2023</Copyright>
+        <PackageProjectUrl>https://github.com/siisltd/Curiosity.Utils</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>Curiosity; SMS; siisltd; iqsms</PackageTags>
+        <Authors>Max Markelow (@markeli), Andrey Ioch (@DevCorvette)</Authors>
+        <LangVersion>10</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,6 +23,14 @@
 
     <ItemGroup>
       <PackageReference Include="RestSharp" Version="108.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\..\siisltd.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>siisltd.png</Link>
+      </None>
     </ItemGroup>
 
 </Project>
