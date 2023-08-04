@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>netstandard2.1</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackageVersion>1.0.1</PackageVersion>
@@ -14,6 +14,7 @@
         <RepositoryType>git</RepositoryType>
         <PackageTags>Curiosity; SMS; siisltd; iqsms</PackageTags>
         <Authors>Max Markelow (@markeli), Andrey Ioch (@DevCorvette)</Authors>
+        <LangVersion>10</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>

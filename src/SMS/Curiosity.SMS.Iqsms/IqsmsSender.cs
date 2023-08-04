@@ -57,9 +57,9 @@ public class IqsmsSender : IIqsmsSender
         {
             phoneNumber = phoneNumber[0] switch
             {
-                '8' => String.Concat("+7", phoneNumber.AsSpan(1)),
-                '7' => "+" + phoneNumber,
-                _ => phoneNumber,
+                '8' => "+7" + phoneNumber.Substring(1),
+                '7' => "+"  + phoneNumber,
+                _   => phoneNumber,
             };
         }
         
