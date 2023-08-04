@@ -1,0 +1,9 @@
+Log:
+  LogConfigurationPath: ./NLog.config
+  LogOutputDirectory: ./logs
+  
+# must specified login and password
+IqsmsOptions:
+  Login: 
+  Password: 
+  Sender: MediaGramma
