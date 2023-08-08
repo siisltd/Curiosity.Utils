@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.9] - 2023-08-08
+
+### Fixed
+
+- Upgraded RestSharp to `108.0.3`.
+:wq
 ## [1.0.8] - 2022-07-12
 
 ### Fixed

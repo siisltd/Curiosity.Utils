@@ -98,10 +98,7 @@ namespace Curiosity.Email.UnisenderGo
                     throw new ArgumentException($"Region {region} is not supported.", nameof(region));
             }
 
-            var restClient = new RestClient
-            {
-                BaseUrl = new Uri(unisenderGoHost)
-            };
+            var restClient = new RestClient(new Uri(unisenderGoHost));
             restClient.UseNewtonsoftJson(_serializerSettings);
 
             // build message body
@@ -159,7 +156,7 @@ namespace Curiosity.Email.UnisenderGo
             restRequest.AddHeader("X-API-KEY", apiKey);
             restRequest.AddJsonBody(sendEmailRequest);
             restRequest.Resource = "email/send.json";
-            restRequest.Method = Method.POST;
+            restRequest.Method = Method.Post;
 
             // send
             _logger.LogTrace("Sending email to \"{Email}\"...", toAddress);
