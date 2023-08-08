@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.0] - 2023-01-29
+
+### Changed
+
+- Upgraded `Newtonsoft.Json` up to `13.0.2`.
+
 ## [1.3.3] - 2022-07-08
 
 ### Added

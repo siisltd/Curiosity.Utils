@@ -44,7 +44,7 @@ namespace Curiosity.SMS.Smsc
             var client = new RestClient("https://smsc.ru/sys/send.php");
             var request = new RestRequest
             {
-                Method = Method.POST
+                Method = Method.Post
             };
 
             request.AddQueryParameter("login", smscLogin);

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         
         <PackageId>Curiosity.Tools.Web</PackageId>
         <Title>Curiosity.Tools.Web</Title>
@@ -12,7 +12,7 @@
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.1.9</PackageVersion>
+        <PackageVersion>1.2.0</PackageVersion>
 
         <Authors>Max Markelow (@markeli), Andrei Vinogradov (@anri-vin), Andrey Ioch (@DevCorvette)</Authors>
         <Company>SIIS Ltd</Company>
@@ -50,9 +50,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Flurl.Http" Version="3.0.0" />
-      <PackageReference Include="HtmlSanitizer" Version="5.0.376" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.10" />
+      <PackageReference Include="Flurl.Http" Version="3.2.4" />
+      <PackageReference Include="HtmlSanitizer" Version="8.0.645" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
       <PackageReference Include="Microsoft.Net.Http.Headers" Version="2.2.8" />
       <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     </ItemGroup>

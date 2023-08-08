@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0] - 2023-01-29
+
+### Changed
+
+- Upgraded `Microsoft`'s packages up to `6.*` versions.
+- Upgraded `MailKit` up to `3.4.3`.
+
 ## [1.3.1] - 2022-06-20
 
 ### Changed

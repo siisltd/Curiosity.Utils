@@ -6,7 +6,7 @@ namespace Curiosity.SFTP.SSH.Net
     internal static class LNG
     {
         private static readonly ResourceManager _resourceManager
-            = new ResourceManager("Curiosity.SFTP.SSH.Net.Resources.LNG", typeof(LNG).GetTypeInfo().Assembly);
+            = new ResourceManager("Curiosity.SFTP.SSH.Net.LNG", typeof(LNG).GetTypeInfo().Assembly);
 
         public static string SftpClient_SameFileAlreadyExists => GetString("SameFileAlreadyExists");
         public static string SftpClient_DifferentFileAlreadyExists => GetString( "DifferentFileAlreadyExists");
@@ -20,12 +20,11 @@ namespace Curiosity.SFTP.SSH.Net
 
             System.Diagnostics.Debug.Assert(value != null);
 
-            if (formatterNames != null)
+            if (formatterNames == null) return value;
+
+            for (var i = 0; i < formatterNames.Length; i++)
             {
-                for (var i = 0; i < formatterNames.Length; i++)
-                {
-                    value = value.Replace("{" + formatterNames[i] + "}", "{" + i + "}");
-                }
+                value = value.Replace("{" + formatterNames[i] + "}", "{" + i + "}");
             }
 
             return value;

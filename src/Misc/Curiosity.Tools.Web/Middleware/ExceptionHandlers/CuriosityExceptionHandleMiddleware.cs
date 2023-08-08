@@ -117,7 +117,7 @@ namespace Curiosity.Tools.Web.Middleware
                 // TODO: Optional re-throw? We'll re-throw the original exception by default if the error handler throws.
                 return;
             }
-            catch (BadHttpRequestException ex2)
+            catch (Microsoft.AspNetCore.Http.BadHttpRequestException ex2)
             {
                 // https://github.com/dotnet/aspnetcore/issues/23949 ошибка возникает, когда пользователя отменяет запрос.
                 // Тогда в своей обработки мы не можем обновить response. MS тупо советуют не реагировать на ошибку.

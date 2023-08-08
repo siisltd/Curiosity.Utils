@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.0] - 2023-01-29
+
+### Changed
+
+- Upgraded `NpgSql` up to `7.0.1`.
+
 ## [1.2.0] - 2022-06-09
 
 ### Changed

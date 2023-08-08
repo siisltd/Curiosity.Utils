@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.5.0] - 2023-01-29
+
+### Removed
+
+- Removed `ToPageAsync` method with implicit calling count over query. 
+
+## [1.4.0] - 2023-01-29
+
+### Changed
+
+- Upgraded `Microsoft`'s packages up to `6.*` versions.
+
 ## [1.3.1] - 2021-11-16
 
 ### Changed

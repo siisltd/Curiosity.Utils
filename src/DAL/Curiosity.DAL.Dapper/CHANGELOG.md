@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0] - 2023-01-29
+
+### Changed
+
+- Upgraded `Microsoft`'s packages up to `6.*` versions.
+- Upgraded `Dapper` up to `2.0.123`. 
+
 ## [1.1.1] - 2021-03-29
 
 ### Changed

@@ -12,7 +12,7 @@
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.0.1</PackageVersion>
+        <PackageVersion>1.1.0</PackageVersion>
 
         <Authors>Max Markelow (@markeli)</Authors>
         <Company>SIIS Ltd</Company>
@@ -46,7 +46,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Npgsql" Version="5.0.1.1" />
+      <PackageReference Include="Npgsql" Version="7.0.1" />
     </ItemGroup>
 
 </Project>

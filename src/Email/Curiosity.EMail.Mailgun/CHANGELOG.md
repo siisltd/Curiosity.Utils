@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0] - 2023-01-29
+
+### Changed
+
+- Upgraded `Microsoft`'s packages up to `6.*` versions.
+- Upgraded `Newtonsoft.Json` up to `13.0.2`.
+- Upgraded `RestSharp` up to `108.0.3`.
+
 ## [1.3.6] - 2022-06-20
 
 ### Changed

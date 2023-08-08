@@ -20,18 +20,18 @@
     </resheader>
 
     <data name="SameFileAlreadyExists" xml:space="preserve">
-        <value>File {0} already exists on the server.</value>
+        <value>File "{0}" already exists on the server.</value>
     </data>
     <data name="DifferentFileAlreadyExists" xml:space="preserve">
-        <value>File {0} already exists on the server. Server (size={1}), new file (size={2}).</value>
+        <value>File "{0}" already exists on the server. Server (size={1}), new file (size={2}).</value>
     </data>
     <data name="Overwriting" xml:space="preserve">
-        <value>Overwriting file (name={0}, size={1}) with file (size={2})</value>
+        <value>Overwriting file (name="{0}", size={1}) with file (size={2})</value>
     </data>
     <data name="AuthMethodsNotSpecified" xml:space="preserve">
         <value>Auth methods aren't specified</value>
     </data>
     <data name="CanNotBeEmpty" xml:space="preserve">
-        <value>{0} can not be empty</value>
+        <value>"{0}" can not be empty</value>
     </data>
 </root>

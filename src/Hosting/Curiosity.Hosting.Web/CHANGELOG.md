@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.0] - 2023-01-29
+
+### Changed
+
+- Upgraded `Microsoft`'s packages up to `6.*` versions.
+- Upgraded `NLog`'s packages up to `5.*` versions.
+- Upgraded `MailKit` up to `3.4.3`.
+
 ## [1.2.3] - 2022-07-15
 
 ### Changed

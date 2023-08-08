@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0] - 2023-01-29
+
+### Changed
+
+- Upgraded `Microsoft`'s packages up to `6.*` versions.
+- Upgraded `NetEscapades.Configuration.Yaml` up to `2.2.0`
+
 ## [1.0.7] - 2021-07-09
 
 ### Changed

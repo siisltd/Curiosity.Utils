@@ -84,9 +84,8 @@ namespace Curiosity.EMail.Mailgun
                     throw new ArgumentException($"Region {region} is not supported.", nameof(region));
             }
 
-            var restClient = new RestClient
+            var restClient = new RestClient(new Uri(mailgunHost))
             {
-                BaseUrl = new Uri(mailgunHost),
                 Authenticator = new HttpBasicAuthenticator(mailgunUser, mailGunApiKey)
             };
 
@@ -102,7 +101,7 @@ namespace Curiosity.EMail.Mailgun
 
             restRequest.AddParameter("subject", subject);
             restRequest.AddParameter(isBodyHtml ? "html" : "text", body);
-            restRequest.Method = Method.POST;
+            restRequest.Method = Method.Post;
 
             _logger.LogTrace("Sending email to {Email}...", toAddress);
             var response = await restClient.ExecuteAsync(restRequest, cancellationToken);
