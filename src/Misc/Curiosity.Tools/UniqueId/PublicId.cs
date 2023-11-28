@@ -19,19 +19,15 @@ namespace Curiosity.Tools
         }
 
         /// <summary>
-        /// Converts an ID from a "public" view to a regular long (our internal)
+        /// Converts an ID from a "public" view to a regular long.
         /// </summary>
-        /// <param name= "exportId" >Public version of the ID (can be either hex or regular)</param>
-        /// <param name= " id " >Our regular ID</param>
+        /// <param name= "exportId" >Public version of the ID (only in hex format)</param>
+        /// <param name= "id" >Our regular ID</param>
         /// <returns>Successfully parted?</returns>
         public static bool TryParse(string exportId, out long id)
         {
             id = 0;
-            if (String.IsNullOrWhiteSpace(exportId))
-                return false;
-
-            // first we will try to parse as a decimal number, and then as hex
-            return long.TryParse(exportId, out id) ||
+            return !String.IsNullOrWhiteSpace(exportId) && 
                    long.TryParse(exportId, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out id);
         }
     }

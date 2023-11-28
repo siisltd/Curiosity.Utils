@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.0] - 2023-11-28
+
+### Changed
+
+- Upgraded `HtmlSanitizer` up to `8.0.723`.
+
 ## [1.2.0] - 2023-01-29
 
 ### Changed

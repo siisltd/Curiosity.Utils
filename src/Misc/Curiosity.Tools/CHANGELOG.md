@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.5.1] - 2023-11-28
+
+### Fixed
+
+- Fixed parsing string version of `PublicId`.
+
 ## [1.5.0] - 2023-01-29
 
 ### Changed
