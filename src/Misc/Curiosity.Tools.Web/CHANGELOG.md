@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.1] 
+
+### Added
+
+- Cancellation exception handling, write a message to WARN log
+
 ## [1.3.0] - 2023-11-28
 
 ### Changed
