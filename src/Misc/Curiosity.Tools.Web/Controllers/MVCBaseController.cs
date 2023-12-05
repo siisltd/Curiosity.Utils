@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 using Curiosity.Tools.Web.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
@@ -82,6 +83,11 @@ namespace Curiosity.Tools.Web.Controllers
                     case BadHttpRequestException _:
                         message = ex.Message;
                         logger.LogWarning(ex, $"Connection was closed by the client while sending response: {ex.Message}.");
+                        break;
+                    case TaskCanceledException _:
+                    case OperationCanceledException _:
+                        message = ex.Message;
+                        logger.LogWarning(ex, "Request was canceled by user");
                         break;
                     default:
                         logger.LogError(ex, $"Unhandled error: {ex.Message}");
