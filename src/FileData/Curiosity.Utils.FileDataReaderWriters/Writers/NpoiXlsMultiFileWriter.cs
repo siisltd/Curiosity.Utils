@@ -1,11 +1,11 @@
-﻿using ICSharpCode.SharpZipLib.Zip;
+﻿using Curiosity.Utils.FileDataReaderWriters.Helpers;
+using Curiosity.Utils.FileDataReaderWriters.Style;
+using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.Extensions.Logging;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.Streaming;
-using SIISLtd.SSNG.Common;
-using SIISLtd.Utils.FileDataReaderWriters.Style;
 
-namespace SIISLtd.Utils.FileDataReaderWriters;
+namespace Curiosity.Utils.FileDataReaderWriters.Writers;
 
 /// <summary>
 /// Класс для записи данных в xlsx / xls формате для NPOI с разбитием на несколько файлов

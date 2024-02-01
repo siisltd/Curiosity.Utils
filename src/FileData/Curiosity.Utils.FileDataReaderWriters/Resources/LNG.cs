@@ -1,7 +1,7 @@
 using System.Globalization;
-using SIISLtd.Utils.Localization;
+using Curiosity.Localization;
 
-namespace SIISLtd.Utils.FileDataReaderWriters.Resources
+namespace Curiosity.Utils.FileDataReaderWriters.Resources
 {
     internal static class LNG
     {
@@ -17,11 +17,6 @@ namespace SIISLtd.Utils.FileDataReaderWriters.Resources
         public static string Get(string source, params object[] arguments)
         {
             return Localizer.Get(Options.Prefix, source, false, arguments);
-        }
-        
-        public static string GetForCulture(CultureInfo culture, string source, params object[] arguments)
-        {
-            return Localizer.GetForCulture(culture, Options.Prefix, source, false, arguments);
         }
     }
 }

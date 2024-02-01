@@ -1,8 +1,7 @@
 ﻿using System.Text;
-using SIISLtd.SSNG.Common.Guards;
 using Sylvan.Data.Csv;
 
-namespace SIISLtd.Utils.FileDataReaderWriters.Readers;
+namespace Curiosity.Utils.FileDataReaderWriters.Readers;
 
 /// <summary>
 /// Класс для построчного чтения CSV файлов. 

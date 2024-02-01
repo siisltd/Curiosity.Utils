@@ -1,6 +1,6 @@
-using SIISLtd.Utils.FileDataReaderWriters.Style;
+using Curiosity.Utils.FileDataReaderWriters.Style;
 
-namespace SIISLtd.Utils.FileDataReaderWriters;
+namespace Curiosity.Utils.FileDataReaderWriters.Writers;
 
 /// <summary>
 /// Интерфейс для простого построчного вывода данных

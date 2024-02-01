@@ -1,4 +1,4 @@
-﻿namespace SIISLtd.Utils.FileDataReaderWriters.Style;
+﻿namespace Curiosity.Utils.FileDataReaderWriters.Style;
 
 /// <summary>
 /// Настройки формата ячеек

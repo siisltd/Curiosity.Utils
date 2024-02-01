@@ -1,7 +1,7 @@
 using FlexCel.Core;
 using FlexCel.XlsAdapter;
 
-namespace SIISLtd.Utils.FileDataReaderWriters;
+namespace Curiosity.Utils.FileDataReaderWriters.Writers;
 
 public static class XlsFileExtensions
 {

@@ -151,7 +151,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.SMS.Iqsms", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.SMS.Iqsms.Sample", "samples\Curiosity.SMS.Iqsms.Sample\Curiosity.SMS.Iqsms.Sample.csproj", "{4015E00D-EC76-4A73-A52F-4C4D71C6B8B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIISLtd.Utils.FileDataReaderWriters", "src\FileData\SIISLtd.Utils.FileDataReaderWriters\SIISLtd.Utils.FileDataReaderWriters.csproj", "{D135ADFA-0A52-41C0-876F-691876A780E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.Utils.FileDataReaderWriters", "src\FileData\Curiosity.Utils.FileDataReaderWriters\Curiosity.Utils.FileDataReaderWriters.csproj", "{D135ADFA-0A52-41C0-876F-691876A780E1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FileData", "FileData", "{2B8CCF93-24F0-45F9-9961-85695351141E}"
 EndProject

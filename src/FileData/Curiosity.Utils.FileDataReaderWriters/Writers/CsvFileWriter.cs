@@ -1,11 +1,11 @@
+using System.Globalization;
 using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
-using FlexCel.Core;
-using SIISLtd.Utils.FileDataReaderWriters.Style;
-using SIISLtd.Utils.Tools.Localization;
+using Curiosity.Utils.FileDataReaderWriters.Style;
+using Curiosity.Utils.FileDataReaderWriters.Writers;
 
-namespace SIISLtd.Utils.FileDataReaderWriters;
+namespace Curiosity.Utils.FileDataReaderWriters;
 
 /// <summary>
 /// Запись данных в .csv формате
@@ -20,7 +20,7 @@ public class CsvFileWriter : IFileWriter
 
     public CsvFileWriter(string outputFilePath)
     {
-        var configuration = new CsvConfiguration(LngHelper.CurrentCulture)
+        var configuration = new CsvConfiguration(CultureInfo.CurrentCulture)
         {
             Delimiter = ";",
             Mode = CsvMode.RFC4180,

@@ -1,11 +1,9 @@
-﻿using FlexCel.Core;
+﻿using Curiosity.Utils.FileDataReaderWriters.Helpers;
+using Curiosity.Utils.FileDataReaderWriters.Resources;
+using FlexCel.Core;
 using FlexCel.XlsAdapter;
-using SIISLtd.SSNG.Common;
-using SIISLtd.SSNG.Common.Guards;
-using SIISLtd.SSNG.Exceptions;
-using SIISLtd.Utils.FileDataReaderWriters.Resources;
 
-namespace SIISLtd.Utils.FileDataReaderWriters.Readers;
+namespace Curiosity.Utils.FileDataReaderWriters.Readers;
 
 /// <summary>
 /// Класс для построчного чтения данных их Xlsx/xlsx файлов.
@@ -122,7 +120,7 @@ public class XlsxFileDataReader : IFileDataReader
 
         // выбираем первый лист
         if (xls.SheetCount < 1)
-            throw new UserException(LNG.Get("Файл должен содержать хотя бы один лист"));
+            throw new ArgumentException(LNG.Get("Файл должен содержать хотя бы один лист"));
 
         xls.ActiveSheet = 1;
 

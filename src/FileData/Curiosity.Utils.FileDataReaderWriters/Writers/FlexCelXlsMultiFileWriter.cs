@@ -1,10 +1,11 @@
-﻿using FlexCel.Core;
+﻿using Curiosity.Utils.FileDataReaderWriters.Helpers;
+using Curiosity.Utils.FileDataReaderWriters.Style;
+using Curiosity.Utils.FileDataReaderWriters.Writers;
+using FlexCel.Core;
 using FlexCel.XlsAdapter;
 using Microsoft.Extensions.Logging;
-using SIISLtd.SSNG.Common;
-using SIISLtd.Utils.FileDataReaderWriters.Style;
 
-namespace SIISLtd.Utils.FileDataReaderWriters
+namespace Curiosity.Utils.FileDataReaderWriters
 {
     /// <summary>
     /// Класс для записи звонков в xlsx. Основная фишка - если количество строк больше лимита, то создаются отдельные файлы автоматчиески

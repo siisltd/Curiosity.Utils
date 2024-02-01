@@ -1,6 +1,6 @@
 using FlexCel.XlsAdapter;
 
-namespace SIISLtd.Utils.FileDataReaderWriters.Readers
+namespace Curiosity.Utils.FileDataReaderWriters.Readers
 {
     /// <summary>
     /// Методы расширения для <see cref="XlsFile"/> в TMS FlexCell

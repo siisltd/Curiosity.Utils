@@ -1,4 +1,4 @@
-﻿namespace SIISLtd.Utils.FileDataReaderWriters.Readers;
+﻿namespace Curiosity.Utils.FileDataReaderWriters.Readers;
 
 /// <summary>
 /// Общий интерфейс для классов, которые читает загруженные файлы построчно.
