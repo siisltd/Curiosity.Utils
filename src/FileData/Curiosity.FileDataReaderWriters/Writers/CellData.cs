@@ -1,4 +1,4 @@
-namespace Curiosity.Utils.FileDataReaderWriters.Writers;
+namespace Curiosity.FileDataReaderWriters.Writers;
 
 /// <summary>
 /// Данные ячейки с форматом

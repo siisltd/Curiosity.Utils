@@ -1,6 +1,6 @@
-using Curiosity.Utils.FileDataReaderWriters.Style;
+using Curiosity.FileDataReaderWriters.Style;
 
-namespace Curiosity.Utils.FileDataReaderWriters.Writers;
+namespace Curiosity.FileDataReaderWriters.Writers;
 
 /// <summary>
 /// Интерфейс для простого построчного вывода данных

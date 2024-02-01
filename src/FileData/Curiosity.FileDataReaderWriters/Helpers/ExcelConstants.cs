@@ -1,4 +1,4 @@
-﻿namespace Curiosity.Utils.FileDataReaderWriters.Helpers;
+﻿namespace Curiosity.FileDataReaderWriters.Helpers;
 
 public static class ExcelConstants
 {

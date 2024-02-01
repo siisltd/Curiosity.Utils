@@ -2,10 +2,10 @@ using System.Globalization;
 using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
-using Curiosity.Utils.FileDataReaderWriters.Style;
-using Curiosity.Utils.FileDataReaderWriters.Writers;
+using Curiosity.FileDataReaderWriters.Style;
+using Curiosity.FileDataReaderWriters.Writers;
 
-namespace Curiosity.Utils.FileDataReaderWriters;
+namespace Curiosity.FileDataReaderWriters;
 
 /// <summary>
 /// Запись данных в .csv формате

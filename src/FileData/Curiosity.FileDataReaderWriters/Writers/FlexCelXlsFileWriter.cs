@@ -1,9 +1,9 @@
 using System.Text;
-using Curiosity.Utils.FileDataReaderWriters.Style;
+using Curiosity.FileDataReaderWriters.Style;
 using FlexCel.Core;
 using FlexCel.XlsAdapter;
 
-namespace Curiosity.Utils.FileDataReaderWriters.Writers;
+namespace Curiosity.FileDataReaderWriters.Writers;
 
 /// <summary>
 /// Запись данных в xlsx / xls формате

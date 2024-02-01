@@ -1,9 +1,9 @@
-﻿using Curiosity.Utils.FileDataReaderWriters.Helpers;
-using Curiosity.Utils.FileDataReaderWriters.Resources;
+﻿using Curiosity.FileDataReaderWriters.Helpers;
+using Curiosity.FileDataReaderWriters.Resources;
 using FlexCel.Core;
 using FlexCel.XlsAdapter;
 
-namespace Curiosity.Utils.FileDataReaderWriters.Readers;
+namespace Curiosity.FileDataReaderWriters.Readers;
 
 /// <summary>
 /// Класс для построчного чтения данных их Xlsx/xlsx файлов.

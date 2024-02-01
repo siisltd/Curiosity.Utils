@@ -151,9 +151,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.SMS.Iqsms", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.SMS.Iqsms.Sample", "samples\Curiosity.SMS.Iqsms.Sample\Curiosity.SMS.Iqsms.Sample.csproj", "{4015E00D-EC76-4A73-A52F-4C4D71C6B8B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.Utils.FileDataReaderWriters", "src\FileData\Curiosity.Utils.FileDataReaderWriters\Curiosity.Utils.FileDataReaderWriters.csproj", "{D135ADFA-0A52-41C0-876F-691876A780E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.FileDataReaderWriters", "src\FileData\Curiosity.FileDataReaderWriters\Curiosity.FileDataReaderWriters.csproj", "{D135ADFA-0A52-41C0-876F-691876A780E1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FileData", "FileData", "{2B8CCF93-24F0-45F9-9961-85695351141E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FileData", "FileData", "{973E81A0-574E-406A-AB95-01B1243A984C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -424,6 +426,7 @@ Global
 		{4015E00D-EC76-4A73-A52F-4C4D71C6B8B5} = {A7A87B49-2E4C-4A0A-92F4-7C7849F36A84}
 		{2B8CCF93-24F0-45F9-9961-85695351141E} = {7C485CBA-A08F-4A0E-835A-4505CBBB7EA8}
 		{D135ADFA-0A52-41C0-876F-691876A780E1} = {2B8CCF93-24F0-45F9-9961-85695351141E}
+		{973E81A0-574E-406A-AB95-01B1243A984C} = {55CC9AE1-6978-4ECB-9A0A-0DCE1B66D492}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA1A20A2-0D4E-492D-877C-0A36F18FBFF1}

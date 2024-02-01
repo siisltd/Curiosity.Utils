@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Curiosity.Utils.FileDataReaderWriters;
+namespace Curiosity.FileDataReaderWriters;
 
 public static partial class Guard
     {

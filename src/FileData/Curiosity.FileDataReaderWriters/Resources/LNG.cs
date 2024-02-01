@@ -1,7 +1,7 @@
 using System.Globalization;
 using Curiosity.Localization;
 
-namespace Curiosity.Utils.FileDataReaderWriters.Resources
+namespace Curiosity.FileDataReaderWriters.Resources
 {
     internal static class LNG
     {

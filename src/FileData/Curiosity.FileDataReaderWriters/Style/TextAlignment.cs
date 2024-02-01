@@ -1,4 +1,4 @@
-﻿namespace Curiosity.Utils.FileDataReaderWriters.Style;
+﻿namespace Curiosity.FileDataReaderWriters.Style;
 
 public enum TextAlignment
 {
