@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CsvHelper" Version="30.0.1" />
+      <PackageReference Include="SIISLtd.NPOI" Version="2.6.2-Zip64" />
+      <PackageReference Include="Sylvan.Data.Csv" Version="1.3.2" />
+      <PackageReference Include="TMS.FlexCel" Version="7.9.0" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <!-- Скрывает WARN об отсутствии XML комментариев -->
+        <NoWarn>$(NoWarn);1591</NoWarn>
+        <NoWarn>$(NoWarn);1573</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Core\SIISLtd.SSNG.Common\SIISLtd.SSNG.Common.csproj" />
+      <ProjectReference Include="..\SIISLtd.Utils.Tools\SIISLtd.Utils.Tools.csproj" />
+    </ItemGroup>
+
+</Project>
