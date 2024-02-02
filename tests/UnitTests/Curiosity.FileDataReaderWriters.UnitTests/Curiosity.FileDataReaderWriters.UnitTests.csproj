@@ -24,6 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\src\FileData\Curiosity.FileDataReaderWriters.Npoi\Curiosity.FileDataReaderWriters.Npoi.csproj" />
       <ProjectReference Include="..\..\..\src\FileData\Curiosity.FileDataReaderWriters\Curiosity.FileDataReaderWriters.csproj" />
     </ItemGroup>
 
