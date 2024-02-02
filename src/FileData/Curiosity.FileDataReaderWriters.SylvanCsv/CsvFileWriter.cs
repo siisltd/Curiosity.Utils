@@ -8,7 +8,7 @@ using CsvHelper.Configuration;
 using Curiosity.FileDataReaderWriters.Style;
 using Curiosity.FileDataReaderWriters.Writers;
 
-namespace Curiosity.FileDataReaderWriters.Sylvan;
+namespace Curiosity.FileDataReaderWriters.SylvanCsv;
 
 /// <summary>
 /// Запись данных в .csv формате

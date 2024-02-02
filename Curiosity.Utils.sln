@@ -161,7 +161,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.FileDataReaderWri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.FileDataReaderWriters.Npoi", "src\FileData\Curiosity.FileDataReaderWriters.Npoi\Curiosity.FileDataReaderWriters.Npoi.csproj", "{7BDDB1E2-79A6-4E0E-9EE4-C4B03E4D0864}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.FileDataReaderWriters.Sylvan", "src\FileData\Curiosity.FileDataReaderWriters.Sylvan\Curiosity.FileDataReaderWriters.Sylvan.csproj", "{BEF02973-7CBA-4AB3-9F91-D0F5BFB5E942}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.FileDataReaderWriters.SylvanCsv", "src\FileData\Curiosity.FileDataReaderWriters.SylvanCsv\Curiosity.FileDataReaderWriters.SylvanCsv.csproj", "{BEF02973-7CBA-4AB3-9F91-D0F5BFB5E942}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

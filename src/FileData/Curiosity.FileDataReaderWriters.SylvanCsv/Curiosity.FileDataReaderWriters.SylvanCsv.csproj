@@ -3,8 +3,8 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         
-        <PackageId>Curiosity.FileDataReaderWriters.Sylvan</PackageId>
-        <Title>Curiosity.FileDataReaderWriters.Sylvan</Title>
+        <PackageId>Curiosity.FileDataReaderWriters.SylvanCsv</PackageId>
+        <Title>Curiosity.FileDataReaderWriters.SylvanCsv</Title>
         <Description>Sylvan realization for working with csv files</Description>
         <Summary>Read and write to csv file. Low memory consumption due to bufferization.</Summary>
         <PackageTags>Curiosity; FileDataReaderWriters; Sylvan; siisltd</PackageTags>

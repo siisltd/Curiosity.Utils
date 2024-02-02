@@ -5,7 +5,7 @@ using System.Text;
 using Curiosity.FileDataReaderWriters.Readers;
 using Sylvan.Data.Csv;
 
-namespace Curiosity.FileDataReaderWriters.Sylvan;
+namespace Curiosity.FileDataReaderWriters.SylvanCsv;
 
 /// <summary>
 /// Класс для построчного чтения CSV файлов. 
