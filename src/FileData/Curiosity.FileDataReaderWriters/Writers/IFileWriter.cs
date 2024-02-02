@@ -1,4 +1,6 @@
 using Curiosity.FileDataReaderWriters.Style;
+using global::System;
+using global::System.Collections.Generic;
 
 namespace Curiosity.FileDataReaderWriters.Writers;
 

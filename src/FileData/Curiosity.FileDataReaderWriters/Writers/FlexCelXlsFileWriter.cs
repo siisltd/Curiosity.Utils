@@ -2,6 +2,8 @@ using System.Text;
 using Curiosity.FileDataReaderWriters.Style;
 using FlexCel.Core;
 using FlexCel.XlsAdapter;
+using global::System;
+using global::System.Collections.Generic;
 
 namespace Curiosity.FileDataReaderWriters.Writers;
 

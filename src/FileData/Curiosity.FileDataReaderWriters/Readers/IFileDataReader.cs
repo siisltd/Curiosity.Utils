@@ -1,4 +1,7 @@
-﻿namespace Curiosity.FileDataReaderWriters.Readers;
+﻿using global::System;
+using global::System.Collections.Generic;
+
+namespace Curiosity.FileDataReaderWriters.Readers;
 
 /// <summary>
 /// Общий интерфейс для классов, которые читает загруженные файлы построчно.

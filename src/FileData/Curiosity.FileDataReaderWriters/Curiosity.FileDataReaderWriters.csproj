@@ -1,21 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>netstandard2.1</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="CsvHelper" Version="30.0.1" />
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.3" />
-      <PackageReference Include="SIISLtd.NPOI" Version="2.6.2-Zip64" />
       <PackageReference Include="Sylvan.Data.Csv" Version="1.3.2" />
       <PackageReference Include="TMS.FlexCel" Version="7.9.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\Localization\Curiosity.Localization\Curiosity.Localization.csproj" />
     </ItemGroup>
 
     <ItemGroup>

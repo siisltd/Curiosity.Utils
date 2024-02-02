@@ -1,4 +1,6 @@
-﻿namespace Curiosity.FileDataReaderWriters.Style;
+﻿using global::System;
+
+namespace Curiosity.FileDataReaderWriters.Style;
 
 [Flags]
 public enum FontStyle

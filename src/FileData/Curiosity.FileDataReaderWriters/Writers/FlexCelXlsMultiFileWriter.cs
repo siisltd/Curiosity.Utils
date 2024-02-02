@@ -3,6 +3,9 @@ using Curiosity.FileDataReaderWriters.Style;
 using Curiosity.FileDataReaderWriters.Writers;
 using FlexCel.Core;
 using FlexCel.XlsAdapter;
+using global::System;
+using global::System.Collections.Generic;
+using global::System.IO;
 using Microsoft.Extensions.Logging;
 
 namespace Curiosity.FileDataReaderWriters
