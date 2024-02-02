@@ -1,14 +1,14 @@
+using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Text;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Curiosity.FileDataReaderWriters.Style;
 using Curiosity.FileDataReaderWriters.Writers;
-using global::System;
-using global::System.Collections.Generic;
-using global::System.IO;
 
-namespace Curiosity.FileDataReaderWriters;
+namespace Curiosity.FileDataReaderWriters.Sylvan;
 
 /// <summary>
 /// Запись данных в .csv формате

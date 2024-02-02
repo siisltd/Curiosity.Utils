@@ -1,9 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
-using global::System;
 
 namespace Curiosity.FileDataReaderWriters;
 
-internal static class Guard
+public static class Guard
 {
     /// <summary>
     /// Проверяет, что параметр не null.

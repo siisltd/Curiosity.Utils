@@ -161,6 +161,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.FileDataReaderWri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.FileDataReaderWriters.Npoi", "src\FileData\Curiosity.FileDataReaderWriters.Npoi\Curiosity.FileDataReaderWriters.Npoi.csproj", "{7BDDB1E2-79A6-4E0E-9EE4-C4B03E4D0864}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Curiosity.FileDataReaderWriters.Sylvan", "src\FileData\Curiosity.FileDataReaderWriters.Sylvan\Curiosity.FileDataReaderWriters.Sylvan.csproj", "{BEF02973-7CBA-4AB3-9F91-D0F5BFB5E942}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -363,6 +365,10 @@ Global
 		{7BDDB1E2-79A6-4E0E-9EE4-C4B03E4D0864}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BDDB1E2-79A6-4E0E-9EE4-C4B03E4D0864}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BDDB1E2-79A6-4E0E-9EE4-C4B03E4D0864}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEF02973-7CBA-4AB3-9F91-D0F5BFB5E942}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEF02973-7CBA-4AB3-9F91-D0F5BFB5E942}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEF02973-7CBA-4AB3-9F91-D0F5BFB5E942}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEF02973-7CBA-4AB3-9F91-D0F5BFB5E942}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -441,6 +447,7 @@ Global
 		{973E81A0-574E-406A-AB95-01B1243A984C} = {55CC9AE1-6978-4ECB-9A0A-0DCE1B66D492}
 		{14444441-9159-44B1-AEE0-50B9C8F6E90C} = {973E81A0-574E-406A-AB95-01B1243A984C}
 		{7BDDB1E2-79A6-4E0E-9EE4-C4B03E4D0864} = {2B8CCF93-24F0-45F9-9961-85695351141E}
+		{BEF02973-7CBA-4AB3-9F91-D0F5BFB5E942} = {2B8CCF93-24F0-45F9-9961-85695351141E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BA1A20A2-0D4E-492D-877C-0A36F18FBFF1}

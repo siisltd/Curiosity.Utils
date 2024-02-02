@@ -1,10 +1,11 @@
-﻿using System.Text;
-using global::System;
-using global::System.Collections.Generic;
-using global::System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using Curiosity.FileDataReaderWriters.Readers;
 using Sylvan.Data.Csv;
 
-namespace Curiosity.FileDataReaderWriters.Readers;
+namespace Curiosity.FileDataReaderWriters.Sylvan;
 
 /// <summary>
 /// Класс для построчного чтения CSV файлов. 
