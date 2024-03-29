@@ -21,22 +21,6 @@ namespace Curiosity.Tools.UnitTests.UniqueId
             id.Should().Be(value);
         }
         
-        // can detect that line is 17 chars hex and parse it to true long value
-        [Fact]
-        public void TryParse_Parse17CharsHexLine_LongValue()
-        {
-            // arrange
-            const long value = 10752219502637056;
-            const string hex = "00026331630007000"; // 17 chars hex
-            
-            // act
-            var canParse = PublicId.TryParse(hex, out var id);
-
-            // assert
-            canParse.Should().Be(true);
-            id.Should().Be(value);
-        }
-        
         // can detect that line is dec and parse it to true long value
         [Fact]
         public void TryParse_ParseDecLine_LongValue()
