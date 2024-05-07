@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.5.3]
+
+### Changed
+
+- `PublicId.ToPublicId()` returns 16 chars string again
+
 ## [1.5.2]
 
 ### Changed

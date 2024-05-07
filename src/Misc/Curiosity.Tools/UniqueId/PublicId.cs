@@ -15,11 +15,9 @@ namespace Curiosity.Tools
         /// <returns>ID in HEX</returns>
         public static string ToPublicId(this long id)
         {
-            // number 17 in the format indicates the minimum number of characters in the string
+            // number 16 in the format indicates the minimum number of characters in the string
             // missing characters are replaced with 0
-            // by the first 0, we can detect that the number is hexadecimal, even if all numbers are there
-            // until 2024 year, our UniqueIdGenerator had generated 16 characters string
-            return id.ToString("x17", CultureInfo.InvariantCulture);
+            return id.ToString("x16", CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -52,9 +50,8 @@ namespace Curiosity.Tools
                     return true;
             }
         
-            // until 2024 year, our UniqueIdGenerator had generated 16 chars string then 17 chars
-            // always with first 0
-            if ((line.Length == 16 || line.Length == 17) && 
+            // our UniqueIdGenerator will generate hex id with first 0 until 2028 year
+            if ((line.Length == 16) && 
                 line[0] == '0')
                 return true;
 
