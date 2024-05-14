@@ -24,6 +24,8 @@ namespace Curiosity.Tools
         private const int MaxSequenceId = 4096;
 
         // 13 apr 2020 (in Ticks / 10000)
+        // can generate positive long numbers ~70 years from this date,
+        // then a overflow starts
         private const long ModelStartEpoch = 63722332800000;
         private static long _generatorId = -1;
 

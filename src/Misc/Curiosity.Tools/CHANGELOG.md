@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.5.3]
+
+### Changed
+
+- `PublicId.ToPublicId()` returns 16 chars string again
+
+## [1.5.2]
+
+### Changed
+
+- `PublicId.ToPublicId()` returns 17 chars string instead 16 chars
+- `PublicId.TryParse()` can parse hex and dec line
+
 ## [1.5.1] - 2023-11-28
 
 ### Fixed
