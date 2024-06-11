@@ -74,21 +74,23 @@ namespace Curiosity.SMS.Smsc
                 _logger.LogDebug(resultJson);
 
                 // has sent error
-                if ((response.Data.ErrorCode ?? 0) != 0)
+                var errorCode = response.Data?.error_code ?? 0;
+                var error = response.Data?.Error;
+                if (errorCode != 0 || error != null)
                 {
                     // if we got message denied error (6) and it is our first attempt, let's remove sender name and try again
                     // because SMSC can block SMS to Megafon and Tele2 with specified sender name when there is sender name is not agreed
-                    if (response.Data.ErrorCode == 6 && retriesCount == 0)
+                    if (errorCode == 6 && retriesCount == 0)
                     {
                         _logger.LogWarning("Отправка SMS на номер {PhoneNumber} заблокирована. Попробуем повторно отправить без указания имени отправтиеля (текущее имя отправителя = \"{SenderName}\")", phoneNumber, senderName);
                         return await SendSmsAsync(phoneNumber, message, smscLogin, smscPassword, null, 1, cancellationToken);
                     }
 
-                    var errorMessage = $"Ошибка при отправке sms на номер {phoneNumber} (error_code = {response.Data.ErrorCode}, error = \"{response.Data.Error}\")";
-                    _logger.LogWarning($"Ошибка при отправке sms на номер {phoneNumber} (error_code = {response.Data.ErrorCode}, error = \"{response.Data.Error}\")");
+                    var errorMessage = $"Ошибка при отправке sms на номер {phoneNumber} (error_code = {errorCode}, error = \"{error}\")";
+                    _logger.LogWarning($"Ошибка при отправке sms на номер {phoneNumber} (error_code = {errorCode}, error = \"{error}\")");
 
                     // check error code
-                    switch (response.Data.ErrorCode)
+                    switch (errorCode)
                     {
                         case 1: // Ошибка в параметрах.
                         case 2: // Неверный логин или пароль.
@@ -111,7 +113,7 @@ namespace Curiosity.SMS.Smsc
             {
                 var data = new SmscResponseData
                 {
-                    ErrorCode = -1
+                    error_code = -1
                 };
                 if (response.ErrorException != null)
                 {
@@ -134,7 +136,7 @@ namespace Curiosity.SMS.Smsc
             }
 
             // successfully sent
-            if (response.Data.Cost.HasValue)
+            if (response.Data?.Cost != null)
                 messageCost = response.Data.Cost;
 
             _logger.LogInformation($"Успешно отправили sms на номер {phoneNumber}");

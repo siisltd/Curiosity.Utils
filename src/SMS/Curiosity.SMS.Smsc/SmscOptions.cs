@@ -24,7 +24,7 @@ namespace Curiosity.SMS.Smsc
         /// <summary>
         /// Sender's name.
         /// </summary>
-        public string SmscSender { get; set; } = null!;
+        public string? SmscSender { get; set; } = null!;
 
         /// <inheritdoc />
         public IReadOnlyCollection<ConfigurationValidationError> Validate(string? prefix = null)
@@ -32,7 +32,6 @@ namespace Curiosity.SMS.Smsc
             var errors = new ConfigurationValidationErrorCollection(prefix);
             errors.AddErrorIf(String.IsNullOrEmpty(SmscLogin), nameof(SmscLogin), CanNotBeEmptyErrorDescription);
             errors.AddErrorIf(String.IsNullOrEmpty(SmscPassword), nameof(SmscPassword), CanNotBeEmptyErrorDescription);
-            errors.AddErrorIf(String.IsNullOrEmpty(SmscSender), nameof(SmscSender), CanNotBeEmptyErrorDescription);
 
             return errors;
         }
