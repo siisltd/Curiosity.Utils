@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.1]
+
+### Changed
+
+- Fixed smsc delivery error detection
+
 ## [1.3.0] - 2023-01-29
 
 ### Changed

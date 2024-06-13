@@ -7,11 +7,11 @@ namespace Curiosity.SMS.Smsc
         [JsonProperty("Error")]
         public string? Error { get; set; }
 
-        [JsonProperty("ErrorCode")]
-        public int? ErrorCode { get; set; }
+        [JsonProperty("error_code")]
+        public int? error_code { get; set; }
 
-        [JsonProperty("Id")]
-        public string? Id { get; set; }
+        [JsonProperty("id")]
+        public long? Id { get; set; }
 
         [JsonProperty("cnt")]
         public int? Count { get; set; }
