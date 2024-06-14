@@ -34,5 +34,10 @@ namespace Curiosity.SMS
         /// Account has no money.
         /// </summary>
         NoMoney = 5,
+        
+        /// <summary>
+        /// Can't to deliver
+        /// </summary>
+        DeliveryError = 6,
     }
 }

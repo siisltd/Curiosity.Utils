@@ -102,6 +102,9 @@ namespace Curiosity.SMS.Smsc
                         case 4: // IP-адрес временно заблокирован из-за частых ошибок в запросах. 
                         case 9: // Более 15 параллельных запросов под одним логином с разных подключений.
                             return Response.Failed(new Error((int) SmsError.RateLimit, errorMessage), new SmsSentResult(null, null, resultJson));
+                        
+                        case 8: // can't to deliver
+                            return Response.Failed(new Error((int)SmsError.DeliveryError, errorMessage), new SmsSentResult(null, null, resultJson));
 
                         default:
                             return Response.Failed(new Error((int) SmsError.Unknown, errorMessage), new SmsSentResult(null, null, resultJson));

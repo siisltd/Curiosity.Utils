@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.2]
+
+### Changed
+
+- Added delivery error
+
 ## [1.3.1]
 
 ### Changed
