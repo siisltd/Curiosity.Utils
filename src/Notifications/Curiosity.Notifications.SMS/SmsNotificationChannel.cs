@@ -74,6 +74,7 @@ namespace Curiosity.Notifications.SMS
                     2 => NotificationErrorCode.Communication,
                     4 => NotificationErrorCode.RateLimit,
                     5 => NotificationErrorCode.NoMoney,
+                    6 => NotificationErrorCode.DeliveryError,
                     _ => NotificationErrorCode.Unknown,
                 };
                 

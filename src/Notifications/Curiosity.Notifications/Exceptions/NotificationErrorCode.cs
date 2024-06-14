@@ -38,6 +38,11 @@
         /// <summary>
         /// Send data was incorrect.
         /// </summary>
-        IncorrectRequestData = 6
+        IncorrectRequestData = 6,
+        
+        /// <summary>
+        /// Delivery error
+        /// </summary>
+        DeliveryError = 7,
     }
 }
