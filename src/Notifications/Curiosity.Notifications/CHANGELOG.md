@@ -1,11 +1,17 @@
 # Changelog
 
+## [1.3.1] 
+
+### Changed
+
+- Add delivery error
+
 ## [1.3.0] - 2023-01-29
 
 ### Changed
 
 - Upgraded `Microsoft`'s packages up to `6.*` versions.
-- 
+
 ## [1.2.4] - 2022-06-20
 
 ### Changed
