@@ -83,8 +83,6 @@ public class IqsmsSender : IIqsmsSender
         // execute
         var response = await client.ExecuteAsync<string>(request, cancellationToken);
         
-        const string warnMessage = "Ошибка при отправке sms на номер {0} (error = \"{1}\")";
-        
         // HTTP code
         switch (response.StatusCode)
         {
@@ -92,13 +90,13 @@ public class IqsmsSender : IIqsmsSender
                 break;
             
             case HttpStatusCode.Unauthorized:
-                _logger.LogWarning(warnMessage, phoneNumber, "Ошибка авторизации");
+                _logger.LogWarning($"Ошибка при отправке sms на номер {phoneNumber} (error = \"Ошибка авторизации\", Content = \"{response.Content}\")");
                 return Response.Failed(
                     new Error((int)SmsError.Auth, "Ошибка авторизации"),
                     new SmsSentResult(null, null, response.Content      ?? "empty content"));
             
             default:
-                _logger.LogWarning(warnMessage, phoneNumber, response.ErrorMessage);
+                _logger.LogWarning($"Ошибка при отправке sms на номер {phoneNumber} (error = \"{response.ErrorMessage}\", Content = \"{response.Content}\")");
                 return Response.Failed(
                     new Error((int)SmsError.Communication, response.ErrorMessage ?? "empty error message"),
                     new SmsSentResult(null, null, response.Content               ?? "empty content"));
@@ -108,7 +106,7 @@ public class IqsmsSender : IIqsmsSender
         var content = response.Content?.Split(";");
         if (content == null || content.Length < 1)
         {
-            _logger.LogWarning(warnMessage, phoneNumber, "Неожиданый контент в ответе");
+            _logger.LogWarning($"Ошибка при отправке sms на номер {phoneNumber} (error = \"Неожиданый контент в ответе\", Content = \"{response.Content}\")");
 
             return Response.Failed(
                 new Error((int)SmsError.Unknown, "Неожиданый контент в ответе"),
@@ -116,14 +114,23 @@ public class IqsmsSender : IIqsmsSender
         }
 
         // bad request
-        var resultText = content[0];
+        var resultText = content[0].Trim().ToLower();
         if (resultText != "accepted")
         {
-            _logger.LogWarning(warnMessage, phoneNumber, $"Сервер вернул: {resultText}");
+            _logger.LogWarning($"Ошибка при отправке sms на номер {phoneNumber} (Сервер вернул: \"{resultText}\", Content = \"{response.Content}\")");
 
-            return Response.Failed(
-                new Error((int)SmsError.Unknown, resultText),
-                new SmsSentResult(null, null, response.Content ?? "empty content"));
+            string? errorMessage = null;
+            if (content.Length > 1)
+                errorMessage = content[1];
+
+            switch (errorMessage?.Trim().ToLower())
+            {
+                case "not enough balance":
+                    return Response.Failed(new Error((int)SmsError.NoMoney, response.Content!), new SmsSentResult(null, null, response.Content!));
+
+                default:
+                    return Response.Failed(new Error((int)SmsError.Unknown, response.Content!), new SmsSentResult(null, null, response.Content!));
+            }
         }
         
         // success
