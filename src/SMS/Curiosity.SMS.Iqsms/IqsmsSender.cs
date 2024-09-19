@@ -127,6 +127,9 @@ public class IqsmsSender : IIqsmsSender
             {
                 case "not enough balance":
                     return Response.Failed(new Error((int)SmsError.NoMoney, response.Content!), new SmsSentResult(null, null, response.Content!));
+                
+                case "invalid mobile phone":
+                    return Response.Failed(new Error((int)SmsError.DeliveryError, response.Content!), new SmsSentResult(null, null, response.Content!));
 
                 default:
                     return Response.Failed(new Error((int)SmsError.Unknown, response.Content!), new SmsSentResult(null, null, response.Content!));
