@@ -2,14 +2,3 @@ mkdocs-material
 markdown-include
 pymdown-extensions
 pygments
-mkdocs-git-revision-date-localized-plugin
-mkdocs-minify-plugin
-mkdocs-awesome-pages-plugin
-mkdocs-static-i18n
-mkdocs-git-authors-plugin
-mkdocs-section-index
-mkdocs-glightbox
-mkdocs-redirects
-mkdocs-exclude
-mkdocs-macros-plugin
-mkdocs-include-markdown-plugin
