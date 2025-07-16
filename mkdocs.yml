@@ -3,6 +3,10 @@ site_url: https://curiosityutils.readthedocs.io/en/latest/
 
 nav:
   - Home: index.md
+  - Notifications:
+    - Overview: Notiifications/index.md
+    - Email Notifications: Notiifications/emails.md
+    - SMS Notifications: Notiifications/sms.md
 
 theme:
   name: material
@@ -25,6 +29,7 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
+  
   features:
     - navigation.sections
     - navigation.expand
