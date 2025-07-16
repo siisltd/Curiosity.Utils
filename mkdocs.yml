@@ -7,15 +7,48 @@ nav:
 theme:
   name: material
   language: en
+  logo: images/logo.png
+  favicon: images/logo.png
   font:
-    text: Roboto
-    code: Roboto Mono
+    text: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif
+    code: 'JetBrains Mono', 'Fira Code', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace
   palette:
-    primary: red
-    accent: red
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
   features:
     - navigation.sections
     - navigation.expand
+    - navigation.top
+    - navigation.instant
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - search.highlight
+    - search.share
+    - search.suggest
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+    - toc.integrate
+
+extra_css:
+  - stylesheets/extra.css
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/siisltd/Curiosity.Utils
+    - icon: fontawesome/solid/globe
+      link: https://siisltd.com
 
 markdown_extensions:
   - codehilite
