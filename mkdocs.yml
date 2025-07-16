@@ -37,15 +37,14 @@ markdown_extensions:
 
 plugins:
   - search
-  - mkdocs-git-revision-date-localized-plugin
-  - mkdocs-minify-plugin
-  - mkdocs-awesome-pages-plugin
-  - mkdocs-pymdownx-material-extras
-  - mkdocs-static-i18n
-  - mkdocs-git-authors-plugin
-  - mkdocs-section-index
-  - mkdocs-glightbox
-  - mkdocs-redirects
-  - mkdocs-exclude
-  - mkdocs-macros-plugin
-  - mkdocs-include-markdown-plugin 
+  - git-revision-date-localized
+  - minify
+  - awesome-pages
+  - static-i18n
+  - git-authors
+  - section-index
+  - glightbox
+  - redirects
+  - exclude
+  - macros
+  - include-markdown 
