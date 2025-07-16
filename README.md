@@ -1,6 +1,13 @@
-# Curiosity.Utils [![Build and Test](https://github.com/siisltd/Curiosity.Utils/actions/workflows/build.yml/badge.svg)](https://github.com/siisltd/Curiosity.Utils/actions/workflows/build.yml) [![(License)](https://img.shields.io/github/license/siisltd/curiosity.utils.svg)](https://github.com/siisltd/Curiosity.Utils/blob/master/LICENSE) 
+# Curiosity.Utils
 
-Utils for .NET Core / .NET Standard projects
+[![Documentation Status](https://readthedocs.org/projects/curiosityutils/badge/?version=latest)](https://curiosityutils.readthedocs.io/en/latest/?badge=latest)
 
-> ReadMe is under construction.
->
+A collection of .NET utilities and helpers for various common tasks: configuration, data access, email, file operations, localization, messaging, notifications, and more.
+
+## Documentation
+
+Full documentation is available at: [https://curiosityutils.readthedocs.io/](https://curiosityutils.readthedocs.io/)
+
+---
+
+Licensed under the MIT License.
