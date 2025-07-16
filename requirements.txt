@@ -1,0 +1,17 @@
+mkdocs>=1.5.3
+mkdocs-material>=9.5.13
+mkdocs-markdowninclude-plugin>=0.8.0
+mkdocs-git-revision-date-localized-plugin>=1.2.0
+mkdocs-minify-plugin>=0.7.1
+mkdocs-awesome-pages-plugin>=2.9.2
+mkdocs-pymdownx-material-extras>=1.0.0
+mkdocs-static-i18n>=0.25
+mkdocs-git-authors-plugin>=0.7.2
+mkdocs-section-index>=0.3.5
+mkdocs-glightbox>=0.3.4
+mkdocs-redirects>=1.2.0
+mkdocs-exclude>=1.0.2
+mkdocs-macros-plugin>=1.0.5
+mkdocs-include-markdown-plugin>=3.9.1
+pymdown-extensions>=10.7
+markdown-include>=0.8.1 

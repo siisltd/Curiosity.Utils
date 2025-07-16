@@ -1,0 +1,53 @@
+site_name: Curiosity.Utils
+site_url: https://curiosityutils.readthedocs.io/en/latest/
+
+nav:
+  - Home: index.md
+
+theme:
+  name: material
+  language: en
+  font:
+    text: Roboto
+    code: Roboto Mono
+  palette:
+    primary: red
+    accent: red
+  features:
+    - navigation.sections
+    - navigation.expand
+
+markdown_extensions:
+  - codehilite
+  - toc:
+      permalink: true
+  - markdown_include.include:
+      base_path: docs
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - def_list
+  - attr_list
+
+plugins:
+  - search
+  - mkdocs-material
+  - mkdocs-markdowninclude-plugin
+  - mkdocs-git-revision-date-localized-plugin
+  - mkdocs-minify-plugin
+  - mkdocs-awesome-pages-plugin
+  - mkdocs-pymdownx-material-extras
+  - mkdocs-static-i18n
+  - mkdocs-git-authors-plugin
+  - mkdocs-section-index
+  - mkdocs-glightbox
+  - mkdocs-redirects
+  - mkdocs-exclude
+  - mkdocs-macros-plugin
+  - mkdocs-include-markdown-plugin 
