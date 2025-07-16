@@ -13,4 +13,4 @@ build:
 # Optionally specify the Python version and additional dependencies
 python:
   install:
-    - requirements: docs/requirements.txt 
+    - requirements: requirements.txt 
