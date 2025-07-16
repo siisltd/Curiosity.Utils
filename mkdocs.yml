@@ -37,8 +37,6 @@ markdown_extensions:
 
 plugins:
   - search
-  - mkdocs-material
-  - mkdocs-markdowninclude-plugin
   - mkdocs-git-revision-date-localized-plugin
   - mkdocs-minify-plugin
   - mkdocs-awesome-pages-plugin
