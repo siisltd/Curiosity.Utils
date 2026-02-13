@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0] - 2026-02-13
+
+### Changed
+
+- Build target changed to `net10.0`
+- Upgraded `Microsoft`'s packages up to `10.*` versions.
+- Upgraded `HtmlSanitizer` up to `8.1.870`.
+
 ## [1.3.1] 
 
 ### Added

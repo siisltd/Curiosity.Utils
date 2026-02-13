@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.0] - 2026-02-13
+
+### Changed
+
+- Upgraded `Microsoft`'s packages up to `10.*` versions.
+
 ## [1.1.0] - 2023-01-29
 
 ### Changed

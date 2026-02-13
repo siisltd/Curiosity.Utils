@@ -1,10 +1,17 @@
 # Changelog
 
+## [1.4.0] - 2026-02-12
+
+### Changed
+
+- Build target changed to `net10.0`
+- Upgraded `Npgsql` up to `10.0.1`.
+
 ## [1.3.0] - 2023-01-29
 
 ### Changed
 
-- Upgraded `NpgSql` up to `7.0.1`.
+- Upgraded `Npgsql` up to `7.0.1`.
 
 ## [1.2.0] - 2022-06-09
 

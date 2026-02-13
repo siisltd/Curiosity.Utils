@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0] - 2026-02-13
+
+### Changed
+
+- Upgraded `Microsoft`'s packages up to `10.*` versions.
+- Upgraded `NLog.Web.AspNetCore` up to `5.5.0`.
+- Upgraded `MailKit` up to `3.6.0`.
+
 ## [1.3.0] - 2023-01-29
 
 ### Changed

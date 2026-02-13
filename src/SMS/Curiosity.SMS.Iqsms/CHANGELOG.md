@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.1.0]
+
+Upgraded dependencies.
+
 ## [1.0.3]
 
 Convert response with text "invalid mobile phone" to delivery error.

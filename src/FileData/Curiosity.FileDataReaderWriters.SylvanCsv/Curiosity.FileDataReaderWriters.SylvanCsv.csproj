@@ -12,11 +12,11 @@
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.0.0</PackageVersion>
+        <PackageVersion>1.1.0</PackageVersion>
 
         <Authors>Max Markelow (@markeli), Andrei Vinogradov (@anri-vin), Andrey Ioch (@DevCorvette), Timur Sidoriuk (@shockthunder)</Authors>
         <Company>SIIS Ltd</Company>
-        <Copyright>SIIS Ltd, 2024</Copyright>
+        <Copyright>SIIS Ltd, 2026</Copyright>
 
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -41,7 +41,7 @@
     
     <ItemGroup>
         <ProjectReference Include="..\Curiosity.FileDataReaderWriters\Curiosity.FileDataReaderWriters.csproj"/>
-        <PackageReference Include="Sylvan.Data.Csv" Version="1.3.2"/>
+        <PackageReference Include="Sylvan.Data.Csv" Version="1.4.3" />
     </ItemGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

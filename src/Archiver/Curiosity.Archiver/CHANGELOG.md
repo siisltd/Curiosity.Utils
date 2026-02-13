@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.4.0] - 2026-02-13
+
+### Changed
+
+- Upgraded dependencies.
+
 ## [1.3.1] - 2022-05-14
 
 ### Changed

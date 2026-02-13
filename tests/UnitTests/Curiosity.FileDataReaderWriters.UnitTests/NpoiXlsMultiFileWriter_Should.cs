@@ -79,12 +79,12 @@ namespace Curiosity.FileDataReaderWriters.UnitTests
                 
                 var firstRowResult = sheet.GetRow(1);
                 Assert.Equal(firstRowResult.GetCell(0).NumericCellValue, firstRow[0].Value);
-                Assert.Equal(firstRowResult.GetCell(1).DateCellValue.ToLongDateString(), DateTime.Parse(firstRow[1].Value.ToString()).ToLongDateString());
+                Assert.Equal(firstRowResult.GetCell(1).DateCellValue?.ToLongDateString(), DateTime.Parse(firstRow[1].Value.ToString()).ToLongDateString());
                 Assert.Equal(firstRowResult.GetCell(2).StringCellValue, firstRow[2].Value);
                 
                 var secondRowResult = sheet.GetRow(2);
                 Assert.Equal(secondRowResult.GetCell(0).NumericCellValue, secondRow[0].Value);
-                Assert.Equal(secondRowResult.GetCell(1).DateCellValue.ToLongDateString(), DateTime.Parse(secondRow[1].Value.ToString()).ToLongDateString());
+                Assert.Equal(secondRowResult.GetCell(1).DateCellValue?.ToLongDateString(), DateTime.Parse(secondRow[1].Value.ToString()).ToLongDateString());
                 Assert.Equal(secondRowResult.GetCell(2).StringCellValue, secondRow[2].Value);
                 
                 stream.Close();

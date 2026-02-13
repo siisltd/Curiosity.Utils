@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0] - 2026-02-13
+
+### Changed
+
+- Upgraded `Microsoft`'s packages up to `10.*` versions.
+- Upgraded `NodaTime` up to `3.3.0`.
+
 ## [1.5.3]
 
 ### Changed

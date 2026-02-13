@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
 
         <PackageId>Curiosity.DAL.EF</PackageId>
         <Title>Curiosity.DAL.EF</Title>
@@ -12,10 +12,10 @@
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.5.0</PackageVersion>
+        <PackageVersion>1.6.0</PackageVersion>
 
-        <Authors>Max Markelow (@markeli)</Authors>
-        <Copyright>SIIS Ltd, 2023</Copyright>
+        <Authors>Max Markelow (@markeli), Andrei Vinogradov (@anri-vin)</Authors>
+        <Copyright>SIIS Ltd, 2026</Copyright>
 
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -44,8 +44,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.13" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.13" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.3" />
       <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     </ItemGroup>
 

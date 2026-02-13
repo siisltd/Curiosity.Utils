@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0] - 2026-02-13
+
+### Changed
+
+- Upgraded `Microsoft`'s packages up to `10.*` versions.
+- Upgraded `Newtonsoft.Json` up to `13.0.4`.
+
 ## [1.4.0] - 2023-01-29
 
 ### Changed

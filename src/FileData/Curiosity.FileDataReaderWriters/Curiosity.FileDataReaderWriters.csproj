@@ -13,11 +13,11 @@
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.0.0</PackageVersion>
+        <PackageVersion>1.1.0</PackageVersion>
 
         <Authors>Max Markelow (@markeli), Andrei Vinogradov (@anri-vin), Andrey Ioch (@DevCorvette), Timur Sidoriuk (@shockthunder)</Authors>
         <Company>SIIS Ltd</Company>
-        <Copyright>SIIS Ltd, 2024</Copyright>
+        <Copyright>SIIS Ltd, 2026</Copyright>
 
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -42,8 +42,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="CsvHelper" Version="30.0.1" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.3" />
+      <PackageReference Include="CsvHelper" Version="30.1.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
     </ItemGroup>
 
     <ItemGroup>

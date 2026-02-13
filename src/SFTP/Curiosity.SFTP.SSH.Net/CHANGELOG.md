@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.5.0] - 2026-02-13
+
+### Changed
+
+- Upgraded `Polly` up to `7.2.4`.
+
 ## [1.4.1] - 2023-03-14
 
 ### Fixed

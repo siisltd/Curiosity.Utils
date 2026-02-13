@@ -12,11 +12,11 @@
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.4.1</PackageVersion>
+        <PackageVersion>1.5.0</PackageVersion>
 
-        <Authors>Max Markelow (@markeli)</Authors>
+        <Authors>Max Markelow (@markeli), Andrei Vinogradov (@anri-vin)</Authors>
         <Company>SIIS Ltd</Company>
-        <Copyright>SIIS Ltd, 2023</Copyright>
+        <Copyright>SIIS Ltd, 2026</Copyright>
 
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -38,7 +38,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     </ItemGroup>
 
     <PropertyGroup>
