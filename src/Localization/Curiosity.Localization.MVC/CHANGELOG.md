@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.0] - 2026-02-21
+
+### Changed
+
+- Dropped `netstandard2.1` support. Now multi-targeting `net8.0`, `net9.0`, and `net10.0`.
+- Replaced `Microsoft.AspNetCore.Mvc.Localization` NuGet package with `Microsoft.AspNetCore.App` framework reference.
+
 ## [1.1.0] - 2026-02-13
 
 ### Added

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+        <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
 
         <PackageId>Curiosity.EMail</PackageId>
         <Title>Curiosity.EMail</Title>
@@ -12,7 +12,7 @@
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.5.0</PackageVersion>
+        <PackageVersion>2.0.0</PackageVersion>
 
         <Authors>Max Markelow (@markeli), Andrey Ioch (@DevCorvette), Andrei Vinogradov (@anri-vin)</Authors>
         <Company>SIIS Ltd</Company>
@@ -25,8 +25,6 @@
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
         <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/EMail/Curiosity.EMail/CHANGELOG.md</PackageReleaseNotes>
-
-        <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
         
@@ -45,10 +43,10 @@
     </PropertyGroup>
 
     <ItemGroup>                                             
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.3" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
-      <PackageReference Include="MimeKit" Version="3.6.1" />
-      <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+      <PackageReference Include="MimeKit" />
+      <PackageReference Include="System.ComponentModel.Annotations" />
     </ItemGroup>
 
     <ItemGroup>

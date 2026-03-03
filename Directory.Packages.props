@@ -1,0 +1,119 @@
+<Project>
+
+	<PropertyGroup>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+	</PropertyGroup>
+
+	<!-- Default versions (net10.0) -->
+	<ItemGroup>
+		<!-- Microsoft.Extensions.* -->
+		<PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="10.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.Configuration.CommandLine" Version="10.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.Localization" Version="10.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.Localization.Abstractions" Version="10.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.3" />
+		<PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
+
+		<!-- EF Core -->
+		<PackageVersion Include="Microsoft.EntityFrameworkCore" Version="10.0.3" />
+		<PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.3" />
+		<PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.3" />
+
+		<!-- ASP.NET Core -->
+		<PackageVersion Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="10.0.3" />
+		<PackageVersion Include="Microsoft.Net.Http.Headers" Version="10.0.3" />
+
+		<!-- Npgsql -->
+		<PackageVersion Include="Npgsql" Version="10.0.1" />
+
+		<!-- Framework-agnostic packages -->
+		<PackageVersion Include="CsvHelper" Version="30.1.0" />
+		<PackageVersion Include="Dapper" Version="2.1.66" />
+		<PackageVersion Include="EntryPoint" Version="1.3.0" />
+		<PackageVersion Include="Flurl.Http" Version="3.2.4" />
+		<PackageVersion Include="HtmlSanitizer" Version="8.1.870" />
+		<PackageVersion Include="MailKit" Version="3.6.0" />
+		<PackageVersion Include="MemoryPools" Version="1.1.3.5" />
+		<PackageVersion Include="MimeKit" Version="3.6.1" />
+		<PackageVersion Include="NetEscapades.Configuration.Yaml" Version="2.2.0" />
+		<PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
+		<PackageVersion Include="NLog.Extensions.Logging" Version="5.5.0" />
+		<PackageVersion Include="NLog.MailKit" Version="5.0.0" />
+		<PackageVersion Include="NLog.Web.AspNetCore" Version="5.5.0" />
+		<PackageVersion Include="NodaTime" Version="3.3.0" />
+		<PackageVersion Include="NPOI" Version="2.7.5" />
+		<PackageVersion Include="Polly" Version="7.2.4" />
+		<PackageVersion Include="RabbitMQ.Client" Version="6.8.1" />
+		<PackageVersion Include="RestSharp" Version="108.0.3" />
+		<PackageVersion Include="RestSharp.Serializers.NewtonsoftJson" Version="108.0.3" />
+		<PackageVersion Include="SharpZipLib" Version="1.4.2" />
+		<PackageVersion Include="SSH.NET" Version="2020.0.2" />
+		<PackageVersion Include="Sylvan.Data.Csv" Version="1.4.3" />
+		<PackageVersion Include="System.ComponentModel.Annotations" Version="5.0.0" />
+
+		<!-- Test packages -->
+		<PackageVersion Include="coverlet.collector" Version="3.2.0" />
+		<PackageVersion Include="FluentAssertions" Version="6.12.2" />
+		<PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+		<PackageVersion Include="Moq" Version="4.20.72" />
+		<PackageVersion Include="xunit" Version="2.9.3" />
+		<PackageVersion Include="xunit.runner.visualstudio" Version="2.8.2" />
+	</ItemGroup>
+
+	<!-- net8.0 overrides -->
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+		<PackageVersion Update="Microsoft.Extensions.Caching.Memory" Version="8.0.1" />
+		<PackageVersion Update="Microsoft.Extensions.Configuration" Version="8.0.0" />
+		<PackageVersion Update="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+		<PackageVersion Update="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
+		<PackageVersion Update="Microsoft.Extensions.Configuration.CommandLine" Version="8.0.0" />
+		<PackageVersion Update="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
+		<PackageVersion Update="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+		<PackageVersion Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+		<PackageVersion Update="Microsoft.Extensions.Hosting" Version="8.0.1" />
+		<PackageVersion Update="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.1" />
+		<PackageVersion Update="Microsoft.Extensions.Localization" Version="8.0.24" />
+		<PackageVersion Update="Microsoft.Extensions.Localization.Abstractions" Version="8.0.24" />
+		<PackageVersion Update="Microsoft.Extensions.Logging" Version="8.0.1" />
+		<PackageVersion Update="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3" />
+		<PackageVersion Update="Microsoft.EntityFrameworkCore" Version="8.0.24" />
+		<PackageVersion Update="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.24" />
+		<PackageVersion Update="Microsoft.EntityFrameworkCore.Relational" Version="8.0.24" />
+		<PackageVersion Update="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.24" />
+		<PackageVersion Update="Microsoft.Net.Http.Headers" Version="8.0.24" />
+		<PackageVersion Update="Npgsql" Version="8.0.8" />
+	</ItemGroup>
+
+	<!-- net9.0 overrides -->
+	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
+		<PackageVersion Update="Microsoft.Extensions.Caching.Memory" Version="9.0.13" />
+		<PackageVersion Update="Microsoft.Extensions.Configuration" Version="9.0.13" />
+		<PackageVersion Update="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.13" />
+		<PackageVersion Update="Microsoft.Extensions.Configuration.Binder" Version="9.0.13" />
+		<PackageVersion Update="Microsoft.Extensions.Configuration.CommandLine" Version="9.0.13" />
+		<PackageVersion Update="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.13" />
+		<PackageVersion Update="Microsoft.Extensions.DependencyInjection" Version="9.0.13" />
+		<PackageVersion Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.13" />
+		<PackageVersion Update="Microsoft.Extensions.Hosting" Version="9.0.13" />
+		<PackageVersion Update="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.13" />
+		<PackageVersion Update="Microsoft.Extensions.Localization" Version="9.0.13" />
+		<PackageVersion Update="Microsoft.Extensions.Localization.Abstractions" Version="9.0.13" />
+		<PackageVersion Update="Microsoft.Extensions.Logging" Version="9.0.13" />
+		<PackageVersion Update="Microsoft.Extensions.Logging.Abstractions" Version="9.0.13" />
+		<PackageVersion Update="Microsoft.EntityFrameworkCore" Version="9.0.13" />
+		<PackageVersion Update="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.13" />
+		<PackageVersion Update="Microsoft.EntityFrameworkCore.Relational" Version="9.0.13" />
+		<PackageVersion Update="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.13" />
+		<PackageVersion Update="Microsoft.Net.Http.Headers" Version="9.0.13" />
+		<PackageVersion Update="Npgsql" Version="9.0.4" />
+	</ItemGroup>
+
+</Project>

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net10.0</TargetFramework>
+        <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
         
         <PackageId>Curiosity.Tools.Web</PackageId>
         <Title>Curiosity.Tools.Web</Title>
@@ -12,7 +12,7 @@
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.4.0</PackageVersion>
+        <PackageVersion>2.0.0</PackageVersion>
 
         <Authors>Max Markelow (@markeli), Andrei Vinogradov (@anri-vin), Andrey Ioch (@DevCorvette)</Authors>
         <Company>SIIS Ltd</Company>
@@ -27,7 +27,6 @@
         <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Misc/Curiosity.Tools.Web/CHANGELOG.md</PackageReleaseNotes>
 
         <OutputType>Library</OutputType>
-        <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
         
@@ -50,10 +49,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Flurl.Http" Version="3.2.4" />
-      <PackageReference Include="HtmlSanitizer" Version="8.1.870" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.3" />
-      <PackageReference Include="Microsoft.Net.Http.Headers" Version="10.0.3" />
-      <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+      <PackageReference Include="Flurl.Http" />
+      <PackageReference Include="HtmlSanitizer" />
+      <PackageReference Include="System.ComponentModel.Annotations" />
     </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+        <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
         
         <PackageId>Curiosity.FileDataReaderWriters.Npoi</PackageId>
         <Title>Curiosity.FileDataReaderWriters.Npoi</Title>
@@ -12,7 +12,7 @@
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.1.0</PackageVersion>
+        <PackageVersion>2.0.0</PackageVersion>
 
         <Authors>Max Markelow (@markeli), Andrei Vinogradov (@anri-vin), Andrey Ioch (@DevCorvette), Timur Sidoriuk (@shockthunder)</Authors>
         <Company>SIIS Ltd</Company>
@@ -25,8 +25,6 @@
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
         <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/FileData/Curiosity.FileDataReaderWriters.Npoi/CHANGELOG.md</PackageReleaseNotes>
-
-        <LangVersion>10</LangVersion>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
     </PropertyGroup>
@@ -44,7 +42,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="NPOI" Version="2.7.5" />
+      <PackageReference Include="NPOI" />
     </ItemGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
