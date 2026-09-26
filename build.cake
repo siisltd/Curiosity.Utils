@@ -8,15 +8,13 @@ var configuration = Argument<string>("configuration", "Release");
 var artifactsDir = Directory("./artifacts");
 var packages = "./artifacts/packages";
 var solutionPath = "./Curiosity.Utils.sln";
-var framework = "net10.0";
-
 var nugetSource = "https://api.nuget.org/v3/index.json";
 var nugetApiKey = Argument<string>("nugetApiKey", null);
 
 Task("Clean")
     .Does(() => 
     {
-        DotNetCoreClean(solutionPath);
+        DotNetClean(solutionPath);
         DirectoryPath[] cleanDirectories = new DirectoryPath[] {
             artifactsDir
         };
@@ -30,12 +28,12 @@ Task("Build")
     .IsDependentOn("Clean")
     .Does(() => 
     {
-        var settings = new DotNetCoreBuildSettings
+        var settings = new DotNetBuildSettings
           {
               Configuration = configuration
           };
           
-        DotNetCoreBuild(
+        DotNetBuild(
             solutionPath,
             settings);
     });
@@ -49,9 +47,9 @@ Task("UnitTests")
         {
             Information(project);
             
-            DotNetCoreTest(
+            DotNetTest(
                 project.FullPath,
-                new DotNetCoreTestSettings()
+                new DotNetTestSettings()
                 {
                     Configuration = configuration,
                     NoBuild = false
@@ -73,9 +71,9 @@ Task("IntegrationTests")
         {
             Information(project);
             
-            DotNetCoreTest(
+            DotNetTest(
                 project.FullPath,
-                new DotNetCoreTestSettings()
+                new DotNetTestSettings()
                 {
                     Configuration = configuration,
                     NoBuild = false
@@ -93,20 +91,20 @@ Task("Pack")
     .Does(() =>
     {        
          Information("Packing to nupkg...");
-         var settings = new DotNetCorePackSettings
+         var settings = new DotNetPackSettings
           {
               Configuration = configuration,
               OutputDirectory = packages
           };
          
-          DotNetCorePack(solutionPath, settings);
+          DotNetPack(solutionPath, settings);
     });
  
 Task("Publish")
     .IsDependentOn("Pack")
     .Does(() =>
     {
-         var pushSettings = new DotNetCoreNuGetPushSettings
+         var pushSettings = new DotNetNuGetPushSettings
          {
              Source = nugetSource,
              ApiKey = nugetApiKey,
@@ -117,7 +115,7 @@ Task("Publish")
          foreach(var pkg in pkgs)
          {
              Information($"Publishing \"{pkg}\".");
-             DotNetCoreNuGetPush(pkg.FullPath, pushSettings);
+             DotNetNuGetPush(pkg.FullPath, pushSettings);
          }
  });
  
@@ -125,7 +123,7 @@ Task("ForcePublish")
     .IsDependentOn("Pack")
     .Does(() =>
     {
-         var pushSettings = new DotNetCoreNuGetPushSettings 
+         var pushSettings = new DotNetNuGetPushSettings 
          {
              Source = nugetSource,
              ApiKey = nugetApiKey,
@@ -136,7 +134,7 @@ Task("ForcePublish")
          foreach(var pkg in pkgs) 
          {     
              Information($"Publishing \"{pkg}\".");
-             DotNetCoreNuGetPush(pkg.FullPath, pushSettings);
+             DotNetNuGetPush(pkg.FullPath, pushSettings);
          }
  }); 
  

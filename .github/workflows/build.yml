@@ -12,22 +12,25 @@ jobs:
     runs-on: [self-hosted, linux]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+    - name: Restore tools
+      run: dotnet tool restore
     - name: Clean
-      run: ./build.sh -t Clean --exclusive
+      run: dotnet cake --target=Clean --exclusive
     - name: Build
-      run: ./build.sh -t Build --exclusive
+      run: dotnet cake --target=Build --exclusive
 
   tests:
 
     runs-on: [self-hosted, linux]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - name: Restore tools
+        run: dotnet tool restore
       - name: Clean
-        run: ./build.sh -t Clean --exclusive
+        run: dotnet cake --target=Clean --exclusive
       - name: Unit tests
-        run: ./build.sh -t UnitTests --exclusive
+        run: dotnet cake --target=UnitTests --exclusive
       - name: Integration tests
-        run: ./build.sh -t IntegrationTests --exclusive
-
+        run: dotnet cake --target=IntegrationTests --exclusive
