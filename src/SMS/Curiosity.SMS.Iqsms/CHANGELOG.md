@@ -4,7 +4,7 @@
 
 ### Changed
 
-- Dropped `netstandard2.1` support. Now multi-targeting `net8.0`, `net9.0`, and `net10.0`.
+- Dropped `netstandard2.1` support. Now multi-targeting `net9.0` and `net10.0`.
 
 ## [1.1.0]
 
