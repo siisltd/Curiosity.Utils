@@ -13,10 +13,11 @@ namespace Curiosity.FileDataReaderWriters.UnitTests
     /// </summary>
     public class NpoiXlsMultiFileWriter_Should
     {
-        // [Fact]
+        [Fact]
         public void WriteWithHeaders()
         {
             //ARRANGE
+            var tempDirectory = Directory.CreateTempSubdirectory("curiosity-npoi-tests-").FullName;
             var fileName = "testFile.xlsx";
             var header1 = "Header1";
             var header2 = "Header2";
@@ -30,7 +31,7 @@ namespace Curiosity.FileDataReaderWriters.UnitTests
             };
             
             var logger = new Logger<NpoiXlsMultiFileWriter>(new LoggerFactory());
-            var fileWriter = new NpoiXlsMultiFileWriter(Directory.GetCurrentDirectory(), fileName, logger);
+            var fileWriter = new NpoiXlsMultiFileWriter(tempDirectory, fileName, logger);
             var formatNumber = fileWriter.AddFormat(headerFormat);
             
             var headers = new List<CellData>();
@@ -66,7 +67,7 @@ namespace Curiosity.FileDataReaderWriters.UnitTests
             //ASSERT
             try
             {
-                var stream = File.Open(fileName, FileMode.Open, FileAccess.Read);
+                using var stream = File.Open(Path.Combine(tempDirectory, fileName), FileMode.Open, FileAccess.Read);
                 var fileReader = new XSSFWorkbook(stream);
                 var sheet = fileReader.GetSheetAt(0);
             
@@ -87,9 +88,10 @@ namespace Curiosity.FileDataReaderWriters.UnitTests
                 Assert.Equal(secondRowResult.GetCell(1).DateCellValue?.ToLongDateString(), DateTime.Parse(secondRow[1].Value.ToString()).ToLongDateString());
                 Assert.Equal(secondRowResult.GetCell(2).StringCellValue, secondRow[2].Value);
                 
-                stream.Close();
-                
-                var streamPart2 = File.Open($"{Path.GetFileNameWithoutExtension(fileName)}_part_2.xlsx", FileMode.Open, FileAccess.Read);
+                using var streamPart2 = File.Open(
+                    Path.Combine(tempDirectory, $"{Path.GetFileNameWithoutExtension(fileName)}_part_2.xlsx"),
+                    FileMode.Open,
+                    FileAccess.Read);
                 
                 var fileReaderPart2 = new XSSFWorkbook(streamPart2);
                 var sheetPart2 = fileReaderPart2.GetSheetAt(0);
@@ -104,8 +106,7 @@ namespace Curiosity.FileDataReaderWriters.UnitTests
             }
             finally
             {
-                File.Delete(fileName);
-                File.Delete($"{Path.GetFileNameWithoutExtension(fileName)}_part_2.xlsx");
+                Directory.Delete(tempDirectory, recursive: true);
             }
         }
     }

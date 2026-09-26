@@ -13,11 +13,12 @@ namespace Curiosity.FileDataReaderWriters.UnitTests
     /// </summary>
     public class NpoiXlsFileWriter_Should
     {
-        // [Fact]
+        [Fact]
         public void WriteWithHeaders()
         {
             //ARRANGE
-            var fileName = "testFile.xlsx";
+            var tempDirectory = Directory.CreateTempSubdirectory("curiosity-npoi-tests-").FullName;
+            var fileName = Path.Combine(tempDirectory, "testFile.xlsx");
             var header1 = "Header1";
             var header2 = "Header2";
             var header3 = "Header3";
@@ -58,7 +59,7 @@ namespace Curiosity.FileDataReaderWriters.UnitTests
             //ASSERT
             try
             {
-                var stream = File.Open(fileName, FileMode.Open, FileAccess.Read);
+                using var stream = File.Open(fileName, FileMode.Open, FileAccess.Read);
                 var fileReader = new XSSFWorkbook(stream);
                 var sheet = fileReader.GetSheetAt(0);
             
@@ -79,8 +80,9 @@ namespace Curiosity.FileDataReaderWriters.UnitTests
                 Assert.Equal(secondRowResult.GetCell(1).DateCellValue?.ToLongDateString(), DateTime.Parse(secondRow[1].Value.ToString()).ToLongDateString());
                 Assert.Equal(secondRowResult.GetCell(2).StringCellValue, secondRow[2].Value);
             }
-            finally{
-                File.Delete(fileName);
+            finally
+            {
+                Directory.Delete(tempDirectory, recursive: true);
             }
         }
     }
