@@ -61,7 +61,7 @@ Curiosity.Configuration (base)
 
 ## Key Technical Details
 
-- **Multi-targeting:** `net9.0;net10.0`
+- **Multi-targeting:** `net9.0;net10.0` (libraries and tests; tests run on every target runtime)
 - **Nullable reference types:** enabled globally
 - **Central package management:** `Directory.Packages.props` manages all NuGet versions — update versions there, not in individual .csproj files
 - **Test framework:** xUnit + FluentAssertions + Moq + coverlet

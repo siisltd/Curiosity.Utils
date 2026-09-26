@@ -13,6 +13,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - uses: actions/setup-dotnet@v4
+      env:
+        DOTNET_INSTALL_DIR: ${{ runner.tool_cache }}/dotnet
+      with:
+        dotnet-version: |
+          9.0.x
+          10.0.x
     - name: Restore tools
       run: dotnet tool restore
     - name: Clean
@@ -26,6 +33,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        env:
+          DOTNET_INSTALL_DIR: ${{ runner.tool_cache }}/dotnet
+        with:
+          dotnet-version: |
+            9.0.x
+            10.0.x
       - name: Restore tools
         run: dotnet tool restore
       - name: Clean
