@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
+        <TargetFrameworks>$(CuriosityTargetFrameworks)</TargetFrameworks>
 
         <PackageId>Curiosity.SMS.Smsc</PackageId>
         <Title>Curiosity.SMS.Smsc</Title>

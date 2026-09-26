@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
+        <TargetFrameworks>$(CuriosityTargetFrameworks)</TargetFrameworks>
 
         <PackageId>Curiosity.SFTP.SSH.NET</PackageId>
         <Title>Curiosity.SFTP.SSH.NET</Title>
