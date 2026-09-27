@@ -63,7 +63,7 @@ public class IqsmsSender : IIqsmsSender
             };
         }
         
-        var client = new RestClient("https://api.iqsms.ru/messages/v2/send");
+        using var client = new RestClient("https://api.iqsms.ru/messages/v2/send");
         var request = new RestRequest
         {
             Method = Method.Get

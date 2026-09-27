@@ -5,6 +5,12 @@
 ### Changed
 
 - Dropped `netstandard2.1` support. Now multi-targeting `net9.0` and `net10.0`.
+- Replaced `Newtonsoft.Json` with `System.Text.Json`. `SmsSentResult.ResponseJson` keeps the previous format.
+- Upgraded `RestSharp` up to `114.0.0` (fixes known vulnerabilities).
+
+### Fixed
+
+- `SmsSentResult.SmsCount` was always empty: the `cnt` field of the SMSC response was not mapped since `RestSharp` switched to `System.Text.Json`.
 
 ## [1.4.0] - 2026-02-13
 

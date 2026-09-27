@@ -5,6 +5,12 @@
 ### Changed
 
 - Dropped `netstandard2.1` support. Now multi-targeting `net9.0` and `net10.0`.
+- Replaced `Newtonsoft.Json` with `System.Text.Json`, removed `RestSharp.Serializers.NewtonsoftJson` dependency.
+- Upgraded `RestSharp` up to `114.0.0` (fixes known vulnerabilities).
+
+### Fixed
+
+- Subject and body were validated with the recipient address guard, which reported a misleading error message.
 
 ## [1.2.0] - 2026-02-13
 

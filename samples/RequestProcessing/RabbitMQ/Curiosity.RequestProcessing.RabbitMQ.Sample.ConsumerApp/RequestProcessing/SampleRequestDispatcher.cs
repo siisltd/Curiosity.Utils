@@ -1,11 +1,11 @@
 using System.Collections.Concurrent;
 using System.Globalization;
 using System.Text;
+using System.Text.Json;
 using Curiosity.RequestProcessing.RabbitMQ.Sample.Common;
 using Curiosity.RequestProcessing.RabbitMQ;
 using Curiosity.RequestProcessing.Workers;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace Curiosity.RequestProcessing.RabbitMQ.Sample.ConsumerApp.RequestProcessing;
 
@@ -50,7 +50,7 @@ public class SampleRequestDispatcher : RabbitMQRequestDispatcherBase<
                  // parse it
                  jsonData = Encoding.UTF8.GetString(rabbitMQEvent.Payload);
                  correlationId = rabbitMQEvent.ReceivedData.BasicProperties.CorrelationId;
-                 var checkRequest = JsonConvert.DeserializeObject<SampleRequest>(jsonData) ?? throw new ArgumentNullException(nameof(jsonData));
+                 var checkRequest = JsonSerializer.Deserialize<SampleRequest>(jsonData) ?? throw new ArgumentNullException(nameof(jsonData));
 
                  // and prepare for processing
                  var request = new RabbitMQRequestWrapper<SampleRequest>(

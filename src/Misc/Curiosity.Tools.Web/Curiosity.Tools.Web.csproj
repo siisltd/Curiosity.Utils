@@ -51,6 +51,7 @@
     <ItemGroup>
       <PackageReference Include="Flurl.Http" />
       <PackageReference Include="HtmlSanitizer" />
+      <PackageReference Include="Newtonsoft.Json" />
       <PackageReference Include="System.ComponentModel.Annotations" />
     </ItemGroup>
 </Project>

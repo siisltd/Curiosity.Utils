@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Curiosity.Email.UnisenderGo
 {
@@ -11,7 +11,7 @@ namespace Curiosity.Email.UnisenderGo
         /// <summary>
         /// Status of sending email.
         /// </summary>
-        [JsonProperty("status")]
+        [JsonPropertyName("status")]
         public string Status { get; set; } = null!;
 
         /// <summary>
@@ -23,13 +23,13 @@ namespace Curiosity.Email.UnisenderGo
         /// <summary>
         /// The ID of the sending task, may be useful in finding out the causes of failures.
         /// </summary>
-        [JsonProperty("job_id")]
+        [JsonPropertyName("job_id")]
         public string JobId { get; set; } = null!;
 
         /// <summary>
         /// Array of email addresses successfully accepted for sending.
         /// </summary>
-        [JsonProperty("emails")]
+        [JsonPropertyName("emails")]
         public IReadOnlyList<string>? Emails { get; set; }
 
         /// <summary>
@@ -51,19 +51,19 @@ namespace Curiosity.Email.UnisenderGo
         /// - blocked - sending to this address is prohibited by the administration of Unisender Go.
         /// - Other statuses may appear in the future.
         /// </remarks>
-        [JsonProperty("failed_emails")]
+        [JsonPropertyName("failed_emails")]
         public Dictionary<string, string>? FailedEmails { get; set; }
 
         /// <summary>
         /// Error message in English.Required if <see cref="Status"/> is "error".
         /// </summary>
-        [JsonProperty("message")]
+        [JsonPropertyName("message")]
         public string? Message { get; set; }
 
         /// <summary>
         /// Error code. Required if <see cref="Status"/> is "error".
         /// </summary>
-        [JsonProperty("code")]
+        [JsonPropertyName("code")]
         public int? Code { get; set; }
     }
 }

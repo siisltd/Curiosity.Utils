@@ -5,6 +5,7 @@
 ### Changed
 
 - Dropped `netstandard2.1` support. Now multi-targeting `net9.0` and `net10.0`.
+- Upgraded `RestSharp` up to `114.0.0` (fixes known vulnerabilities).
 
 ## [1.1.0]
 

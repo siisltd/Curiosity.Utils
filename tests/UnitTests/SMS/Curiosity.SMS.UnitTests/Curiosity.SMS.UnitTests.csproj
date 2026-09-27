@@ -20,8 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\..\src\Email\Curiosity.EMail\Curiosity.EMail.csproj" />
-      <ProjectReference Include="..\..\..\..\src\Email\Curiosity.Email.UnisenderGo\Curiosity.Email.UnisenderGo.csproj" />
+      <ProjectReference Include="..\..\..\..\src\SMS\Curiosity.SMS.Smsc\Curiosity.SMS.Smsc.csproj" />
     </ItemGroup>
 
 </Project>

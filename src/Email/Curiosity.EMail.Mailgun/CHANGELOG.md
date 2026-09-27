@@ -5,6 +5,12 @@
 ### Changed
 
 - Dropped `netstandard2.1` support. Now multi-targeting `net9.0` and `net10.0`.
+- Replaced `Newtonsoft.Json` with `System.Text.Json`.
+- Upgraded `RestSharp` up to `114.0.0` (fixes known vulnerabilities).
+
+### Fixed
+
+- `replyTo` was sent as `h:Reply-T` header instead of `h:Reply-To`, so replies went to the sender address.
 
 ## [1.5.0] - 2026-02-13
 

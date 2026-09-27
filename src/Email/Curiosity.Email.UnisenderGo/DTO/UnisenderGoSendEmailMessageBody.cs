@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Curiosity.Email.UnisenderGo
 {
@@ -13,19 +13,19 @@ namespace Curiosity.Email.UnisenderGo
         /// <summary>
         /// HTML part of the letter.
         /// </summary>
-        [JsonProperty("html")]
+        [JsonPropertyName("html")]
         public string? Html { get; set; }
 
         /// <summary>
         /// Plaintext part of the letter.
         /// </summary>
-        [JsonProperty("plaintext")]
+        [JsonPropertyName("plaintext")]
         public string? PlainText { get; set; }
 
         /// <summary>
         /// Amp part of the letter.
         /// </summary>
-        [JsonProperty("amp")]
+        [JsonPropertyName("amp")]
         public string? Amp { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Curiosity.Email.UnisenderGo
 {
@@ -10,7 +10,7 @@ namespace Curiosity.Email.UnisenderGo
         /// <summary>
         /// Data with all params of send message.
         /// </summary>
-        [JsonProperty("message")]
+        [JsonPropertyName("message")]
         public UnisenderGoSendEmailMessage Message { get; set; } = null!;
     }
 }

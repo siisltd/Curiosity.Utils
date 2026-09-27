@@ -44,9 +44,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Newtonsoft.Json" />
       <PackageReference Include="RestSharp" />
-      <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" />
     </ItemGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

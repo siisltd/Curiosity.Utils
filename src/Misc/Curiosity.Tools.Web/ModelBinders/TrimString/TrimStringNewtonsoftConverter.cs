@@ -11,6 +11,9 @@ namespace Curiosity.Tools.Web.ModelBinders
     /// Works only with Newtonsoft serialization.
     /// Add attribute [JsonConverter(typeof(TrimStringNewtonsoftConverter))] for string property.
     /// </remarks>
+    [Obsolete(
+        "Newtonsoft.Json support will be removed in the next major version. Use TrimStringSystemJsonConverter instead. " +
+        "See https://github.com/siisltd/Curiosity.Utils/issues/77")]
     public class TrimStringNewtonsoftConverter : JsonConverter<string?>
     {
         /// <inheritdoc />

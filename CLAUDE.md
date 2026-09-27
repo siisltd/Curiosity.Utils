@@ -62,6 +62,7 @@ Curiosity.Configuration (base)
 ## Key Technical Details
 
 - **Multi-targeting:** `net9.0;net10.0` for libraries and tests, defined once as `CuriosityTargetFrameworks` in `Directory.Build.props` (projects use `<TargetFrameworks>$(CuriosityTargetFrameworks)</TargetFrameworks>`); samples target `net10.0` only
+- **JSON:** `System.Text.Json` only. `Newtonsoft.Json` remains solely for the obsolete `TrimStringNewtonsoftConverter` in `Curiosity.Tools.Web` (removal tracked in #77) — do not add new usages
 - **Nullable reference types:** enabled globally
 - **Central package management:** `Directory.Packages.props` manages all NuGet versions — update versions there, not in individual .csproj files
 - **Test framework:** xUnit + FluentAssertions + Moq + coverlet

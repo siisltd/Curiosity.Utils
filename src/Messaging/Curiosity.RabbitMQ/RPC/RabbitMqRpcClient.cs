@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Concurrent;
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Curiosity.Tools;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Exceptions;
@@ -31,6 +33,30 @@ public class RabbitMqRpcClient : IAsyncDisposable
     private static readonly TimeSpan ConnectionCloseTimeout = TimeSpan.FromSeconds(3);
 
     /// <summary>
+    /// Default JSON options for requests and responses.
+    /// </summary>
+    /// <remarks>
+    /// Mimics Newtonsoft.Json defaults (used before 2.0.0) to keep the wire format compatible with existing RPC peers:
+    /// case-insensitive property names, public fields, numbers from strings and unescaped non-ASCII characters.
+    /// The instance is read-only; to customize, copy it: <c>new JsonSerializerOptions(DefaultJsonSerializerOptions)</c>.
+    /// </remarks>
+    public static JsonSerializerOptions DefaultJsonSerializerOptions { get; } = CreateDefaultJsonSerializerOptions();
+
+    private static JsonSerializerOptions CreateDefaultJsonSerializerOptions()
+    {
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+            IncludeFields = true,
+            NumberHandling = JsonNumberHandling.AllowReadingFromString,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        };
+        options.MakeReadOnly(populateMissingResolver: true);
+
+        return options;
+    }
+
+    /// <summary>
     /// Time for waiting connection full recovering before sending data to the queues.
     /// </summary>
     private readonly TimeSpan _recoverWaitDelay;
@@ -42,6 +68,7 @@ public class RabbitMqRpcClient : IAsyncDisposable
     private readonly bool _disposeResponseQueue;
 
     private readonly ILogger _logger;
+    private readonly JsonSerializerOptions _jsonSerializerOptions;
 
     private IModel? _readerChannel;
     private IModel? _writerChannel;
@@ -66,7 +93,8 @@ public class RabbitMqRpcClient : IAsyncDisposable
         ILogger logger,
         TimeSpan networkRecoveryInterval,
         Func<IConnection> rabbitMqConnectionFactory,
-        bool disposeResponseQueue)
+        bool disposeResponseQueue,
+        JsonSerializerOptions? jsonSerializerOptions = null)
     {
         if (String.IsNullOrWhiteSpace(clientName)) throw new ArgumentNullException(nameof(clientName));
 
@@ -76,6 +104,7 @@ public class RabbitMqRpcClient : IAsyncDisposable
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _rabbitMqConnectionFactory = rabbitMqConnectionFactory;
         _disposeResponseQueue = disposeResponseQueue;
+        _jsonSerializerOptions = jsonSerializerOptions ?? DefaultJsonSerializerOptions;
         _requestQueueName = requestQueueName ?? throw new ArgumentNullException(nameof(requestQueueName));
         _responseQueueName = responseQueueName ?? throw new ArgumentNullException(nameof(responseQueueName));
 
@@ -639,13 +668,13 @@ public class RabbitMqRpcClient : IAsyncDisposable
         string? correlationId = null,
         CancellationToken cancellationToken = default)
     {
-        var message = JsonConvert.SerializeObject(request);
+        var message = JsonSerializer.Serialize(request, _jsonSerializerOptions);
         correlationId ??= $"{_clientName}_r{UniqueIdGenerator.Generate().ToPublicId()}";
 
         var responseMessage = await SendAsync(message, correlationId, cancellationToken);
         try
         {
-            var response = JsonConvert.DeserializeObject<TResponse>(responseMessage.Response);
+            var response = JsonSerializer.Deserialize<TResponse>(responseMessage.Response, _jsonSerializerOptions);
             if (response == null)
             {
                 throw new InvalidOperationException($"Incorrect response message with correlationId = {correlationId}");
@@ -749,7 +778,7 @@ public class RabbitMqRpcClient : IAsyncDisposable
     {
         if (request == null) throw new ArgumentNullException(nameof(request));
 
-        var message = JsonConvert.SerializeObject(request);
+        var message = JsonSerializer.Serialize(request, _jsonSerializerOptions);
         correlationId ??= $"{_clientName}_r{UniqueIdGenerator.Generate().ToPublicId()}";
 
         _logger.LogDebug(
@@ -761,7 +790,7 @@ public class RabbitMqRpcClient : IAsyncDisposable
         try
         {
             responseMessage = await SendAsync(message, correlationId, cancellationToken);
-            response = JsonConvert.DeserializeObject<TResponse>(responseMessage.Response)!;
+            response = JsonSerializer.Deserialize<TResponse>(responseMessage.Response, _jsonSerializerOptions)!;
         }
         catch (Exception e)
         {

@@ -1,13 +1,15 @@
 using System;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Curiosity.Configuration;
 using Curiosity.EMail;
 using Curiosity.Tools;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using RestSharp;
-using RestSharp.Serializers.NewtonsoftJson;
+using RestSharp.Serializers.Json;
 
 namespace Curiosity.Email.UnisenderGo
 {
@@ -16,7 +18,12 @@ namespace Curiosity.Email.UnisenderGo
     /// </summary>
     public class UnisenderGoEmailSender : IUnisenderGoEmailSender
     {
-        private readonly JsonSerializerSettings _serializerSettings;
+        internal static readonly JsonSerializerOptions SerializerOptions = new()
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        };
+
         private readonly ILogger _logger;
         private readonly UnisenderGoEmailOptions _options;
 
@@ -28,11 +35,6 @@ namespace Curiosity.Email.UnisenderGo
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _options = options ?? throw new ArgumentNullException(nameof(options));
             options.AssertValid();
-
-            _serializerSettings = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            };
         }
 
         /// <inheritdoc />
@@ -44,8 +46,8 @@ namespace Curiosity.Email.UnisenderGo
             CancellationToken cancellationToken = default)
         {
             EmailGuard.AssertToAddress(toAddress);
-            EmailGuard.AssertToAddress(subject);
-            EmailGuard.AssertToAddress(body);
+            EmailGuard.AssertSubject(subject);
+            EmailGuard.AssertBody(body);
 
             return SendAsync(
                 toAddress,
@@ -98,8 +100,9 @@ namespace Curiosity.Email.UnisenderGo
                     throw new ArgumentException($"Region {region} is not supported.", nameof(region));
             }
 
-            var restClient = new RestClient(new Uri(unisenderGoHost));
-            restClient.UseNewtonsoftJson(_serializerSettings);
+            using var restClient = new RestClient(
+                new RestClientOptions(unisenderGoHost),
+                configureSerialization: s => s.UseSystemTextJson(SerializerOptions));
 
             // build message body
             var messageBody = new UnisenderGoSendEmailMessageBody();
@@ -172,7 +175,7 @@ namespace Curiosity.Email.UnisenderGo
                 UnisenderGoSendEmailResponse? unisenderGoFailedResponse = null;
                 try
                 {
-                    unisenderGoFailedResponse = JsonConvert.DeserializeObject<UnisenderGoSendEmailResponse>(response.Content);
+                    unisenderGoFailedResponse = JsonSerializer.Deserialize<UnisenderGoSendEmailResponse>(response.Content!, SerializerOptions);
                 }
                 catch (Exception e)
                 {
@@ -252,7 +255,7 @@ namespace Curiosity.Email.UnisenderGo
 
             try
             {
-                var unisenderGoSuccessResponse = JsonConvert.DeserializeObject<UnisenderGoSendEmailResponse>(response.Content)!;
+                var unisenderGoSuccessResponse = JsonSerializer.Deserialize<UnisenderGoSendEmailResponse>(response.Content!, SerializerOptions)!;
                 _logger.LogDebug(
                     "UnisenderGo response: status = \"{UnisenderGoSuccessResponseStatus}\", jobId = \"{UnisenderGoSuccessResponseJobId}\"",
                     unisenderGoSuccessResponse.Status,
@@ -278,8 +281,8 @@ namespace Curiosity.Email.UnisenderGo
             CancellationToken cancellationToken = default)
         {
             EmailGuard.AssertToAddress(toAddress);
-            EmailGuard.AssertToAddress(subject);
-            EmailGuard.AssertToAddress(body);
+            EmailGuard.AssertSubject(subject);
+            EmailGuard.AssertBody(body);
 
             if (emailExtraParams == null) throw new ArgumentNullException(nameof(emailExtraParams));
 
