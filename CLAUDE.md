@@ -21,6 +21,7 @@ dotnet cake
 dotnet cake --target=Build --exclusive     # Build only
 dotnet cake --target=UnitTests --exclusive # Unit tests only
 dotnet cake --target=Pack --exclusive      # Pack NuGet packages
+dotnet cake --target=GitHubReleases --exclusive --githubReleaseDryRun  # Preview release notes for packed packages (artifacts/release-notes)
 
 # Single-project commands (for focused development)
 dotnet test tests/UnitTests/Misc/Curiosity.Tools.UnitTests/Curiosity.Tools.UnitTests.csproj
@@ -66,5 +67,5 @@ Curiosity.Configuration (base)
 - **Nullable reference types:** enabled globally
 - **Central package management:** `Directory.Packages.props` manages all NuGet versions — update versions there, not in individual .csproj files
 - **Test framework:** xUnit + FluentAssertions + Moq + coverlet
-- **CI/CD:** GitHub Actions (`.github/workflows/build.yml` for build/test, `nuget_publish.yml` for NuGet publishing)
+- **CI/CD:** GitHub Actions on `ubuntu-latest`. `.github/workflows/build.yml` builds and tests PRs; `nuget_publish.yml` runs on every push to `master`: publishes packages whose `<PackageVersion>` is not on nuget.org yet, then creates a `<PackageId>.v<Version>` tag and GitHub release (notes = that version section of the package `CHANGELOG.md`). To release a package: bump `<PackageVersion>` and add a `## [x.y.z]` section to its CHANGELOG
 - **Documentation:** MkDocs hosted on ReadTheDocs at https://curiosityutils.readthedocs.io/

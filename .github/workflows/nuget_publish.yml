@@ -4,23 +4,29 @@ on:
   push:
     branches: [ master ]
 
+concurrency:
+  group: nuget-publish
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
 jobs:
   publish:
 
-    runs-on: [self-hosted, linux]
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-dotnet@v4
-      env:
-        DOTNET_INSTALL_DIR: ${{ runner.tool_cache }}/dotnet
       with:
         dotnet-version: |
           9.0.x
           10.0.x
     - name: Restore tools
       run: dotnet tool restore
-    - name: Publish
+    - name: Publish packages and create GitHub releases
       run: dotnet cake --target=GitHub --nugetApiKey=$nugetApiKey
       env:
         nugetApiKey: ${{ secrets.NUGETAPIKEY }}
+        GH_TOKEN: ${{ github.token }}

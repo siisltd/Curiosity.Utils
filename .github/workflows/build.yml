@@ -6,16 +6,17 @@ on:
   pull_request:
     branches: [ $default-branch, master ]
 
+permissions:
+  contents: read
+
 jobs:
   build:
 
-    runs-on: [self-hosted, linux]
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-dotnet@v4
-      env:
-        DOTNET_INSTALL_DIR: ${{ runner.tool_cache }}/dotnet
       with:
         dotnet-version: |
           9.0.x
@@ -29,13 +30,11 @@ jobs:
 
   tests:
 
-    runs-on: [self-hosted, linux]
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
-        env:
-          DOTNET_INSTALL_DIR: ${{ runner.tool_cache }}/dotnet
         with:
           dotnet-version: |
             9.0.x
