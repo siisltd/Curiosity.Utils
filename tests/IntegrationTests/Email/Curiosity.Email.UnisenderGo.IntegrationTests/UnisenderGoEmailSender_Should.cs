@@ -1,10 +1,10 @@
 using System;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Newtonsoft.Json;
 using Xunit;
 
 namespace Curiosity.Email.UnisenderGo.IntegrationTests
@@ -49,7 +49,7 @@ namespace Curiosity.Email.UnisenderGo.IntegrationTests
             var responseJson = "{\"status\":\"error\",\"code\":204,\"message\":\"Error ID:EAF0945E-DB5D-11EC-8461-46277D42C7E8. No valid recipients\",\"failed_emails\":{\"zibrovauana26@gmail.com\":\"permanent_unavailable\"}}";
 
             // act
-            var response = JsonConvert.DeserializeObject<UnisenderGoSendEmailResponse>(responseJson)!;
+            var response = JsonSerializer.Deserialize<UnisenderGoSendEmailResponse>(responseJson)!;
 
             // assert
             response.FailedEmails.Should().NotBeNull();

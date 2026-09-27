@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+        <TargetFrameworks>$(CuriosityTargetFrameworks)</TargetFrameworks>
 
         <PackageId>Curiosity.Archiver</PackageId>
         <Title>Curiosity.Archiver</Title>
@@ -12,7 +12,7 @@
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.4.0</PackageVersion>
+        <PackageVersion>2.0.0</PackageVersion>
 
         <Authors>Max Markelow (@markeli), Andrei Vinogradov (@anri-vin)</Authors>
         <Company>SIIS Ltd</Company>
@@ -27,7 +27,6 @@
         <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Archiver/Curiosity.Archiver/CHANGELOG.md</PackageReleaseNotes>
 
         <OutputType>Library</OutputType>
-        <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
     </PropertyGroup>

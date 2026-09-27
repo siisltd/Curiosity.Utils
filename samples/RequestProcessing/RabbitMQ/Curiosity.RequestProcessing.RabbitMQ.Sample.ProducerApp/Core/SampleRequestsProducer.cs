@@ -1,12 +1,12 @@
 using System.Globalization;
 using System.Text;
+using System.Text.Json;
 using Curiosity.RabbitMQ;
 using Curiosity.RequestProcessing.RabbitMQ.Sample.Common;
 using Curiosity.RequestProcessing.RabbitMQ.Sample.ProducerApp.Configuration;
 using Curiosity.Tools;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Exceptions;
 
@@ -354,7 +354,7 @@ public class SampleRequestsProducer : BackgroundService
                     "sample data");
 
                 // publish to rabbit
-                var responseMessageBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(newRequest));
+                var responseMessageBytes = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(newRequest));
 
                 _logger.LogTrace("Entering lock to publish a message...");
                 lock (_lockObject)

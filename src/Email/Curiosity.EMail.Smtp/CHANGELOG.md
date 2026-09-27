@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.0] - 2026-09-27
+
+### Changed
+
+- Dropped `netstandard2.1` support. Now multi-targeting `net9.0` and `net10.0`.
+- Upgraded `MailKit` up to `4.18.0` (fixes known vulnerabilities).
+
 ## [1.5.0] - 2026-02-13
 
 ### Changed

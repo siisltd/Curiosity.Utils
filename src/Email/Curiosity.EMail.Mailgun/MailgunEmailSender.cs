@@ -1,10 +1,11 @@
 using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Curiosity.Configuration;
 using Curiosity.Tools;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Authenticators;
 
@@ -29,10 +30,10 @@ namespace Curiosity.EMail.Mailgun
 
         private class MailGunResponse
         {
-            [JsonProperty("message")]
+            [JsonPropertyName("message")]
             public string Message { get; set; } = null!;
 
-            [JsonProperty("id")]
+            [JsonPropertyName("id")]
             public string Id { get; set; } = null!;
         }
 
@@ -84,10 +85,10 @@ namespace Curiosity.EMail.Mailgun
                     throw new ArgumentException($"Region {region} is not supported.", nameof(region));
             }
 
-            var restClient = new RestClient(new Uri(mailgunHost))
+            using var restClient = new RestClient(new RestClientOptions(mailgunHost)
             {
                 Authenticator = new HttpBasicAuthenticator(mailgunUser, mailGunApiKey)
-            };
+            });
 
             var restRequest = new RestRequest();
             restRequest.AddParameter("domain", mailgunDomain, ParameterType.UrlSegment);
@@ -97,7 +98,7 @@ namespace Curiosity.EMail.Mailgun
 
             // add reply to address if it specified
             if (!String.IsNullOrWhiteSpace(replyTo))
-                restRequest.AddParameter("h:Reply-T", replyTo);
+                restRequest.AddParameter("h:Reply-To", replyTo);
 
             restRequest.AddParameter("subject", subject);
             restRequest.AddParameter(isBodyHtml ? "html" : "text", body);
@@ -119,7 +120,7 @@ namespace Curiosity.EMail.Mailgun
 
             try
             {
-                var mgResponse = JsonConvert.DeserializeObject<MailGunResponse>(response.Content);
+                var mgResponse = JsonSerializer.Deserialize<MailGunResponse>(response.Content!)!;
                 _logger.LogDebug($"MailGun response: message = \"{mgResponse.Message}\", id = \"{mgResponse.Id}\"");
             }
             catch (Exception e)

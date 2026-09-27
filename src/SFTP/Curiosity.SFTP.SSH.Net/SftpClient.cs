@@ -430,7 +430,7 @@ namespace Curiosity.SFTP.SSH.Net
             });
         }
 
-        private static SftpFileType GetSftpFileType(SftpFile file)
+        private static SftpFileType GetSftpFileType(ISftpFile file)
         {
             SftpFileType fileType = SftpFileType.Unknown;
             if (file.IsDirectory)

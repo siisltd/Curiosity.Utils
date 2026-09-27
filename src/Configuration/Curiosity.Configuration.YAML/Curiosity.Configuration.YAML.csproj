@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+        <TargetFrameworks>$(CuriosityTargetFrameworks)</TargetFrameworks>
 
         <PackageId>Curiosity.Configuration.YML</PackageId>
         <Title>Curiosity.Configuration.YML</Title>
@@ -14,7 +14,7 @@
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.2.0</PackageVersion>
+        <PackageVersion>2.0.0</PackageVersion>
 
         <Authors>Max Markelow (@markeli), Andrei Vinogradov (@anri-vin)</Authors>
         <Copyright>SIIS Ltd, 2026</Copyright>
@@ -26,8 +26,6 @@
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
         <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/Configuration/Curiosity.Configuration.YML/CHANGELOG.md</PackageReleaseNotes>
-
-        <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
     </PropertyGroup>
@@ -45,8 +43,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.3" />
-      <PackageReference Include="NetEscapades.Configuration.Yaml" Version="2.2.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
+      <PackageReference Include="NetEscapades.Configuration.Yaml" />
     </ItemGroup>
 
     <ItemGroup>

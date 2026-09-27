@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net10.0</TargetFramework>
+        <TargetFrameworks>$(CuriosityTargetFrameworks)</TargetFrameworks>
 
         <PackageId>Curiosity.DAL.NpgSQL</PackageId>
         <Title>Curiosity.DAL.NpgSQL</Title>
@@ -12,7 +12,7 @@
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.2.0</PackageVersion>
+        <PackageVersion>2.0.0</PackageVersion>
 
         <Authors>Max Markelow (@markeli), Andrei Vinogradov (@anri-vin)</Authors>
         <Company>SIIS Ltd</Company>
@@ -27,7 +27,6 @@
         <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/DAL/Curiosity.DAL.NpgSQL/CHANGELOG.md</PackageReleaseNotes>
 
         <OutputType>Library</OutputType>
-        <LangVersion>8</LangVersion>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
         
@@ -42,11 +41,11 @@
     </ItemGroup>
     
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>bin\Release\Marvin.DAL.NpgSQL.xml</DocumentationFile>
+      <DocumentationFile>bin\Release\Curiosity.DAL.NpgSQL.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Npgsql" Version="10.0.1" />
+      <PackageReference Include="Npgsql" />
     </ItemGroup>
 
 </Project>

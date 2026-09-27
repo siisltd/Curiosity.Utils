@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.0.0] - 2026-09-27
+
+### Changed
+
+- Dropped `netstandard2.1` support. Now multi-targeting `net9.0` and `net10.0`.
+- `SessionExtensions` use `System.Text.Json` instead of `Newtonsoft.Json`; values stored by previous versions remain readable.
+- Upgraded `Flurl.Http` up to `4.0.2` (drops transitive vulnerable `Newtonsoft.Json` `12.0.2`) and `HtmlSanitizer` up to `9.2.1039` (fixes known vulnerabilities).
+
+### Deprecated
+
+- `TrimStringNewtonsoftConverter`: use `TrimStringSystemJsonConverter`. `Newtonsoft.Json` support will be removed in the next major version ([#77](https://github.com/siisltd/Curiosity.Utils/issues/77)).
+
 ## [1.4.0] - 2026-02-13
 
 ### Changed

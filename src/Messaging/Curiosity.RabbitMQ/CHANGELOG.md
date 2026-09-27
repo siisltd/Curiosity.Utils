@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0] - 2026-09-27
+
+### Changed
+
+- Dropped `netstandard2.1` support. Now multi-targeting `net9.0` and `net10.0`.
+- **Breaking:** RPC client uses `System.Text.Json` instead of `Newtonsoft.Json`. Default options (`RabbitMqRpcClient.DefaultJsonSerializerOptions`) mimic Newtonsoft.Json behavior to stay wire-compatible: case-insensitive property names, public fields, numbers from strings, unescaped non-ASCII characters. Enums are still written as numbers; reading enums from strings requires custom options.
+
+### Added
+
+- `jsonSerializerOptions` parameter in `RabbitMqRpcClientFactory.CreateClient` to customize JSON serialization.
+
 ## [1.2.0] - 2026-02-13
 
 ### Changed

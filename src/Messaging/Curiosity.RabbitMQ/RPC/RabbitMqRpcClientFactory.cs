@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using Curiosity.Configuration;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
@@ -49,10 +50,14 @@ public class RabbitMqRpcClientFactory
     /// <param name="requestQueueName">Queue name.</param>
     /// <param name="clientNameSuffix">Extra for client name.</param>
     /// <param name="disposeResponseQueue">Should response queue be deleted after client disposing?</param>
+    /// <param name="jsonSerializerOptions">
+    /// JSON options for requests and responses. <see cref="RabbitMqRpcClient.DefaultJsonSerializerOptions"/> is used if not specified.
+    /// </param>
     public RabbitMqRpcClient CreateClient(
         string requestQueueName,
         string? clientNameSuffix = null,
-        bool disposeResponseQueue = true)
+        bool disposeResponseQueue = true,
+        JsonSerializerOptions? jsonSerializerOptions = null)
     {
         if (String.IsNullOrWhiteSpace(requestQueueName)) throw new ArgumentNullException(nameof(requestQueueName));
 
@@ -76,7 +81,8 @@ public class RabbitMqRpcClientFactory
             logger,
             NetworkRecoveryInterval,
             _connectionFactory.CreateConnection,
-            disposeResponseQueue);
+            disposeResponseQueue,
+            jsonSerializerOptions);
 
         client.Init();
 

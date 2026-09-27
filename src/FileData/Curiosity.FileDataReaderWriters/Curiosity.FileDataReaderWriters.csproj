@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+        <TargetFrameworks>$(CuriosityTargetFrameworks)</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
 
         <PackageId>Curiosity.FileDataReaderWriters</PackageId>
@@ -13,7 +13,7 @@
 
         <AssemblyVersion>1.0.0</AssemblyVersion>
         <FileVersion>1.0.0</FileVersion>
-        <PackageVersion>1.1.0</PackageVersion>
+        <PackageVersion>2.0.0</PackageVersion>
 
         <Authors>Max Markelow (@markeli), Andrei Vinogradov (@anri-vin), Andrey Ioch (@DevCorvette), Timur Sidoriuk (@shockthunder)</Authors>
         <Company>SIIS Ltd</Company>
@@ -26,8 +26,6 @@
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/siisltd/Curiosity.Utils</RepositoryUrl>
         <PackageReleaseNotes>https://github.com/siisltd/Curiosity.Utils/tree/master/src/FileData/Curiosity.FileDataReaderWriters/CHANGELOG.md</PackageReleaseNotes>
-
-        <LangVersion>10</LangVersion>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
 
@@ -42,8 +40,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="CsvHelper" Version="30.1.0" />
-      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
+      <PackageReference Include="CsvHelper" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     </ItemGroup>
 
     <ItemGroup>

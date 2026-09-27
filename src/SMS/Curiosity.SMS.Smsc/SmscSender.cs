@@ -1,18 +1,25 @@
 using System;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Curiosity.Configuration;
 using Curiosity.Tools;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using RestSharp;
-using SIISLtd.SSNG.ISACR.Core;
 
 namespace Curiosity.SMS.Smsc
 {
     /// <inheritdoc />
     public class SmscSender : ISmscSender
     {
+        internal static readonly JsonSerializerOptions ResultJsonOptions = new()
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        };
+
         private readonly ILogger _logger;
         private readonly SmscOptions _options;
 
@@ -41,7 +48,7 @@ namespace Curiosity.SMS.Smsc
             int retriesCount = 0,
             CancellationToken cancellationToken = default)
         {
-            var client = new RestClient("https://smsc.ru/sys/send.php");
+            using var client = new RestClient("https://smsc.ru/sys/send.php");
             var request = new RestRequest
             {
                 Method = Method.Post
@@ -70,7 +77,7 @@ namespace Curiosity.SMS.Smsc
             decimal? messageCost = null;
             if (response.IsSuccessful)
             {
-                resultJson = JsonConvert.SerializeObject(response.Data, SmsConstants.JsonSerializerSettings);
+                resultJson = JsonSerializer.Serialize(response.Data, ResultJsonOptions);
                 _logger.LogDebug(resultJson);
 
                 // has sent error
@@ -130,7 +137,7 @@ namespace Curiosity.SMS.Smsc
                         : $"{(int) response.StatusCode}, {response.StatusDescription}";
                 }
 
-                resultJson = JsonConvert.SerializeObject(data, SmsConstants.JsonSerializerSettings);
+                resultJson = JsonSerializer.Serialize(data, ResultJsonOptions);
 
                 _logger.LogWarning(
                     $"Ошибка при отправке sms на номер {phoneNumber} (error = \"{data.Error}\")");

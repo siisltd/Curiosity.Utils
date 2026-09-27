@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.0.0] - 2026-09-27
+
+### Changed
+
+- Dropped `netstandard2.1` support. Now multi-targeting `net9.0` and `net10.0`.
+
+### Removed
+
+- **Breaking:** `SIISLtd.SSNG.ISACR.Core.SmsConstants` (exposed `Newtonsoft.Json` settings) and the `Newtonsoft.Json` dependency.
+
 ## [1.5.0] - 2026-02-13
 
 ### Changed
