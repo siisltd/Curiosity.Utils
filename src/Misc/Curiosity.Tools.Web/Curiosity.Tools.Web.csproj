@@ -51,7 +51,7 @@
 
     <ItemGroup>
       <PackageReference Include="Flurl.Http" Version="3.2.4" />
-      <PackageReference Include="HtmlSanitizer" Version="8.1.870" />
+      <PackageReference Include="HtmlSanitizer" Version="9.0.967" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.3" />
       <PackageReference Include="Microsoft.Net.Http.Headers" Version="10.0.3" />
       <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
